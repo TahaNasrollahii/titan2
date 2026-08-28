@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import GradientOrb from '@/components/effects/GradientOrb';
-import StaticHero from '@/components/hero/StaticHero';
+import ThreeHero from '@/components/hero/ThreeHero';
 import DiscountsSection from '@/components/sections/DiscountsSection';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Button from '@/components/ui/Button';
@@ -59,7 +59,7 @@ export default function HomePage() {
     <>
       <Navbar />
 
-      <StaticHero />
+      <ThreeHero />
 
       {/* ==================== DISCOUNTS ==================== */}
       <motion.section 
