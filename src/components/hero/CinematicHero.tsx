@@ -66,6 +66,11 @@ export default function CinematicHero() {
     return () => clearInterval(timer);
   }, [isHovered]);
 
+  useEffect(() => {
+    document.documentElement.style.setProperty('--active-hero-glow', activeGame.glowColor);
+    return () => document.documentElement.style.removeProperty('--active-hero-glow');
+  }, [activeGame]);
+
   return (
     <section 
       className={styles.heroSection}
