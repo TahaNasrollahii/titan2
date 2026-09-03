@@ -187,17 +187,16 @@ export default function CinematicHero() {
               alt={activeGame.title}
               className={styles.mainCharacter}
               style={{
-                scale: (activeGame as any).scale || 1,
                 mixBlendMode: (activeGame as any).mixBlendMode || 'normal'
               }}
-              initial={{ opacity: 0, scale: 0.9, x: -30 }}
-              animate={{
-                opacity: 1,
-                scale: 1,
+              initial={{ opacity: 0, scale: ((activeGame as any).scale || 1) - 0.1, x: -30 }}
+              animate={{ 
+                opacity: 1, 
+                scale: (activeGame as any).scale || 1, 
                 x: 0,
                 y: [0, -10, 0] // Subtle idle breathing
               }}
-              exit={{ opacity: 0, scale: 0.95, x: 30 }}
+              exit={{ opacity: 0, scale: ((activeGame as any).scale || 1) - 0.05, x: 30 }}
               transition={{
                 opacity: { duration: 0.6 },
                 scale: { duration: 0.6 },
