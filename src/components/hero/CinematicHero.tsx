@@ -7,39 +7,51 @@ import styles from './CinematicHero.module.css';
 const GAMES = [
   {
     id: 'valorant',
-    title: 'VALORANT',
-    category: 'TACTICAL SHOOTER',
-    description: 'در رقابت‌های تاکتیکال و هیجان‌انگیز والورانت مهارت‌های خود را به چالش بکشید و قهرمان شوید.',
+    title: 'VALORANT POINTS',
+    category: 'IN-GAME CURRENCY',
+    description: 'ولورانت پوینت (VP) بخرید و اسکین‌های جذاب و بتل پس را در بازی آزاد کنید.',
     character: '/images/hero/characters/valorant.png',
     glowColor: 'rgba(255, 70, 85, 0.3)',
-    accentColor: '#ff4655'
+    accentColor: '#ff4655',
+    scale: 1.25
   },
   {
     id: 'callofduty',
-    title: 'CALL OF DUTY',
-    category: 'BATTLE ROYALE',
-    description: 'نبرد در خط مقدم وارزون. برای بقا مبارزه کنید و آخرین تیم بازمانده در نقشه باشید.',
+    title: 'COD POINTS',
+    category: 'IN-GAME CURRENCY',
+    description: 'سی‌پی (CP) کال آف دیوتی برای خرید بتل پس و باندل‌های ویژه وارزون.',
     character: '/images/hero/characters/callofduty.png',
     glowColor: 'rgba(0, 255, 170, 0.25)',
     accentColor: '#00ffaa'
   },
   {
     id: 'fortnite',
-    title: 'FORTNITE',
-    category: 'BATTLE ROYALE',
-    description: 'به دنیای رنگارنگ و پر از چالش فورتنایت وارد شوید. بسازید، بجنگید و پیروز شوید.',
+    title: 'V-BUCKS',
+    category: 'IN-GAME CURRENCY',
+    description: 'وی‌باکس فورتنایت برای خرید اسکین‌ها، دنس‌ها و بتل پس سیزن جدید.',
     character: '/images/hero/characters/fortnite.png',
     glowColor: 'rgba(160, 32, 240, 0.3)',
     accentColor: '#a020f0'
   },
   {
     id: 'apex',
-    title: 'APEX LEGENDS',
-    category: 'HERO SHOOTER',
-    description: 'قهرمانان اپکس در انتظار شما هستند. قدرت‌های منحصربه‌فرد خود را در مسابقات خونین نشان دهید.',
+    title: 'APEX COINS',
+    category: 'IN-GAME CURRENCY',
+    description: 'اپکس کوین برای باز کردن لجندهای جدید و خرید پک‌های ویژه در اپکس لجندز.',
     character: '/images/hero/characters/apex.png',
     glowColor: 'rgba(255, 50, 50, 0.3)',
     accentColor: '#ff3232'
+  },
+  {
+    id: 'tournaments',
+    title: 'TITAN TOURNAMENTS',
+    category: 'COMPETITIVE GAMING',
+    description: 'در مسابقات حرفه‌ای ما شرکت کنید، مهارت خود را ثابت کنید و جوایز نقدی ببرید.',
+    character: '/images/tournaments/trophy.jpg',
+    glowColor: 'rgba(255, 200, 0, 0.3)',
+    accentColor: '#ffc800',
+    mixBlendMode: 'screen',
+    scale: 1.15
   }
 ];
 
@@ -72,21 +84,21 @@ export default function CinematicHero() {
   }, [activeGame]);
 
   return (
-    <section 
+    <section
       className={styles.heroSection}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Dynamic Backgrounds */}
       <div className={styles.bgWrapper}>
-        
+
         {/* Dynamic Glow */}
-        <motion.div 
+        <motion.div
           className={styles.bgGlow}
           animate={{ background: `radial-gradient(circle at 50% 50%, ${activeGame.glowColor} 0%, transparent 65%)` }}
           transition={{ duration: 1.5, ease: 'easeInOut' }}
         />
-        
+
         {/* Large Typography in BG */}
         <AnimatePresence mode="wait">
           <motion.div
@@ -103,7 +115,7 @@ export default function CinematicHero() {
       </div>
 
       <div className={`container ${styles.gridContainer}`}>
-        
+
         {/* LEFT SIDE: Information */}
         <div className={styles.leftSide}>
           <AnimatePresence mode="wait">
@@ -115,7 +127,7 @@ export default function CinematicHero() {
               transition={{ duration: 0.6, ease: "easeOut", staggerChildren: 0.1 }}
               className={styles.infoContent}
             >
-              <motion.span 
+              <motion.span
                 className={styles.category}
                 style={{ color: activeGame.accentColor }}
                 initial={{ opacity: 0, y: 10 }}
@@ -123,33 +135,33 @@ export default function CinematicHero() {
               >
                 {activeGame.category}
               </motion.span>
-              
-              <motion.h1 
+
+              <motion.h1
                 className={styles.title}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
                 {activeGame.title}
               </motion.h1>
-              
-              <motion.p 
+
+              <motion.p
                 className={styles.description}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
                 {activeGame.description}
               </motion.p>
-              
+
               <motion.div
                 className={styles.ctaWrapper}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <Button 
-                  href="/store" 
-                  variant="primary" 
-                  size="lg" 
-                  glow 
+                <Button
+                  href="/store"
+                  variant="primary"
+                  size="lg"
+                  glow
                   style={{ '--btn-bg': activeGame.accentColor, '--btn-hover': activeGame.accentColor } as React.CSSProperties}
                 >
                   مشاهده فروشگاه
@@ -162,7 +174,7 @@ export default function CinematicHero() {
         {/* CENTER: Main Character Showcase */}
         <div className={styles.centerSide}>
           {/* Subtle base platform glow */}
-          <motion.div 
+          <motion.div
             className={styles.platformGlow}
             animate={{ boxShadow: `0 0 100px 30px ${activeGame.glowColor}` }}
             transition={{ duration: 1.5 }}
@@ -174,15 +186,19 @@ export default function CinematicHero() {
               src={activeGame.character}
               alt={activeGame.title}
               className={styles.mainCharacter}
+              style={{
+                scale: (activeGame as any).scale || 1,
+                mixBlendMode: (activeGame as any).mixBlendMode || 'normal'
+              }}
               initial={{ opacity: 0, scale: 0.9, x: -30 }}
-              animate={{ 
-                opacity: 1, 
-                scale: 1, 
+              animate={{
+                opacity: 1,
+                scale: 1,
                 x: 0,
                 y: [0, -10, 0] // Subtle idle breathing
               }}
               exit={{ opacity: 0, scale: 0.95, x: 30 }}
-              transition={{ 
+              transition={{
                 opacity: { duration: 0.6 },
                 scale: { duration: 0.6 },
                 x: { duration: 0.6, ease: "easeOut" },
@@ -196,7 +212,7 @@ export default function CinematicHero() {
         <div className={styles.rightSide}>
           <div className={styles.selectorCards}>
             {/* Card 1 */}
-            <motion.div 
+            <motion.div
               className={styles.selectorCard}
               onClick={() => setCurrentIdx(nextGame1Idx)}
               whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
@@ -206,7 +222,7 @@ export default function CinematicHero() {
             </motion.div>
 
             {/* Card 2 */}
-            <motion.div 
+            <motion.div
               className={styles.selectorCard}
               onClick={() => setCurrentIdx(nextGame2Idx)}
               whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
@@ -221,11 +237,11 @@ export default function CinematicHero() {
 
       {/* BOTTOM CONTROL BAR */}
       <div className={`container ${styles.bottomBar}`}>
-        
+
         {/* Bottom Left: Featured Preview */}
         <div className={styles.bottomLeft}>
           <AnimatePresence mode="wait">
-            <motion.div 
+            <motion.div
               key={`featured-${activeGame.id}`}
               className={styles.featuredCard}
               initial={{ opacity: 0, y: 20 }}
@@ -252,8 +268,8 @@ export default function CinematicHero() {
 
           <div className={styles.pagination}>
             {GAMES.map((_, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className={`${styles.dot} ${idx === currentIdx ? styles.dotActive : ''}`}
                 onClick={() => setCurrentIdx(idx)}
               />
