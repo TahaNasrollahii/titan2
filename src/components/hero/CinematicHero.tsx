@@ -53,7 +53,7 @@ const GAMES = [
     accentColor: '#ffc800',
     mixBlendMode: 'screen',
     scale: 1.15,
-    titleStyle: { fontSize: 'clamp(var(--text-2xl), 3.5vw, var(--text-5xl))' }
+    titleStyle: { fontSize: 'clamp(var(--text-xl), 2.5vw, var(--text-4xl))' }
   }
 ];
 
@@ -62,12 +62,6 @@ export default function CinematicHero() {
   const [isHovered, setIsHovered] = useState(false);
 
   const activeGame = GAMES[currentIdx];
-
-  // Get next two games for selector cards
-  const nextGame1Idx = (currentIdx + 1) % GAMES.length;
-  const nextGame2Idx = (currentIdx + 2) % GAMES.length;
-  const nextGame1 = GAMES[nextGame1Idx];
-  const nextGame2 = GAMES[nextGame2Idx];
 
   const nextSlide = () => setCurrentIdx((prev) => (prev + 1) % GAMES.length);
   const prevSlide = () => setCurrentIdx((prev) => (prev - 1 + GAMES.length) % GAMES.length);
@@ -160,15 +154,13 @@ export default function CinematicHero() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <Button
-                  href="/store"
-                  variant="primary"
-                  size="lg"
-                  glow
-                  style={{ '--btn-bg': activeGame.accentColor, '--btn-hover': activeGame.accentColor } as React.CSSProperties}
+                <a 
+                  href="/store" 
+                  className={styles.liquidGlassButton}
+                  style={{ '--btn-glow': activeGame.glowColor } as React.CSSProperties}
                 >
                   مشاهده فروشگاه
-                </Button>
+                </a>
               </motion.div>
             </motion.div>
           </AnimatePresence>
@@ -210,28 +202,22 @@ export default function CinematicHero() {
           </AnimatePresence>
         </div>
 
-        {/* RIGHT SIDE: Selectors */}
+        {/* RIGHT SIDE: Vertical Nav Rail */}
         <div className={styles.rightSide}>
-          <div className={styles.selectorCards}>
-            {/* Card 1 */}
-            <motion.div
-              className={styles.selectorCard}
-              onClick={() => setCurrentIdx(nextGame1Idx)}
-              whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <img src={nextGame1.character} alt={nextGame1.title} className={styles.selectorImg} />
-            </motion.div>
-
-            {/* Card 2 */}
-            <motion.div
-              className={styles.selectorCard}
-              onClick={() => setCurrentIdx(nextGame2Idx)}
-              whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.08)' }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <img src={nextGame2.character} alt={nextGame2.title} className={styles.selectorImg} />
-            </motion.div>
+          <div className={styles.sideNav}>
+            {GAMES.map((game, idx) => {
+              const isActive = idx === currentIdx;
+              return (
+                <div
+                  key={`nav-${game.id}`}
+                  className={`${styles.navNode} ${isActive ? styles.navNodeActive : styles.navNodeInactive}`}
+                  style={{ '--node-glow': game.accentColor } as React.CSSProperties}
+                  onClick={() => setCurrentIdx(idx)}
+                >
+                  <img src={game.icon || game.character} alt={game.title} className={styles.navIcon} />
+                </div>
+              );
+            })}
           </div>
         </div>
 
