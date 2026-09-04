@@ -13,7 +13,8 @@ const GAMES = [
     character: '/images/hero/characters/valorant.png',
     glowColor: 'rgba(255, 70, 85, 0.3)',
     accentColor: '#ff4655',
-    scale: 1.25
+    scale: 1.25,
+    buttonText: 'محصولات ولورانت'
   },
   {
     id: 'callofduty',
@@ -22,7 +23,8 @@ const GAMES = [
     description: 'سی‌پی (CP) کال آف دیوتی برای خرید بتل پس و باندل‌های ویژه وارزون.',
     character: '/images/hero/characters/callofduty.png',
     glowColor: 'rgba(0, 255, 170, 0.25)',
-    accentColor: '#00ffaa'
+    accentColor: '#00ffaa',
+    buttonText: 'محصولات کالاف'
   },
   {
     id: 'fortnite',
@@ -31,7 +33,8 @@ const GAMES = [
     description: 'وی‌باکس فورتنایت برای خرید اسکین‌ها، دنس‌ها و بتل پس سیزن جدید.',
     character: '/images/hero/characters/fortnite.png',
     glowColor: 'rgba(160, 32, 240, 0.3)',
-    accentColor: '#a020f0'
+    accentColor: '#a020f0',
+    buttonText: 'محصولات فورتنایت'
   },
   {
     id: 'apex',
@@ -40,7 +43,8 @@ const GAMES = [
     description: 'اپکس کوین برای باز کردن لجندهای جدید و خرید پک‌های ویژه در اپکس لجندز.',
     character: '/images/hero/characters/apex.png',
     glowColor: 'rgba(255, 50, 50, 0.3)',
-    accentColor: '#ff3232'
+    accentColor: '#ff3232',
+    buttonText: 'محصولات ایپکس'
   },
   {
     id: 'tournaments',
@@ -53,7 +57,8 @@ const GAMES = [
     accentColor: '#ffc800',
     mixBlendMode: 'screen',
     scale: 1.15,
-    titleStyle: { fontSize: 'clamp(var(--text-xl), 2.5vw, var(--text-4xl))' }
+    titleStyle: { fontSize: 'clamp(var(--text-xl), 2.5vw, var(--text-4xl))' },
+    buttonText: 'تورنومنت‌ها'
   }
 ];
 
@@ -157,9 +162,9 @@ export default function CinematicHero() {
                 <a 
                   href="/store" 
                   className={styles.liquidGlassButton}
-                  style={{ '--btn-glow': activeGame.glowColor } as React.CSSProperties}
+                  style={{ '--btn-glow': activeGame.glowColor, '--btn-accent': activeGame.accentColor } as React.CSSProperties}
                 >
-                  مشاهده فروشگاه
+                  {(activeGame as any).buttonText || 'مشاهده فروشگاه'}
                 </a>
               </motion.div>
             </motion.div>
@@ -250,7 +255,7 @@ export default function CinematicHero() {
 
         {/* Bottom Center: Navigation */}
         <div className={styles.bottomCenter}>
-          <button className={styles.navBtn} onClick={nextSlide}>
+          <button className={styles.navBtn} style={{ '--btn-accent': activeGame.accentColor } as React.CSSProperties} onClick={nextSlide}>
             <ChevronRight size={20} />
           </button>
 
@@ -259,12 +264,13 @@ export default function CinematicHero() {
               <div
                 key={idx}
                 className={`${styles.dot} ${idx === currentIdx ? styles.dotActive : ''}`}
+                style={{ backgroundColor: idx === currentIdx ? activeGame.accentColor : '' }}
                 onClick={() => setCurrentIdx(idx)}
               />
             ))}
           </div>
 
-          <button className={styles.navBtn} onClick={prevSlide}>
+          <button className={styles.navBtn} style={{ '--btn-accent': activeGame.accentColor } as React.CSSProperties} onClick={prevSlide}>
             <ChevronLeft size={20} />
           </button>
         </div>
