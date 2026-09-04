@@ -1,6 +1,8 @@
 .heroSection {
   position: relative;
-  min-height: 100vh; /* Full viewport height */
+  width: 100%;
+  margin: 0;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   padding-top: var(--navbar-height, 80px);

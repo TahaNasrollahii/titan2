@@ -22,8 +22,8 @@ const GAMES = [
     category: 'IN-GAME CURRENCY',
     description: 'سی‌پی (CP) کال آف دیوتی برای خرید بتل پس و باندل‌های ویژه وارزون.',
     character: '/images/hero/characters/callofduty.png',
-    glowColor: 'rgba(0, 255, 170, 0.25)',
-    accentColor: '#00ffaa',
+    glowColor: 'rgba(68, 214, 44, 0.25)',
+    accentColor: '#44D62C',
     buttonText: 'محصولات کالاف'
   },
   {
