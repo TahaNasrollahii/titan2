@@ -71,6 +71,14 @@ export default function CinematicHero() {
   const nextSlide = () => setCurrentIdx((prev) => (prev + 1) % GAMES.length);
   const prevSlide = () => setCurrentIdx((prev) => (prev - 1 + GAMES.length) % GAMES.length);
 
+  // Set global theme color for navbar
+  useEffect(() => {
+    document.documentElement.style.setProperty('--theme-accent', activeGame.accentColor);
+    return () => {
+      document.documentElement.style.removeProperty('--theme-accent');
+    };
+  }, [activeGame.accentColor]);
+
   useEffect(() => {
     if (isHovered) return;
     const timer = setInterval(() => {
