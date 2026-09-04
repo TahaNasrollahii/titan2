@@ -263,11 +263,16 @@
   transition: all 0.3s ease;
   text-decoration: none;
 }
+.iconBtn svg {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
 
 .iconBtn:hover {
   filter: brightness(1.15);
-  transform: scale(1.1);
   box-shadow: 0 4px 15px color-mix(in srgb, var(--theme-accent, #dcb464) 40%, transparent);
+}
+.iconBtn:hover svg {
+  transform: scale(1.1);
 }
 .iconBtn:active {
   transform: translateY(0) scale(0.9);

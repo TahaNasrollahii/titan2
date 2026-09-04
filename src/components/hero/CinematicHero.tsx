@@ -32,8 +32,8 @@ const GAMES = [
     category: 'IN-GAME CURRENCY',
     description: 'وی‌باکس فورتنایت برای خرید اسکین‌ها، دنس‌ها و بتل پس سیزن جدید.',
     character: '/images/hero/characters/fortnite.png',
-    glowColor: 'rgba(160, 32, 240, 0.3)',
-    accentColor: '#a020f0',
+    glowColor: 'rgba(109, 184, 250, 0.3)',
+    accentColor: '#6DB8FA',
     buttonText: 'محصولات فورتنایت'
   },
   {
@@ -108,19 +108,6 @@ export default function CinematicHero() {
           transition={{ duration: 1.5, ease: 'easeInOut' }}
         />
 
-        {/* Large Typography in BG */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`bg-text-${activeGame.id}`}
-            className={styles.bgText}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 0.03, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
-            transition={{ duration: 1.2, ease: "easeInOut" }}
-          >
-            {activeGame.title}
-          </motion.div>
-        </AnimatePresence>
       </div>
 
       <div className={`container ${styles.gridContainer}`}>
@@ -239,26 +226,8 @@ export default function CinematicHero() {
       {/* BOTTOM CONTROL BAR */}
       <div className={`container ${styles.bottomBar}`}>
 
-        {/* Bottom Left: Featured Preview */}
+        {/* Bottom Left: Featured Preview - Removed by user request */}
         <div className={styles.bottomLeft}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`featured-${activeGame.id}`}
-              className={styles.featuredCard}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4 }}
-            >
-              <div className={styles.featuredIconWrapper}>
-                <Play size={16} fill="currentColor" />
-              </div>
-              <div>
-                <div className={styles.featuredEyebrow}>بازی ویژه</div>
-                <div className={styles.featuredTitle}>{activeGame.title}</div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
         </div>
 
         {/* Bottom Center: Navigation */}

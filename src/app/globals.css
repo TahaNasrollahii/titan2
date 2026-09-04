@@ -172,7 +172,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   min-height: 100vh;
-  cursor: none;
 }
 
 /* English text utility */
@@ -207,7 +206,6 @@ a {
   color: inherit;
   text-decoration: none;
   transition: color var(--transition-fast);
-  cursor: none;
 }
 
 a:hover {
@@ -215,7 +213,6 @@ a:hover {
 }
 
 button {
-  cursor: none;
 }
 
 strong, b {

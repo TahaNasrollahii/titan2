@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import BackgroundManager from "@/components/effects/BackgroundManager";
-import CustomCursor from "@/components/effects/CustomCursor";
-
 export const metadata: Metadata = {
   title: "TITAN — پلتفرم گیمینگ و اسپورت",
   description: "بازی کن. رقابت کن. فتح کن. پلتفرم گیمینگ و مسابقات اسپورت تایتان — فروشگاه محصولات دیجیتال گیمینگ و تورنمنت‌های حرفه‌ای",
@@ -17,7 +15,6 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" suppressHydrationWarning>
       <body suppressHydrationWarning>
-        <CustomCursor />
         <BackgroundManager />
         {children}
       </body>
