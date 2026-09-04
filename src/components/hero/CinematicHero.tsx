@@ -52,7 +52,8 @@ const GAMES = [
     glowColor: 'rgba(255, 200, 0, 0.3)',
     accentColor: '#ffc800',
     mixBlendMode: 'screen',
-    scale: 1.15
+    scale: 1.15,
+    titleStyle: { fontSize: 'clamp(var(--text-2xl), 3.5vw, var(--text-5xl))' }
   }
 ];
 
@@ -137,8 +138,9 @@ export default function CinematicHero() {
                 {activeGame.category}
               </motion.span>
 
-              <motion.h1
+              <motion.h1 
                 className={styles.title}
+                style={(activeGame as any).titleStyle || {}}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
               >
