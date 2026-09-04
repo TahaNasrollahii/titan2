@@ -255,7 +255,7 @@ export default function CinematicHero() {
 
         {/* Bottom Center: Navigation */}
         <div className={styles.bottomCenter}>
-          <button className={styles.navBtn} style={{ '--btn-accent': activeGame.accentColor } as React.CSSProperties} onClick={nextSlide}>
+          <button className={styles.navBtn} style={{ '--btn-accent': activeGame.accentColor, '--btn-glow': activeGame.glowColor } as React.CSSProperties} onClick={prevSlide}>
             <ChevronRight size={20} />
           </button>
 
@@ -270,7 +270,7 @@ export default function CinematicHero() {
             ))}
           </div>
 
-          <button className={styles.navBtn} style={{ '--btn-accent': activeGame.accentColor } as React.CSSProperties} onClick={prevSlide}>
+          <button className={styles.navBtn} style={{ '--btn-accent': activeGame.accentColor, '--btn-glow': activeGame.glowColor } as React.CSSProperties} onClick={nextSlide}>
             <ChevronLeft size={20} />
           </button>
         </div>

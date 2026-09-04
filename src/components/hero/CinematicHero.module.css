@@ -314,8 +314,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--btn-glow, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--btn-accent, rgba(255, 255, 255, 0.1));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -325,10 +325,11 @@
 }
 
 .navBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--btn-accent, rgba(255, 255, 255, 0.1));
   border-color: var(--btn-accent, rgba(255, 255, 255, 0.3));
-  color: var(--btn-accent, #fff);
+  color: #fff;
   transform: scale(1.1);
+  box-shadow: 0 0 15px 0 var(--btn-glow, transparent);
 }
 
 .navBtn:active {
