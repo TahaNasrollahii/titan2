@@ -116,8 +116,9 @@ export default function Navbar() {
             </a>
 
             <div className={styles.desktopOnly}>
-              <a href="/signup" className={styles.iconBtn} aria-label="حساب کاربری">
+              <a href="/signup" className={`${styles.iconBtn} ${styles.userBtn}`} aria-label="حساب کاربری">
                 <User size={16} />
+                <span>حساب کاربری</span>
               </a>
             </div>
           </div>

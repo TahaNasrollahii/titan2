@@ -269,8 +269,18 @@
 }
 
 .iconBtn:hover {
-  filter: brightness(1.15);
+  background: #ffffff;
+  color: #111;
   box-shadow: 0 4px 15px color-mix(in srgb, var(--theme-accent, #dcb464) 40%, transparent);
+}
+
+.userBtn {
+  width: auto;
+  padding: 0 16px;
+  gap: 8px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: var(--text-sm);
 }
 .iconBtn:hover svg {
   transform: scale(1.1);

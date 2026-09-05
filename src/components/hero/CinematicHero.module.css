@@ -7,10 +7,9 @@
   flex-direction: column;
   padding-top: var(--navbar-height, 80px);
   overflow: hidden;
-  background-color: #05070d;
+  background-color: transparent;
 }
 
-/* --- Background Layer --- */
 .bgWrapper {
   position: absolute;
   inset: 0;
@@ -19,6 +18,7 @@
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
+  background-color: rgba(5, 7, 13, 0.7);
 }
 
 .bgTexture {
@@ -87,7 +87,7 @@
 }
 
 .title {
-  font-size: clamp(var(--text-4xl), 5vw, var(--text-7xl));
+  font-size: clamp(var(--text-xl), 2.5vw, var(--text-4xl));
   font-weight: 900;
   line-height: 1.1;
   color: var(--titan-text-primary, #fff);
@@ -153,10 +153,11 @@
 .liquidGlassButton:hover {
   transform: translateY(-4px) scale(1.02);
   box-shadow: 
-    0 15px 40px 0 var(--btn-glow),
-    inset 0 4px 20px 0 rgba(255, 255, 255, 0.15);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), var(--btn-glow));
-  border: 1px solid var(--btn-accent);
+    0 15px 40px 0 rgba(255, 255, 255, 0.3),
+    inset 0 4px 20px 0 rgba(255, 255, 255, 0.5);
+  background: #ffffff;
+  color: #000;
+  border: 1px solid #ffffff;
 }
 
 .liquidGlassButton:hover::before {

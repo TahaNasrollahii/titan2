@@ -252,17 +252,7 @@ export default function CinematicHero() {
           </button>
         </div>
 
-        {/* Bottom Right: Info Cards */}
-        <div className={styles.bottomRight}>
-          <div className={styles.infoCard}>
-            <Zap size={18} className={styles.infoIcon} />
-            <span>تحویل آنی</span>
-          </div>
-          <div className={styles.infoCard}>
-            <ShieldCheck size={18} className={styles.infoIcon} />
-            <span>پرداخت امن</span>
-          </div>
-        </div>
+
 
       </div>
     </section>
