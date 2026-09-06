@@ -17,16 +17,6 @@ const GAMES = [
     buttonText: 'محصولات ولورانت'
   },
   {
-    id: 'callofduty',
-    title: 'COD POINTS',
-    category: 'IN-GAME CURRENCY',
-    description: 'سی‌پی (CP) کال آف دیوتی برای خرید بتل پس و باندل‌های ویژه وارزون.',
-    character: '/images/hero/characters/callofduty.png',
-    glowColor: 'rgba(68, 214, 44, 0.25)',
-    accentColor: '#44D62C',
-    buttonText: 'محصولات کالاف'
-  },
-  {
     id: 'fortnite',
     title: 'V-BUCKS',
     category: 'IN-GAME CURRENCY',
@@ -35,6 +25,16 @@ const GAMES = [
     glowColor: 'rgba(109, 184, 250, 0.3)',
     accentColor: '#6DB8FA',
     buttonText: 'محصولات فورتنایت'
+  },
+  {
+    id: 'callofduty',
+    title: 'COD POINTS',
+    category: 'IN-GAME CURRENCY',
+    description: 'سی‌پی (CP) کال آف دیوتی برای خرید بتل پس و باندل‌های ویژه وارزون.',
+    character: '/images/hero/characters/callofduty.png',
+    glowColor: 'rgba(255, 255, 255, 0.2)',
+    accentColor: '#ffffff',
+    buttonText: 'محصولات کالاف'
   },
   {
     id: 'apex',
@@ -53,8 +53,8 @@ const GAMES = [
     description: 'در مسابقات حرفه‌ای ما شرکت کنید، مهارت خود را ثابت کنید و جوایز نقدی ببرید.',
     character: '/images/tournaments/tournament3.png',
     icon: '/images/tournaments/tournament3.png',
-    glowColor: 'rgba(220, 180, 100, 0.3)',
-    accentColor: '#dcb464',
+    glowColor: 'rgba(236, 202, 146, 0.3)',
+    accentColor: '#ECCA92',
     mixBlendMode: 'screen',
     scale: 1.15,
     titleStyle: { fontSize: 'clamp(var(--text-xl), 2.5vw, var(--text-4xl))' },
