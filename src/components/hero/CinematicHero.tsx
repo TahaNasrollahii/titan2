@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, ChevronLeft, Play, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Play, ShieldCheck, Zap } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import styles from './CinematicHero.module.css';
 
@@ -232,10 +232,6 @@ export default function CinematicHero() {
 
         {/* Bottom Center: Navigation */}
         <div className={styles.bottomCenter}>
-          <button className={styles.navBtn} style={{ '--btn-accent': activeGame.accentColor, '--btn-glow': activeGame.glowColor } as React.CSSProperties} onClick={prevSlide}>
-            <ChevronRight size={20} />
-          </button>
-
           <div className={styles.pagination}>
             {GAMES.map((_, idx) => (
               <div
@@ -246,10 +242,15 @@ export default function CinematicHero() {
               />
             ))}
           </div>
-
-          <button className={styles.navBtn} style={{ '--btn-accent': activeGame.accentColor, '--btn-glow': activeGame.glowColor } as React.CSSProperties} onClick={nextSlide}>
-            <ChevronLeft size={20} />
-          </button>
+          
+          <div className={styles.navArrows}>
+            <button className={`${styles.navBtn} ${styles.prevBtn}`} style={{ '--btn-accent': activeGame.accentColor, '--btn-glow': activeGame.glowColor } as React.CSSProperties} onClick={prevSlide}>
+              <ArrowRight size={18} />
+            </button>
+            <button className={`${styles.navBtn} ${styles.nextBtn}`} style={{ '--btn-accent': activeGame.accentColor, '--btn-glow': activeGame.glowColor } as React.CSSProperties} onClick={nextSlide}>
+              <ArrowLeft size={18} />
+            </button>
+          </div>
         </div>
 
 
