@@ -1,0 +1,181 @@
+.wrapper {
+  padding: 4rem 0;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cardsGrid {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  position: relative;
+  width: 260px;
+  height: 380px;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.1) 60%, rgba(0,0,0,0) 100%);
+  z-index: 1;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  z-index: 2;
+  transition: border-color 0.3s ease;
+}
+
+.cardFortnite {
+  box-shadow: 0 10px 30px rgba(0, 112, 243, 0.15);
+}
+.cardFortnite::after { border-color: rgba(0, 112, 243, 0.3); }
+.cardFortnite:hover { box-shadow: 0 15px 40px rgba(0, 112, 243, 0.4); transform: translateY(-10px); }
+.cardFortnite:hover::after { border-color: rgba(0, 112, 243, 0.8); }
+
+.cardValorant {
+  box-shadow: 0 10px 30px rgba(255, 70, 85, 0.15);
+}
+.cardValorant::after { border-color: rgba(255, 70, 85, 0.3); }
+.cardValorant:hover { box-shadow: 0 15px 40px rgba(255, 70, 85, 0.4); transform: translateY(-10px); }
+.cardValorant:hover::after { border-color: rgba(255, 70, 85, 0.8); }
+
+.cardApex {
+  box-shadow: 0 10px 30px rgba(168, 85, 247, 0.15);
+}
+.cardApex::after { border-color: rgba(168, 85, 247, 0.3); }
+.cardApex:hover { box-shadow: 0 15px 40px rgba(168, 85, 247, 0.4); transform: translateY(-10px); }
+.cardApex:hover::after { border-color: rgba(168, 85, 247, 0.8); }
+
+.cardCod {
+  box-shadow: 0 10px 30px rgba(200, 200, 200, 0.15);
+}
+.cardCod::after { border-color: rgba(200, 200, 200, 0.3); }
+.cardCod:hover { box-shadow: 0 15px 40px rgba(200, 200, 200, 0.4); transform: translateY(-10px); }
+.cardCod:hover::after { border-color: rgba(200, 200, 200, 0.8); }
+
+.content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.titleWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  margin: 0;
+  line-height: 1;
+}
+
+.button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ddd;
+  padding: 0.6rem 1.5rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: white;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.navButton {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navButton:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  width: 16px;
+  border-radius: 4px;
+  background: #3b82f6;
+}

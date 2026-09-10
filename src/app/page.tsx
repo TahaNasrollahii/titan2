@@ -1,11 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import GradientOrb from '@/components/effects/GradientOrb';
-import CinematicHero from '@/components/hero/CinematicHero';
 import DiscountsSection from '@/components/sections/DiscountsSection';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Button from '@/components/ui/Button';
@@ -39,6 +38,13 @@ const fadeUpItem: any = {
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState<TournamentTab>('all');
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(console.error);
+    }
+  }, []);
 
   const filteredTournaments = activeTab === 'all'
     ? tournaments.slice(0, 6)
@@ -59,7 +65,35 @@ export default function HomePage() {
     <>
       <Navbar />
 
-      <CinematicHero />
+      {/* ==================== BATMAN HERO ==================== */}
+      <section className={styles.heroSection}>
+        <video 
+          ref={videoRef}
+          autoPlay={true}
+          loop={true}
+          muted={true}
+          playsInline={true}
+          className={styles.backgroundVideo}
+        >
+          <source src="/batman.mp4" type="video/mp4" />
+        </video>
+        
+        <div className={styles.overlay}></div>
+        
+        <div className={`container ${styles.heroContainer}`}>
+          <motion.div 
+            className={styles.glassyBox}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          >
+            <h1 className={styles.title}>من انتقام هستم</h1>
+            <p className={styles.subtitle}>
+              به سایه‌های گاتهام خوش آمدید. تورنمنت نهایی در انتظار شماست. وارد تاریکی شوید و پیروزی خود را به دست آورید.
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
       {/* ==================== DISCOUNTS ==================== */}
       <motion.section 
