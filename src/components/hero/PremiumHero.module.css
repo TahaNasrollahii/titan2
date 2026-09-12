@@ -1,5 +1,5 @@
 /* =============================================
-   PREMIUM EDITORIAL HERO
+   PREMIUM EDITORIAL HERO - VERTICAL CAROUSEL
    ============================================= */
 
 /* =============================================
@@ -18,9 +18,8 @@
   width: 100%;
   height: 100vh;
   min-height: 700px;
-  background-color: #0c0c0c;
+  background-color: #111; /* Very dark grey, almost black */
   overflow: hidden;
-  display: flex;
   color: #fff;
   font-family: var(--font-inter), var(--font-persian), sans-serif;
 }
@@ -29,77 +28,65 @@
 .background {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 70% 50%, rgba(20, 20, 20, 0.4) 0%, rgba(12, 12, 12, 1) 70%);
+  background: radial-gradient(circle at center, #1a1a24 0%, #0c0c0c 70%);
+  opacity: 0.8;
   z-index: 0;
-}
-
-.container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  max-width: 1920px;
-  margin: 0 auto;
-  display: flex;
-  z-index: 1;
+  pointer-events: none;
 }
 
 /* =============================================
-   TOP LEFT BRANDING
+   FIXED UI OVERLAY (BRAND, NAV, TIMELINE)
    ============================================= */
+.fixedUI {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  z-index: 10;
+  pointer-events: none; /* Let scroll events pass through to section */
+}
+
+/* Brand */
 .brandMark {
   position: absolute;
-  top: 32px;
+  top: 40px;
   left: 40px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  z-index: 10;
-  text-decoration: none;
-  opacity: 0.9;
-  transition: opacity var(--transition-fast);
-}
-
-.brandMark:hover {
-  opacity: 1;
+  gap: var(--space-2);
+  pointer-events: auto;
 }
 
 .brandIcon {
-  font-size: 18px;
-  color: #fff;
-  line-height: 1;
-  text-shadow: 0 0 10px rgba(255,255,255,0.3);
+  color: var(--titan-accent-blue);
+  font-size: 1.2rem;
 }
 
 .brandText {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.3em;
-  color: #fff;
-  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 2px;
 }
 
-/* =============================================
-   TOP RIGHT NAVIGATION
-   ============================================= */
+/* Nav */
 .topNav {
   position: absolute;
-  top: 36px;
+  top: 40px;
   right: 40px;
   display: flex;
-  gap: 32px;
-  z-index: 10;
-  direction: ltr; /* Keeping editorial English layout if needed, or RTL */
+  gap: var(--space-6);
+  pointer-events: auto;
 }
 
 .navItem {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  color: #888;
+  font-size: var(--text-sm);
   text-transform: uppercase;
-  text-decoration: none;
+  letter-spacing: 1px;
+  color: var(--titan-text-secondary);
+  font-weight: 600;
   transition: color var(--transition-fast);
-  position: relative;
 }
 
 .navItem:hover {
@@ -107,22 +94,10 @@
 }
 
 .navItemActive {
-  color: #fff;
+  color: #ff9d00;
 }
 
-.navItemActive::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 12px;
-  height: 1px;
-  background-color: var(--titan-accent-blue);
-}
-
-/* =============================================
-   LEFT VERTICAL MONTH TIMELINE
-   ============================================= */
+/* Timeline */
 .monthTimeline {
   position: absolute;
   left: 40px;
@@ -130,109 +105,115 @@
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  z-index: 10;
-  direction: ltr;
+  gap: var(--space-6);
+  pointer-events: auto;
 }
 
 .timelineMonth {
-  font-size: 11px;
-  font-weight: 500;
-  color: #777;
-  text-transform: capitalize;
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #fff;
   cursor: pointer;
-  transition: all var(--transition-base);
-  text-align: left;
-  padding: 8px 0;
+  transition: opacity var(--transition-fast), color var(--transition-fast);
   display: flex;
   align-items: center;
-  position: relative;
+  gap: 12px;
 }
 
 .timelineMonth:hover {
-  color: #aaa;
-}
-
-.timelineMonthActive {
-  color: #fff;
-  font-weight: 700;
-  font-size: 14px; /* Slightly larger, not huge */
+  opacity: 1 !important;
 }
 
 .activeLine {
-  position: absolute;
-  left: -40px;
   width: 24px;
-  height: 1px;
-  background-color: #D67A43; /* Bronze/Orange accent */
+  height: 2px;
+  background-color: #ff9d00;
 }
 
 /* =============================================
-   RELEASE DATE / BIG NUMBER
+   VERTICAL TRACK & SLIDES
+   ============================================= */
+.track {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.slide {
+  width: 100%;
+  height: 100vh;
+  flex: 0 0 100vh; /* Do not shrink or grow */
+  position: relative;
+}
+
+.slideInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+/* =============================================
+   RELEASE DATE BLOCK
    ============================================= */
 .dateContainer {
   position: absolute;
-  left: 300px; /* Moved inwards slightly based on image */
-  top: 35%; /* Higher than before */
+  left: 15%;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
+  align-items: center;
+  gap: var(--space-4);
   z-index: 5;
-  direction: ltr;
 }
 
 .releaseLabel {
-  font-size: 14px;
-  font-weight: 500;
-  color: #fff;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  margin-top: -12px;
-  margin-right: 8px; /* Push it a bit away from the number */
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--titan-text-secondary);
+  font-weight: 600;
 }
 
 .dateNumberBlock {
-  position: relative;
-  height: 200px;
-  width: 200px;
-}
-
-.dateAnimatedContainer {
-  position: absolute;
   display: flex;
   align-items: flex-start;
+  gap: var(--space-2);
 }
 
 .dayNumber {
-  font-size: clamp(6rem, 8vw, 9rem);
-  font-weight: 400;
+  font-size: 100px;
   line-height: 0.8;
-  color: #fff;
-  letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
+  font-weight: 300;
+  letter-spacing: -4px;
 }
 
 .monthLabel {
-  font-size: 14px;
-  font-weight: 600;
-  color: #D67A43; /* Bronze/Orange */
   writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  margin-left: -12px; /* Pull closer to the number */
-  margin-top: 16px;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: #ff9d00;
+  font-weight: 700;
 }
 
 /* =============================================
-   RIGHT: MAIN GAME ARTWORK
+   3D ARTWORK & CHARACTER
    ============================================= */
 .artworkContainer {
   position: absolute;
   right: 2%;
-  top: 15%;
+  top: 50%;
   transform: translateY(-50%);
   width: 850px;
   height: 800px;
-  perspective: 2000px;
+  perspective: 1000px;
   z-index: 2;
   display: flex;
   align-items: center;
@@ -245,6 +226,7 @@
   height: 380px;
   position: relative;
   transform-style: preserve-3d;
+  transform: rotateY(-28deg) rotateX(6deg);
 }
 
 .artworkBase {
@@ -258,16 +240,18 @@
 }
 
 .artworkBg {
-  width: 100%;
-  height: 100%;
+  width: 120%;
+  height: 120%;
   object-fit: cover;
-  opacity: 0.6;
+  position: absolute;
+  top: -10%;
+  left: -10%;
 }
 
 .artworkOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255, 16, 122, 0.3) 0%, rgba(20, 10, 60, 0.6) 100%);
+  background: linear-gradient(to top right, rgba(0,0,0,0.8) 0%, transparent 60%);
 }
 
 .artworkCharacter {
@@ -284,101 +268,30 @@
 }
 
 /* =============================================
-   GAME TITLE & METADATA
+   GAME TITLE & META
    ============================================= */
 .gameInfo {
   position: absolute;
-  left: -250px;
-  top: 60%;
-  transform: translateZ(80px) translateY(-50%);
+  left: 32%;
+  top: 55%;
+  transform: translateY(-50%);
   width: 450px;
   z-index: 10;
   pointer-events: none;
 }
 
 .gameTitle {
-  font-size: 42px; /* Make it bigger like the reference */
+  font-size: var(--text-4xl);
   font-weight: 500;
-  letter-spacing: 0.02em;
-  color: #fff;
   line-height: 1.1;
-  margin-bottom: 12px;
-  text-shadow: 0 10px 20px rgba(0,0,0,0.8);
+  margin-bottom: var(--space-3);
+  letter-spacing: -1px;
 }
 
 .gameMeta {
-  font-size: 11px;
+  font-size: var(--text-sm);
+  color: var(--titan-text-secondary);
+  letter-spacing: 1px;
+  text-transform: uppercase;
   font-weight: 500;
-  color: #888;
-  letter-spacing: 0.05em;
-}
-
-/* =============================================
-   FLOATING NAV DOT
-   ============================================= */
-.floatingDot {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: #fff;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  pointer-events: none;
-  mix-blend-mode: difference;
-}
-
-/* =============================================
-   MOBILE RESPONSIVENESS
-   ============================================= */
-@media (max-width: 1024px) {
-  .artworkContainer {
-    right: 5%;
-    width: 450px;
-    height: 260px;
-  }
-  
-  .dateContainer {
-    left: 80px;
-  }
-}
-
-@media (max-width: 768px) {
-  .monthTimeline {
-    display: none; /* Hide timeline on mobile to save space */
-  }
-
-  .topNav {
-    display: none;
-  }
-
-  .dateContainer {
-    left: 20px;
-    top: 25%;
-    transform: translateY(0);
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .releaseLabel {
-    writing-mode: horizontal-tb;
-    transform: none;
-  }
-
-  .artworkContainer {
-    right: 50%;
-    top: 65%;
-    width: 90%;
-    max-width: 400px;
-    height: 240px;
-    transform: translate(50%, -50%) !important; /* Force center */
-  }
-
-  .gameInfo {
-    left: 10px;
-    bottom: -50px;
-  }
 }

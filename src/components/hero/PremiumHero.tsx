@@ -1,70 +1,70 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import styles from './PremiumHero.module.css';
 
+// ----------------------------------------------------
+// MOCK DATA
+// ----------------------------------------------------
 const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
+  'July', 'August', 'September', 'October'
 ];
 
 const GAMES = [
   {
-    id: 'valorant',
-    monthIdx: 4, // May
+    id: 1,
+    title: 'VALORANT POINTS',
+    meta: 'IN-GAME CURRENCY',
     day: '03',
     monthName: 'May',
-    title: 'Valorant',
-    meta: 'PC • PLAYSTATION • XBOX',
+    monthIdx: 4,
     image: '/images/hero/characters/valorant.png',
-    link: '/games/valorant'
+    bg: '/images/hero/hero-bg.jpg'
   },
   {
-    id: 'fortnite',
-    monthIdx: 5, // June
-    day: '14',
-    monthName: 'June',
-    title: 'Fortnite',
-    meta: 'PC • PLAYSTATION • NINTENDO',
+    id: 2,
+    title: 'V-BUCKS',
+    meta: 'IN-GAME CURRENCY',
+    day: '07',
+    monthName: 'May',
+    monthIdx: 4,
     image: '/images/hero/characters/fortnite.png',
-    link: '/games/fortnite'
+    bg: '/images/hero/hero-bg.jpg'
   },
   {
-    id: 'callofduty',
-    monthIdx: 7, // August
-    day: '28',
-    monthName: 'August',
-    title: 'Call of Duty',
-    meta: 'PC • PLAYSTATION • XBOX',
+    id: 3,
+    title: 'COD POINTS',
+    meta: 'IN-GAME CURRENCY',
+    day: '22',
+    monthName: 'June',
+    monthIdx: 5,
     image: '/images/hero/characters/callofduty.png',
-    link: '/games/cod'
+    bg: '/images/hero/hero-bg.jpg'
   },
   {
-    id: 'apex',
-    monthIdx: 8, // September
-    day: '11',
+    id: 4,
+    title: 'APEX COINS',
+    meta: 'IN-GAME CURRENCY',
+    day: '06',
     monthName: 'September',
-    title: 'Apex Legends',
-    meta: 'PC • PLAYSTATION • XBOX',
+    monthIdx: 8,
     image: '/images/hero/characters/apex.png',
-    link: '/games/apex'
+    bg: '/images/hero/hero-bg.jpg'
   }
 ];
 
 export default function PremiumHero() {
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
   const activeGame = GAMES[currentIdx];
 
   // Page-turning Scrolljacking logic
   useEffect(() => {
     let lastScrollTime = 0;
     let touchStartY = 0;
-    const cooldown = 1200; // 1.2s to let animation finish
+    const cooldown = 1000; // 1s cooldown matches transition duration
 
     const handleWheel = (e: WheelEvent) => {
       if (window.scrollY > 5) return; // Let normal scroll happen if not at top
@@ -133,63 +133,25 @@ export default function PremiumHero() {
     };
   }, [currentIdx]);
 
-  // Mouse Parallax Logic
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const springConfig = { damping: 50, stiffness: 400 };
-  const smoothX = useSpring(mouseX, springConfig);
-  const smoothY = useSpring(mouseY, springConfig);
-
-  // Subtle inverse movements for different layers
-  const artTranslateX = useTransform(smoothX, [-0.5, 0.5], [14, -14]);
-  const artTranslateY = useTransform(smoothY, [-0.5, 0.5], [14, -14]);
-  
-  const dateTranslateX = useTransform(smoothX, [-0.5, 0.5], [-6, 6]);
-  const dateTranslateY = useTransform(smoothY, [-0.5, 0.5], [-6, 6]);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
-    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
-    mouseX.set(xPct);
-    mouseY.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    mouseX.set(0);
-    mouseY.set(0);
-  };
-
-  // Premium easing curve as requested
-  const transition = { duration: 1.0, ease: [0.76, 0, 0.24, 1] };
-
   return (
     <div className={styles.scrollContainer}>
-      <section 
-        className={styles.heroSection}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-        dir="ltr" // We force LTR for this specific visual composition per spec
-      >
+      <section className={styles.heroSection} dir="ltr">
         <div className={styles.background} />
 
-        <div className={styles.container}>
-          
+        {/* ==================== FIXED UI OVERLAY ==================== */}
+        <div className={styles.fixedUI}>
           {/* TOP LEFT BRANDING */}
           <Link href="/" className={styles.brandMark}>
-            <span className={styles.brandIcon}>◆</span>
-            <span className={styles.brandText}>TITAN</span>
+            <span className={styles.brandIcon}>GAMEDATE</span>
           </Link>
 
           {/* TOP RIGHT NAVIGATION */}
           <nav className={styles.topNav}>
-            <Link href="/" className={styles.navItem}>Home</Link>
-            <Link href="/store" className={styles.navItem}>Store</Link>
-            <Link href="/tournaments" className={styles.navItem}>Tournaments</Link>
-            <Link href="/games" className={styles.navItemActive + ' ' + styles.navItem}>Games</Link>
-            <Link href="/about" className={styles.navItem}>About</Link>
+            <Link href="/news" className={styles.navItem}>News</Link>
+            <Link href="/previews" className={styles.navItemActive + ' ' + styles.navItem}>Previews</Link>
+            <Link href="/reviews" className={styles.navItem}>Reviews</Link>
+            <Link href="/features" className={styles.navItem}>Features</Link>
+            <Link href="/videos" className={styles.navItem}>Videos</Link>
           </nav>
 
           {/* LEFT VERTICAL MONTH TIMELINE */}
@@ -202,7 +164,7 @@ export default function PremiumHero() {
               return (
                 <div 
                   key={month} 
-                  className={`${styles.timelineMonth} ${isActive ? styles.timelineMonthActive : ''}`}
+                  className={styles.timelineMonth}
                   style={{ opacity: isFeatured ? (isActive ? 1 : 0.4) : 0.1 }}
                   onClick={() => {
                     if (isFeatured) setCurrentIdx(featuredGameIdx);
@@ -214,82 +176,55 @@ export default function PremiumHero() {
               );
             })}
           </div>
-
-          {/* LEFT CENTER: RELEASE DATE */}
-          <motion.div 
-            className={styles.dateContainer}
-            style={{ x: dateTranslateX, y: dateTranslateY }}
-          >
-            <div className={styles.releaseLabel}>
-              Release Date
-            </div>
-            
-            <div className={styles.dateNumberBlock}>
-              <AnimatePresence mode="popLayout">
-                <motion.div
-                  key={activeGame.day}
-                  initial={{ opacity: 0, y: 50, filter: 'blur(4px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: -50, filter: 'blur(4px)' }}
-                  transition={transition}
-                  className={styles.dateAnimatedContainer}
-                >
-                  <div className={styles.dayNumber}>{activeGame.day}</div>
-                  <div className={styles.monthLabel}>{activeGame.monthName}</div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </motion.div>
-
-          {/* RIGHT: FLOATING ARTWORK */}
-          <motion.div 
-            className={styles.artworkContainer}
-            style={{ x: artTranslateX, y: artTranslateY }}
-          >
-            <AnimatePresence mode="popLayout">
-              <motion.div
-                key={activeGame.id}
-                className={styles.artwork3DWrapper}
-                style={{
-                  rotateY: -28,
-                  rotateX: 6,
-                }}
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                transition={transition}
-              >
-                <div className={styles.artworkBase}>
-                  <img src="/images/hero/hero-bg.jpg" alt="bg" className={styles.artworkBg} />
-                  <div className={styles.artworkOverlay} />
-                </div>
-                <img 
-                  src={activeGame.image} 
-                  alt={activeGame.title} 
-                  className={styles.artworkCharacter} 
-                />
-              </motion.div>
-            </AnimatePresence>
-
-            {/* GAME TITLE & META */}
-            <div className={styles.gameInfo}>
-              <AnimatePresence mode="popLayout">
-                <motion.div
-                  key={activeGame.id}
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -30 }}
-                  transition={{ ...transition, delay: 0.1 }}
-                  style={{ position: 'absolute' }}
-                >
-                  <h2 className={styles.gameTitle}>{activeGame.title}</h2>
-                  <div className={styles.gameMeta}>{activeGame.meta}</div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </motion.div>
-
         </div>
+
+        {/* ==================== VERTICAL SLIDES TRACK ==================== */}
+        <motion.div 
+          className={styles.track}
+          animate={{ y: `-${currentIdx * 100}vh` }}
+          transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+        >
+          {GAMES.map((game) => (
+            <div className={styles.slide} key={game.id}>
+              <div className={styles.slideInner}>
+                
+                {/* LEFT CENTER: RELEASE DATE */}
+                <div className={styles.dateContainer}>
+                  <div className={styles.releaseLabel}>
+                    Release Date
+                  </div>
+                  <div className={styles.dateNumberBlock}>
+                    <div className={styles.dayNumber}>{game.day}</div>
+                    <div className={styles.monthLabel}>{game.monthName}</div>
+                  </div>
+                </div>
+
+                {/* CENTER: GAME INFO */}
+                <div className={styles.gameInfo}>
+                  <h2 className={styles.gameTitle}>{game.title}</h2>
+                  <div className={styles.gameMeta}>{game.meta}</div>
+                </div>
+
+                {/* RIGHT: 3D ARTWORK */}
+                <div className={styles.artworkContainer}>
+                  <div className={styles.artwork3DWrapper}>
+                    <div className={styles.artworkBase}>
+                      <img src={game.bg} alt="bg" className={styles.artworkBg} />
+                      <div className={styles.artworkOverlay} />
+                    </div>
+                    <img 
+                      src={game.image} 
+                      alt={game.title} 
+                      className={styles.artworkCharacter} 
+                    />
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          ))}
+        </motion.div>
+
       </section>
     </div>
   );
