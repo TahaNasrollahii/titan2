@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Search, ShoppingCart, ChevronDown, Crosshair, Swords, Flame, Target, Trophy, Gamepad2, X, User } from 'lucide-react';
 import Button from '@/components/ui/Button';
+import { usePathname } from 'next/navigation';
 import styles from './Navbar.module.css';
 
 const navLinks = [
@@ -29,6 +30,8 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,6 +50,12 @@ export default function Navbar() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  // If on home page and not scrolled, don't show the default navbar 
+  // since the PremiumHero provides its own editorial navigation.
+  if (isHomePage && !isScrolled) {
+    return null;
+  }
 
   return (
     <>

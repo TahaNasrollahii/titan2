@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import PremiumHero from '@/components/hero/PremiumHero';
 import GradientOrb from '@/components/effects/GradientOrb';
 import DiscountsSection from '@/components/sections/DiscountsSection';
 import SectionHeader from '@/components/ui/SectionHeader';
@@ -65,35 +66,8 @@ export default function HomePage() {
     <>
       <Navbar />
 
-      {/* ==================== BATMAN HERO ==================== */}
-      <section className={styles.heroSection}>
-        <video 
-          ref={videoRef}
-          autoPlay={true}
-          loop={true}
-          muted={true}
-          playsInline={true}
-          className={styles.backgroundVideo}
-        >
-          <source src="/batman.mp4" type="video/mp4" />
-        </video>
-        
-        <div className={styles.overlay}></div>
-        
-        <div className={`container ${styles.heroContainer}`}>
-          <motion.div 
-            className={styles.glassyBox}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          >
-            <h1 className={styles.title}>من انتقام هستم</h1>
-            <p className={styles.subtitle}>
-              به سایه‌های گاتهام خوش آمدید. تورنمنت نهایی در انتظار شماست. وارد تاریکی شوید و پیروزی خود را به دست آورید.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      {/* ==================== PREMIUM HERO ==================== */}
+      <PremiumHero />
 
       {/* ==================== DISCOUNTS ==================== */}
       <motion.section 

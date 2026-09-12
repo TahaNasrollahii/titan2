@@ -1,0 +1,380 @@
+/* =============================================
+   PREMIUM EDITORIAL HERO
+   ============================================= */
+
+/* =============================================
+   SCROLL TRACKING CONTAINER
+   ============================================= */
+.scrollContainer {
+  position: relative;
+  width: 100%;
+}
+
+/* =============================================
+   MAIN HERO WRAPPER
+   ============================================= */
+.heroSection {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 700px;
+  background-color: #0c0c0c;
+  overflow: hidden;
+  display: flex;
+  color: #fff;
+  font-family: var(--font-inter), var(--font-persian), sans-serif;
+}
+
+/* Background subtlety */
+.background {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 70% 50%, rgba(20, 20, 20, 0.4) 0%, rgba(12, 12, 12, 1) 70%);
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  display: flex;
+  z-index: 1;
+}
+
+/* =============================================
+   TOP LEFT BRANDING
+   ============================================= */
+.brandMark {
+  position: absolute;
+  top: 32px;
+  left: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 10;
+  text-decoration: none;
+  opacity: 0.9;
+  transition: opacity var(--transition-fast);
+}
+
+.brandMark:hover {
+  opacity: 1;
+}
+
+.brandIcon {
+  font-size: 18px;
+  color: #fff;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+.brandText {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+/* =============================================
+   TOP RIGHT NAVIGATION
+   ============================================= */
+.topNav {
+  position: absolute;
+  top: 36px;
+  right: 40px;
+  display: flex;
+  gap: 32px;
+  z-index: 10;
+  direction: ltr; /* Keeping editorial English layout if needed, or RTL */
+}
+
+.navItem {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: #888;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  position: relative;
+}
+
+.navItem:hover {
+  color: #fff;
+}
+
+.navItemActive {
+  color: #fff;
+}
+
+.navItemActive::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 12px;
+  height: 1px;
+  background-color: var(--titan-accent-blue);
+}
+
+/* =============================================
+   LEFT VERTICAL MONTH TIMELINE
+   ============================================= */
+.monthTimeline {
+  position: absolute;
+  left: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 10;
+  direction: ltr;
+}
+
+.timelineMonth {
+  font-size: 11px;
+  font-weight: 500;
+  color: #777;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-align: left;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.timelineMonth:hover {
+  color: #aaa;
+}
+
+.timelineMonthActive {
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px; /* Slightly larger, not huge */
+}
+
+.activeLine {
+  position: absolute;
+  left: -40px;
+  width: 24px;
+  height: 1px;
+  background-color: #D67A43; /* Bronze/Orange accent */
+}
+
+/* =============================================
+   RELEASE DATE / BIG NUMBER
+   ============================================= */
+.dateContainer {
+  position: absolute;
+  left: 300px; /* Moved inwards slightly based on image */
+  top: 35%; /* Higher than before */
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  z-index: 5;
+  direction: ltr;
+}
+
+.releaseLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  margin-top: -12px;
+  margin-right: 8px; /* Push it a bit away from the number */
+}
+
+.dateNumberBlock {
+  position: relative;
+  height: 200px;
+  width: 200px;
+}
+
+.dateAnimatedContainer {
+  position: absolute;
+  display: flex;
+  align-items: flex-start;
+}
+
+.dayNumber {
+  font-size: clamp(6rem, 8vw, 9rem);
+  font-weight: 400;
+  line-height: 0.8;
+  color: #fff;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.monthLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #D67A43; /* Bronze/Orange */
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  margin-left: -12px; /* Pull closer to the number */
+  margin-top: 16px;
+}
+
+/* =============================================
+   RIGHT: MAIN GAME ARTWORK
+   ============================================= */
+.artworkContainer {
+  position: absolute;
+  right: 12%;
+  top: 45%;
+  width: 700px;
+  height: 400px;
+  transform: translateY(-50%);
+  perspective: 2000px;
+  z-index: 5;
+  direction: ltr;
+}
+
+.artwork3DWrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+.artworkBase {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255,255,255,0.03);
+  transform: translateZ(0); /* Base layer */
+}
+
+.artworkBg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.6;
+}
+
+.artworkOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 16, 122, 0.3) 0%, rgba(20, 10, 60, 0.6) 100%);
+}
+
+.artworkCharacter {
+  position: absolute;
+  bottom: 0; /* Align to bottom of card */
+  left: 50%;
+  transform: translateX(-50%) translateZ(60px); /* Pop out in 3D */
+  height: 130%; /* Taller than card */
+  max-width: none;
+  object-fit: contain;
+  object-position: bottom;
+  pointer-events: none;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+}
+
+/* =============================================
+   GAME TITLE & METADATA
+   ============================================= */
+.gameInfo {
+  position: absolute;
+  bottom: 0px; /* Bring it up into the card */
+  left: -80px; /* Overlap left side */
+  z-index: 6;
+  width: 500px;
+  transform: translateZ(80px); /* Float above character slightly or parallel */
+}
+
+.gameTitle {
+  font-size: 42px; /* Make it bigger like the reference */
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 12px;
+  text-shadow: 0 10px 20px rgba(0,0,0,0.8);
+}
+
+.gameMeta {
+  font-size: 11px;
+  font-weight: 500;
+  color: #888;
+  letter-spacing: 0.05em;
+}
+
+/* =============================================
+   FLOATING NAV DOT
+   ============================================= */
+.floatingDot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #fff;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+
+/* =============================================
+   MOBILE RESPONSIVENESS
+   ============================================= */
+@media (max-width: 1024px) {
+  .artworkContainer {
+    right: 5%;
+    width: 450px;
+    height: 260px;
+  }
+  
+  .dateContainer {
+    left: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .monthTimeline {
+    display: none; /* Hide timeline on mobile to save space */
+  }
+
+  .topNav {
+    display: none;
+  }
+
+  .dateContainer {
+    left: 20px;
+    top: 25%;
+    transform: translateY(0);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .releaseLabel {
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  .artworkContainer {
+    right: 50%;
+    top: 65%;
+    width: 90%;
+    max-width: 400px;
+    height: 240px;
+    transform: translate(50%, -50%) !important; /* Force center */
+  }
+
+  .gameInfo {
+    left: 10px;
+    bottom: -50px;
+  }
+}
