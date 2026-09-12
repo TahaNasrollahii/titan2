@@ -251,13 +251,12 @@ export default function PremiumHero() {
                 key={activeGame.id}
                 className={styles.artwork3DWrapper}
                 style={{
-                  rotateY: 15,
-                  rotateZ: -2,
-                  rotateX: 4
+                  rotateY: -28,
+                  rotateX: 6,
                 }}
-                initial={{ opacity: 0, x: 100, rotateY: 25, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, rotateY: 15, scale: 1 }}
-                exit={{ opacity: 0, x: -100, rotateY: 5, scale: 1.05 }}
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -100 }}
                 transition={transition}
               >
                 <div className={styles.artworkBase}>
