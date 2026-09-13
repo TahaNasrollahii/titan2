@@ -157,51 +157,7 @@
   margin: 0 auto;
 }
 
-/* =============================================
-   RELEASE DATE BLOCK
-   ============================================= */
-.dateContainer {
-  position: absolute;
-  left: 15%;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  z-index: 5;
-}
-
-.releaseLabel {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  color: var(--titan-text-secondary);
-  font-weight: 600;
-}
-
-.dateNumberBlock {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-2);
-}
-
-.dayNumber {
-  font-size: 100px;
-  line-height: 0.8;
-  font-weight: 300;
-  letter-spacing: -4px;
-}
-
-.monthLabel {
-  writing-mode: vertical-rl;
-  font-size: var(--text-sm);
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  color: #ff9d00;
-  font-weight: 700;
-}
+/* Removed RELEASE DATE BLOCK */
 
 /* =============================================
    3D ARTWORK & CHARACTER
@@ -226,7 +182,6 @@
   height: 380px;
   position: relative;
   transform-style: preserve-3d;
-  transform: rotateY(-28deg) rotateX(6deg);
 }
 
 .artworkBase {
@@ -235,7 +190,6 @@
   border-radius: var(--radius-2xl);
   overflow: hidden;
   box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 40px rgba(255,255,255,0.03);
-  transform: rotateZ(14deg) translateZ(0); /* Base layer */
   border: 1px solid rgba(255,255,255,0.05);
 }
 
@@ -268,23 +222,25 @@
 }
 
 /* =============================================
-   GAME TITLE & META
+   GAME TITLE & META & BUTTON
    ============================================= */
 .gameInfo {
   position: absolute;
-  left: 32%;
-  top: 55%;
+  left: 15%;
+  top: 50%;
   transform: translateY(-50%);
   width: 450px;
   z-index: 10;
-  pointer-events: none;
+  pointer-events: auto; /* enable click on button */
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
 .gameTitle {
   font-size: var(--text-4xl);
   font-weight: 500;
   line-height: 1.1;
-  margin-bottom: var(--space-3);
   letter-spacing: -1px;
 }
 
@@ -294,4 +250,32 @@
   letter-spacing: 1px;
   text-transform: uppercase;
   font-weight: 500;
+}
+
+/* Glassy button */
+.glassyButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: var(--text-base);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  width: fit-content;
+  margin-top: var(--space-2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.glassyButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
