@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { Search, ShoppingCart, User } from 'lucide-react';
 import styles from './PremiumHero.module.css';
 
 // ----------------------------------------------------
@@ -19,7 +20,8 @@ const GAMES = [
     monthName: 'May',
     monthIdx: 4,
     image: '/images/hero/characters/valorant.png',
-    bg: '/images/hero/hero-bg.jpg'
+    bg: '/images/hero/valorant.jpg',
+    color: '#ff4655'
   },
   {
     id: 2,
@@ -29,27 +31,42 @@ const GAMES = [
     monthName: 'May',
     monthIdx: 4,
     image: '/images/hero/characters/fortnite.png',
-    bg: '/images/hero/hero-bg.jpg'
+    bg: '/images/hero/fortnite.jpg',
+    color: '#00d4ff'
   },
   {
     id: 3,
+    title: 'TOURNAMENTS',
+    meta: 'COMPETITIVE GAMING',
+    day: '15',
+    monthName: 'October',
+    monthIdx: 9,
+    image: '/images/hero/characters/tournaments-character.png',
+    bg: '/images/hero/tournaments-bg.png',
+    color: '#45F882',
+    customStyle: { height: '75%', bottom: '120px' }
+  },
+  {
+    id: 4,
     title: 'COD POINTS',
     meta: 'IN-GAME CURRENCY',
     day: '22',
     monthName: 'June',
     monthIdx: 5,
     image: '/images/hero/characters/callofduty.png',
-    bg: '/images/hero/hero-bg.jpg'
+    bg: '/images/hero/callofduty.jpg',
+    color: '#ffffff'
   },
   {
-    id: 4,
+    id: 5,
     title: 'APEX COINS',
     meta: 'IN-GAME CURRENCY',
     day: '06',
     monthName: 'September',
     monthIdx: 8,
     image: '/images/hero/characters/apex.png',
-    bg: '/images/hero/hero-bg.jpg'
+    bg: '/images/hero/apex.jpg',
+    color: '#da292a'
   }
 ];
 
@@ -137,19 +154,40 @@ export default function PremiumHero() {
 
         {/* ==================== FIXED UI OVERLAY ==================== */}
         <div className={styles.fixedUI}>
-          {/* TOP LEFT BRANDING */}
-          <Link href="/" className={styles.brandMark}>
-            <span className={styles.brandIcon}>GAMEDATE</span>
-          </Link>
+          {/* STUNNING PREMIUM HEADER */}
+          <header className={styles.premiumHeader} dir="rtl">
+            <div className={styles.headerContainer}>
+              {/* Right: Branding */}
+              <Link href="/" className={styles.brandMark}>
+                <span className={styles.brandIcon}>◆</span>
+                <span className={styles.brandText}>تایتان</span>
+              </Link>
 
-          {/* TOP RIGHT NAVIGATION */}
-          <nav className={styles.topNav}>
-            <Link href="/news" className={styles.navItem}>News</Link>
-            <Link href="/previews" className={styles.navItemActive + ' ' + styles.navItem}>Previews</Link>
-            <Link href="/reviews" className={styles.navItem}>Reviews</Link>
-            <Link href="/features" className={styles.navItem}>Features</Link>
-            <Link href="/videos" className={styles.navItem}>Videos</Link>
-          </nav>
+              {/* Center: Navigation */}
+              <nav className={styles.topNav}>
+                <Link href="/" className={`${styles.navItem} ${styles.navItemActive}`}>خانه</Link>
+                <Link href="/store" className={styles.navItem}>فروشگاه</Link>
+                <Link href="/tournaments" className={styles.navItem}>مسابقات</Link>
+                <Link href="/games" className={styles.navItem}>بازی‌ها</Link>
+                <Link href="/leaderboard" className={styles.navItem}>رتبه‌بندی</Link>
+              </nav>
+
+              {/* Left: Actions */}
+              <div className={styles.headerActions}>
+                <button className={styles.iconBtn} aria-label="جستجو">
+                  <Search size={18} />
+                </button>
+                <Link href="/cart" className={styles.iconBtn} aria-label="سبد خرید">
+                  <ShoppingCart size={18} />
+                  <span className={styles.badge}>۲</span>
+                </Link>
+                <Link href="/login" className={styles.loginBtn}>
+                  <User size={18} />
+                  <span>حساب کاربری</span>
+                </Link>
+              </div>
+            </div>
+          </header>
 
           {/* LEFT VERTICAL GAME TIMELINE */}
           <div className={styles.monthTimeline}>
@@ -160,10 +198,10 @@ export default function PremiumHero() {
                 <div 
                   key={game.id} 
                   className={styles.timelineMonth}
-                  style={{ opacity: isActive ? 1 : 0.4 }}
+                  style={{ opacity: isActive ? 1 : 0.4, color: isActive ? game.color : '#fff' }}
                   onClick={() => setCurrentIdx(idx)}
                 >
-                  {isActive && <div className={styles.activeLine} />}
+                  {isActive && <div className={styles.activeLine} style={{ backgroundColor: game.color }} />}
                   {game.title}
                 </div>
               );
@@ -187,8 +225,12 @@ export default function PremiumHero() {
                 <div className={styles.gameInfo}>
                   <h2 className={styles.gameTitle}>{game.title}</h2>
                   <div className={styles.gameMeta}>{game.meta}</div>
-                  <Link href={`/store`} className={styles.glassyButton}>
-                    مشاهده محصول
+                  <Link 
+                    href={`/store`} 
+                    className={styles.glassyButton}
+                    style={{ '--game-color': game.color } as React.CSSProperties}
+                  >
+                    <span>مشاهده محصول</span>
                   </Link>
                 </div>
 
@@ -212,6 +254,7 @@ export default function PremiumHero() {
                       src={game.image} 
                       alt={game.title} 
                       className={styles.artworkCharacter} 
+                      style={game.customStyle || {}}
                     />
                   </div>
                 </div>

@@ -10,6 +10,7 @@ const banners = [
     title: 'VALORANT',
     subtitle: 'رقابت‌های تاکتیکال و هیجان‌انگیز',
     character: '/images/hero/characters/valorant.png',
+    bg: '/images/hero/valorant.jpg',
     customStyle: { left: '-10%', transform: 'scale(1.15)', transformOrigin: 'bottom left' },
     gradient: 'radial-gradient(circle at 70% 30%, rgba(255, 70, 85, 0.8), rgba(15, 25, 35, 0.9) 70%)',
     glowColor: 'rgba(255, 70, 85, 0.5)'
@@ -19,6 +20,7 @@ const banners = [
     title: 'CALL OF DUTY',
     subtitle: 'نبرد در خط مقدم وارزون',
     character: '/images/hero/characters/callofduty.png',
+    bg: '/images/hero/callofduty.jpg',
     gradient: 'radial-gradient(circle at 70% 30%, rgba(0, 255, 170, 0.5), rgba(10, 20, 15, 0.9) 70%)',
     glowColor: 'rgba(0, 255, 170, 0.5)'
   },
@@ -27,14 +29,26 @@ const banners = [
     title: 'FORTNITE',
     subtitle: 'چالش بقا در دنیای فورتنایت',
     character: '/images/hero/characters/fortnite.png',
+    bg: '/images/hero/fortnite.jpg',
     gradient: 'radial-gradient(circle at 70% 30%, rgba(160, 32, 240, 0.7), rgba(20, 10, 35, 0.9) 70%)',
     glowColor: 'rgba(160, 32, 240, 0.5)'
   },
   {
     id: 4,
+    title: 'TOURNAMENTS',
+    subtitle: 'رقابت‌های هیجان‌انگیز',
+    character: '/images/hero/characters/tournaments-character.png',
+    bg: '/images/hero/tournaments-bg.png',
+    gradient: 'radial-gradient(circle at 70% 30%, rgba(69, 248, 130, 0.7), rgba(10, 30, 20, 0.9) 70%)',
+    glowColor: 'rgba(69, 248, 130, 0.5)',
+    customStyle: { height: '65%', bottom: '100px' }
+  },
+  {
+    id: 5,
     title: 'APEX LEGENDS',
     subtitle: 'قهرمانان اپکس در انتظار شما',
     character: '/images/hero/characters/apex.png',
+    bg: '/images/hero/apex.jpg',
     gradient: 'radial-gradient(circle at 70% 30%, rgba(255, 50, 50, 0.7), rgba(30, 10, 10, 0.9) 70%)',
     glowColor: 'rgba(255, 50, 50, 0.5)'
   }
@@ -158,7 +172,7 @@ export default function StaticHero() {
                 >
                   {/* Glass Base (clips background, allows character to overflow above) */}
                   <div className={styles.carouselGlassBase}>
-                    <img src="/images/hero/hero-bg.jpg" alt="Space" className={styles.carouselSpaceBg} />
+                    <img src={banners[currentSlide].bg} alt={banners[currentSlide].title} className={styles.carouselSpaceBg} />
                     <div 
                       className={styles.carouselGradient} 
                       style={{ background: banners[currentSlide].gradient }}
