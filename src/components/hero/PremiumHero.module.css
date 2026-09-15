@@ -458,3 +458,79 @@
 .glassyButton:active {
   transform: translateY(1px);
 }
+
+/* =============================================
+   RESPONSIVE DESIGN (Fixes overlap on zoom/small screens)
+   ============================================= */
+
+@media (max-width: 1600px) {
+  .artworkContainer {
+    transform: translateY(-50%) scale(0.9);
+    transform-origin: right center;
+  }
+  .gameInfo {
+    left: clamp(240px, 20%, 350px);
+  }
+}
+
+@media (max-width: 1400px) {
+  .artworkContainer {
+    transform: translateY(-50%) scale(0.8);
+  }
+  .gameInfo {
+    left: clamp(240px, 15%, 300px);
+  }
+}
+
+@media (max-width: 1200px) {
+  .artworkContainer {
+    transform: translateY(-50%) scale(0.65);
+  }
+  .gameInfo {
+    left: 40px;
+    width: 400px;
+  }
+  .headerContainer {
+    padding: 0 20px;
+  }
+  .monthTimeline {
+    display: none; /* Hide timeline earlier to prevent overlap */
+  }
+}
+
+@media (max-width: 992px) {
+  .artworkContainer {
+    transform: translateY(-50%) scale(0.5);
+  }
+  .gameInfo {
+    left: 40px;
+    width: 350px;
+  }
+  .gameTitle {
+    font-size: var(--text-3xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .artworkContainer {
+    transform: translateY(-50%) scale(0.4);
+    right: -10%;
+  }
+  .gameInfo {
+    left: 20px;
+    width: 300px;
+  }
+}
+
+@media (max-width: 576px) {
+  .artworkContainer {
+    transform: translateY(-50%) scale(0.3);
+    right: -25%;
+  }
+  .gameInfo {
+    width: 250px;
+  }
+  .gameTitle {
+    font-size: var(--text-2xl);
+  }
+}
