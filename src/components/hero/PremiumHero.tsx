@@ -14,8 +14,9 @@ import styles from './PremiumHero.module.css';
 const GAMES = [
   {
     id: 1,
-    title: 'VALORANT PRODUCTS',
-    meta: 'IN-GAME CURRENCY',
+    title: 'محصولات ولورانت',
+    shortTitle: 'ولورانت',
+    meta: 'ارز درون بازی',
     day: '03',
     monthName: 'May',
     monthIdx: 4,
@@ -26,8 +27,9 @@ const GAMES = [
   },
   {
     id: 2,
-    title: 'FORTNITE PRODUCTS',
-    meta: 'IN-GAME CURRENCY',
+    title: 'محصولات فورتنایت',
+    shortTitle: 'فورتنایت',
+    meta: 'ارز درون بازی',
     day: '07',
     monthName: 'May',
     monthIdx: 4,
@@ -38,8 +40,9 @@ const GAMES = [
   },
   {
     id: 3,
-    title: 'TOURNAMENTS',
-    meta: 'COMPETITIVE GAMING',
+    title: 'مسابقات',
+    shortTitle: 'مسابقات',
+    meta: 'بازی رقابتی',
     day: '15',
     monthName: 'October',
     monthIdx: 9,
@@ -51,8 +54,9 @@ const GAMES = [
   },
   {
     id: 4,
-    title: 'APEX PRODUCTS',
-    meta: 'IN-GAME CURRENCY',
+    title: 'محصولات اپکس',
+    shortTitle: 'اپکس',
+    meta: 'ارز درون بازی',
     day: '06',
     monthName: 'September',
     monthIdx: 8,
@@ -142,7 +146,7 @@ export default function PremiumHero() {
 
   return (
     <div className={styles.scrollContainer}>
-      <section className={styles.heroSection} dir="ltr">
+      <section className={styles.heroSection} dir="rtl">
         <div className={styles.background} />
 
         {/* ==================== FIXED UI OVERLAY ==================== */}
@@ -174,7 +178,7 @@ export default function PremiumHero() {
                     <span className={styles.itemIndex} style={{ color: isActive ? game.color : '#666' }}>
                       0{idx + 1}
                     </span>
-                    <span className={styles.itemTitle}>{game.title.split(' ')[0]}</span>
+                    <span className={styles.itemTitle}>{game.shortTitle}</span>
                   </div>
                 </div>
               );
@@ -214,9 +218,9 @@ export default function PremiumHero() {
                       className={styles.artworkBase}
                       initial={false}
                       animate={{ 
-                        rotateY: isActive ? -28 : 0,
+                        rotateY: isActive ? 28 : 0,
                         rotateX: isActive ? 6 : 0,
-                        rotateZ: isActive ? 14 : 0 
+                        rotateZ: isActive ? -14 : 0 
                       }}
                       transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1], delay: isActive ? 0.4 : 0 }}
                     >

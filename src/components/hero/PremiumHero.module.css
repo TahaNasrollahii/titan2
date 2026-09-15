@@ -212,7 +212,7 @@
    ============================================= */
 .timelineContainer {
   position: absolute;
-  left: 40px;
+  right: 40px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -226,7 +226,7 @@
 .timelineContainer::before {
   content: '';
   position: absolute;
-  left: 3px;
+  right: 3px;
   top: 10px;
   bottom: 10px;
   width: 2px;
@@ -287,7 +287,7 @@
   gap: 2px;
   opacity: 0.4;
   transition: all 0.4s ease;
-  transform: translateX(-10px);
+  transform: translateX(10px);
 }
 
 .timelineItem:hover .itemContent {
@@ -350,7 +350,7 @@
    ============================================= */
 .artworkContainer {
   position: absolute;
-  right: 2%;
+  left: 5%;
   top: 50%;
   transform: translateY(-50%);
   width: 850px;
@@ -412,7 +412,7 @@
    ============================================= */
 .gameInfo {
   position: absolute;
-  left: 20%;
+  right: 12%;
   top: 50%;
   transform: translateY(-50%);
   width: 450px;
@@ -542,10 +542,10 @@
 @media (max-width: 1600px) {
   .artworkContainer {
     transform: translateY(-50%) scale(0.9);
-    transform-origin: right center;
+    transform-origin: left center;
   }
   .gameInfo {
-    left: clamp(240px, 20%, 350px);
+    right: clamp(180px, 12%, 350px);
   }
 }
 
@@ -554,7 +554,7 @@
     transform: translateY(-50%) scale(0.8);
   }
   .gameInfo {
-    left: clamp(240px, 15%, 300px);
+    right: clamp(180px, 10%, 300px);
   }
 }
 
@@ -563,7 +563,7 @@
     transform: translateY(-50%) scale(0.65);
   }
   .gameInfo {
-    left: 40px;
+    right: 40px;
     width: 400px;
   }
   .headerContainer {
@@ -579,7 +579,7 @@
     transform: translateY(-50%) scale(0.5);
   }
   .gameInfo {
-    left: 40px;
+    right: 40px;
     width: 350px;
   }
   .gameTitle {
@@ -590,10 +590,10 @@
 @media (max-width: 768px) {
   .artworkContainer {
     transform: translateY(-50%) scale(0.4);
-    right: -10%;
+    left: -10%;
   }
   .gameInfo {
-    left: 20px;
+    right: 20px;
     width: 300px;
   }
 }
@@ -601,7 +601,7 @@
 @media (max-width: 576px) {
   .artworkContainer {
     transform: translateY(-50%) scale(0.3);
-    right: -25%;
+    left: -25%;
   }
   .gameInfo {
     width: 250px;
