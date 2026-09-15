@@ -143,40 +143,6 @@ export default function PremiumHero() {
 
         {/* ==================== FIXED UI OVERLAY ==================== */}
         <div className={styles.fixedUI}>
-          {/* STUNNING PREMIUM HEADER */}
-          <header className={styles.premiumHeader} dir="rtl">
-            <div className={styles.headerContainer}>
-              {/* Right: Branding */}
-              <Link href="/" className={styles.brandMark}>
-                <span className={styles.brandIcon}>◆</span>
-                <span className={styles.brandText}>تایتان</span>
-              </Link>
-
-              {/* Center: Navigation */}
-              <nav className={styles.topNav}>
-                <Link href="/" className={`${styles.navItem} ${styles.navItemActive}`}>خانه</Link>
-                <Link href="/store" className={styles.navItem}>فروشگاه</Link>
-                <Link href="/tournaments" className={styles.navItem}>مسابقات</Link>
-                <Link href="/games" className={styles.navItem}>بازی‌ها</Link>
-                <Link href="/leaderboard" className={styles.navItem}>رتبه‌بندی</Link>
-              </nav>
-
-              {/* Left: Actions */}
-              <div className={styles.headerActions}>
-                <button className={styles.iconBtn} aria-label="جستجو">
-                  <Search size={18} />
-                </button>
-                <Link href="/cart" className={styles.iconBtn} aria-label="سبد خرید">
-                  <ShoppingCart size={18} />
-                  <span className={styles.badge}>۲</span>
-                </Link>
-                <Link href="/login" className={styles.loginBtn}>
-                  <User size={18} />
-                  <span>حساب کاربری</span>
-                </Link>
-              </div>
-            </div>
-          </header>
 
           {/* LEFT VERTICAL GAME TIMELINE */}
           <div className={styles.monthTimeline}>

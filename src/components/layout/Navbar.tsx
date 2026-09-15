@@ -1,18 +1,19 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Search, ShoppingCart, ChevronDown, Crosshair, Swords, Flame, Target, Trophy, Gamepad2, X, User } from 'lucide-react';
+import { Home, ShoppingBag, Trophy as TrophyIcon, Gamepad2 as GamepadIcon, Medal, Search, ShoppingCart, ChevronDown, Crosshair, Swords, Flame, Target, Trophy, Gamepad2, X, User } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { usePathname } from 'next/navigation';
 import styles from './Navbar.module.css';
 
 const navLinks = [
-  { label: 'خانه', href: '/' },
-  { label: 'فروشگاه', href: '/store' },
-  { label: 'مسابقات', href: '/tournaments' },
+  { label: 'خانه', href: '/', topIcon: <Home size={16} /> },
+  { label: 'فروشگاه', href: '/store', topIcon: <ShoppingBag size={16} /> },
+  { label: 'مسابقات', href: '/tournaments', topIcon: <TrophyIcon size={16} /> },
   { 
     label: 'بازی‌ها', 
     href: '/games',
+    topIcon: <GamepadIcon size={16} />,
     isGrid: true,
     dropdown: [
       { label: 'کال آف دیوتی', href: '/games/cod', icon: <Crosshair size={18} /> },
@@ -23,7 +24,7 @@ const navLinks = [
       { label: 'سایر بازی‌ها', href: '/games/all', icon: <Gamepad2 size={18} /> },
     ]
   },
-  { label: 'رتبه‌بندی', href: '/leaderboard' },
+  { label: 'رتبه‌بندی', href: '/leaderboard', topIcon: <Medal size={16} /> },
 ];
 
 export default function Navbar() {
@@ -51,15 +52,10 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // If on home page and not scrolled, don't show the default navbar 
-  // since the PremiumHero provides its own editorial navigation.
-  if (isHomePage && !isScrolled) {
-    return null;
-  }
-
   return (
     <>
-      <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
+      <div className={styles.headerWrapper}>
+        <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
         <div className={`container ${styles.headerInner}`}>
           {/* Right Section (in RTL): Logo */}
           <div className={styles.logoWrapper}>
@@ -72,8 +68,9 @@ export default function Navbar() {
           <nav className={`${styles.desktopNav} ${styles.centerNav}`}>
             {navLinks.map(link => (
               <div key={link.href} className={styles.navItem}>
-                <a href={link.href} className={styles.navLink}>
-                  {link.label}
+                <a href={link.href} className={`${styles.navLink} ${pathname === link.href ? styles.activeNavLink : ''}`}>
+                  {link.topIcon && <span className={styles.topIconWrapper}>{link.topIcon}</span>}
+                  <span className={styles.navLabel}>{link.label}</span>
                   {link.dropdown && <ChevronDown size={14} className={styles.dropdownIcon} />}
                 </a>
                 
@@ -126,14 +123,16 @@ export default function Navbar() {
 
             <div className={styles.desktopOnly}>
               <a href="/signup" className={`${styles.iconBtn} ${styles.userBtn}`} aria-label="حساب کاربری">
-                <User size={16} />
+                <div className={styles.userIconWrapper}>
+                  <User size={16} />
+                </div>
                 <span>حساب کاربری</span>
               </a>
             </div>
           </div>
         </div>
       </header>
-
+    </div>
     </>
   );
 }
