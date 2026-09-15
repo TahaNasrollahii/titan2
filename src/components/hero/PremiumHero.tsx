@@ -48,17 +48,6 @@ const GAMES = [
   },
   {
     id: 4,
-    title: 'COD POINTS',
-    meta: 'IN-GAME CURRENCY',
-    day: '22',
-    monthName: 'June',
-    monthIdx: 5,
-    image: '/images/hero/characters/callofduty.png',
-    bg: '/images/hero/callofduty.jpg',
-    color: '#ffffff'
-  },
-  {
-    id: 5,
     title: 'APEX COINS',
     meta: 'IN-GAME CURRENCY',
     day: '06',

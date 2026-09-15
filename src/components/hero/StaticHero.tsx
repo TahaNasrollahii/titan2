@@ -17,15 +17,6 @@ const banners = [
   },
   {
     id: 2,
-    title: 'CALL OF DUTY',
-    subtitle: 'نبرد در خط مقدم وارزون',
-    character: '/images/hero/characters/callofduty.png',
-    bg: '/images/hero/callofduty.jpg',
-    gradient: 'radial-gradient(circle at 70% 30%, rgba(0, 255, 170, 0.5), rgba(10, 20, 15, 0.9) 70%)',
-    glowColor: 'rgba(0, 255, 170, 0.5)'
-  },
-  {
-    id: 3,
     title: 'FORTNITE',
     subtitle: 'چالش بقا در دنیای فورتنایت',
     character: '/images/hero/characters/fortnite.png',
@@ -34,7 +25,7 @@ const banners = [
     glowColor: 'rgba(160, 32, 240, 0.5)'
   },
   {
-    id: 4,
+    id: 3,
     title: 'TOURNAMENTS',
     subtitle: 'رقابت‌های هیجان‌انگیز',
     character: '/images/hero/characters/tournaments-character.png',
@@ -44,7 +35,7 @@ const banners = [
     customStyle: { height: '65%', bottom: '100px' }
   },
   {
-    id: 5,
+    id: 4,
     title: 'APEX LEGENDS',
     subtitle: 'قهرمانان اپکس در انتظار شما',
     character: '/images/hero/characters/apex.png',
