@@ -320,10 +320,10 @@
 
 .artworkCharacter {
   position: absolute;
-  bottom: -20px; /* Align to bottom of card wrapper */
+  bottom: -10px; /* Align closer to bottom to keep it grounded */
   left: 50%;
   transform: translateX(-50%) translateZ(90px); /* Pop out more in 3D */
-  height: 145%; /* Much taller than card */
+  height: 125%; /* Reduced from 145% to prevent overlap with header */
   max-width: none;
   object-fit: contain;
   object-position: bottom;
