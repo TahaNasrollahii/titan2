@@ -14,25 +14,27 @@ import styles from './PremiumHero.module.css';
 const GAMES = [
   {
     id: 1,
-    title: 'VALORANT POINTS',
+    title: 'VALORANT PRODUCTS',
     meta: 'IN-GAME CURRENCY',
     day: '03',
     monthName: 'May',
     monthIdx: 4,
     image: '/images/hero/characters/valorant.png',
     bg: '/images/hero/valorant.jpg',
-    color: '#ff4655'
+    color: '#ff4655',
+    href: '/store/valorant'
   },
   {
     id: 2,
-    title: 'V-BUCKS',
+    title: 'FORTNITE PRODUCTS',
     meta: 'IN-GAME CURRENCY',
     day: '07',
     monthName: 'May',
     monthIdx: 4,
     image: '/images/hero/characters/fortnite.png',
     bg: '/images/hero/fortnite.jpg',
-    color: '#00d4ff'
+    color: '#00d4ff',
+    href: '/store/fortnite'
   },
   {
     id: 3,
@@ -44,18 +46,20 @@ const GAMES = [
     image: '/images/hero/characters/tournaments-character.png',
     bg: '/images/hero/tournaments-bg.png',
     color: '#45F882',
-    customStyle: { height: '75%', bottom: '120px' }
+    customStyle: { height: '75%', bottom: '120px' },
+    href: '/store/tournaments'
   },
   {
     id: 4,
-    title: 'APEX COINS',
+    title: 'APEX PRODUCTS',
     meta: 'IN-GAME CURRENCY',
     day: '06',
     monthName: 'September',
     monthIdx: 8,
     image: '/images/hero/characters/apex.png',
     bg: '/images/hero/apex.jpg',
-    color: '#da292a'
+    color: '#da292a',
+    href: '/store/apex'
   }
 ];
 
@@ -144,20 +148,34 @@ export default function PremiumHero() {
         {/* ==================== FIXED UI OVERLAY ==================== */}
         <div className={styles.fixedUI}>
 
-          {/* LEFT VERTICAL GAME TIMELINE */}
-          <div className={styles.monthTimeline}>
+          {/* ==================== PREMIUM TIMELINE ==================== */}
+          <div className={styles.timelineContainer}>
             {GAMES.map((game, idx) => {
               const isActive = activeGame.id === game.id;
 
               return (
                 <div 
                   key={game.id} 
-                  className={styles.timelineMonth}
-                  style={{ opacity: isActive ? 1 : 0.4, color: isActive ? game.color : '#fff' }}
+                  className={`${styles.timelineItem} ${isActive ? styles.active : ''}`}
                   onClick={() => setCurrentIdx(idx)}
+                  style={{ '--game-color': game.color } as React.CSSProperties}
                 >
-                  {isActive && <div className={styles.activeLine} style={{ backgroundColor: game.color }} />}
-                  {game.title}
+                  <div className={styles.nodeWrapper}>
+                    {isActive && (
+                      <motion.div 
+                        layoutId="activeTimelineGlow" 
+                        className={styles.nodeActiveGlow} 
+                        style={{ backgroundColor: game.color, boxShadow: `0 0 15px ${game.color}` }}
+                      />
+                    )}
+                  </div>
+                  
+                  <div className={styles.itemContent}>
+                    <span className={styles.itemIndex} style={{ color: isActive ? game.color : '#666' }}>
+                      0{idx + 1}
+                    </span>
+                    <span className={styles.itemTitle}>{game.title.split(' ')[0]}</span>
+                  </div>
                 </div>
               );
             })}
@@ -181,7 +199,7 @@ export default function PremiumHero() {
                   <h2 className={styles.gameTitle}>{game.title}</h2>
                   <div className={styles.gameMeta}>{game.meta}</div>
                   <Link 
-                    href={`/store`} 
+                    href={game.href || `/store`} 
                     className={styles.glassyButton}
                     style={{ '--game-color': game.color } as React.CSSProperties}
                   >

@@ -207,38 +207,114 @@
   color: #fff;
 }
 
-/* Timeline */
-.monthTimeline {
+/* =============================================
+   PREMIUM CYBER TIMELINE
+   ============================================= */
+.timelineContainer {
   position: absolute;
   left: 40px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: 40px;
   pointer-events: auto;
+  z-index: 20;
 }
 
-.timelineMonth {
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #fff;
-  cursor: pointer;
-  transition: opacity var(--transition-fast), color var(--transition-fast);
+/* The vertical connecting track */
+.timelineContainer::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  z-index: 1;
+}
+
+.timelineItem {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 24px;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.4s ease;
 }
 
-.timelineMonth:hover {
-  opacity: 1 !important;
+.nodeWrapper {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 3;
 }
 
-.activeLine {
-  width: 24px;
-  height: 2px;
-  background-color: #ff9d00;
+.timelineItem:hover .nodeWrapper {
+  background: rgba(255, 255, 255, 0.8);
+  transform: scale(1.5);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.nodeActiveGlow {
+  position: absolute;
+  inset: -2px; /* Slight overflow to cover */
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.timelineItem.active .nodeWrapper {
+  background: var(--game-color);
+  transform: scale(1.5);
+  box-shadow: 0 0 12px var(--game-color);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+.itemContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0.4;
+  transition: all 0.4s ease;
+  transform: translateX(-10px);
+}
+
+.timelineItem:hover .itemContent {
+  opacity: 0.8;
+  transform: translateX(0);
+}
+
+.timelineItem.active .itemContent {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.itemIndex {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  transition: color 0.4s ease;
+}
+
+.itemTitle {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #fff;
+  font-family: var(--font-en);
 }
 
 /* =============================================
@@ -493,7 +569,7 @@
   .headerContainer {
     padding: 0 20px;
   }
-  .monthTimeline {
+  .timelineContainer {
     display: none; /* Hide timeline earlier to prevent overlap */
   }
 }
