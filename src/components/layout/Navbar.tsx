@@ -1,138 +1,79 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { Home, ShoppingBag, Trophy as TrophyIcon, Gamepad2 as GamepadIcon, Medal, Search, ShoppingCart, ChevronDown, Crosshair, Swords, Flame, Target, Trophy, Gamepad2, X, User } from 'lucide-react';
-import Button from '@/components/ui/Button';
+import { useState, useEffect } from 'react';
+import { LogIn, ShoppingCart } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import styles from './Navbar.module.css';
 
 const navLinks = [
-  { label: 'خانه', href: '/', topIcon: <Home size={16} /> },
-  { label: 'فروشگاه', href: '/store', topIcon: <ShoppingBag size={16} /> },
-  { label: 'مسابقات', href: '/tournaments', topIcon: <TrophyIcon size={16} /> },
-  { 
-    label: 'بازی‌ها', 
-    href: '/games',
-    topIcon: <GamepadIcon size={16} />,
-    isGrid: true,
-    dropdown: [
-      { label: 'کال آف دیوتی', href: '/games/cod', icon: <Crosshair size={18} /> },
-      { label: 'دوتا ۲', href: '/games/dota2', icon: <Swords size={18} /> },
-      { label: 'ولورانت', href: '/games/valorant', icon: <Flame size={18} /> },
-      { label: 'فیفا ۲۴', href: '/games/fc24', icon: <Trophy size={18} /> },
-      { label: 'کانتر استرایک', href: '/games/cs2', icon: <Target size={18} /> },
-      { label: 'سایر بازی‌ها', href: '/games/all', icon: <Gamepad2 size={18} /> },
-    ]
-  },
-  { label: 'رتبه‌بندی', href: '/leaderboard', topIcon: <Medal size={16} /> },
+  { label: 'خانه', href: '/' },
+  { label: 'فروشگاه', href: '/store' },
+  { label: 'مسابقات', href: '/tournaments' },
+  { label: 'بازی‌ها', href: '/games' },
 ];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const searchRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const isHomePage = pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 10);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        setIsSearchOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
   return (
-    <>
-      <div className={styles.headerWrapper}>
-        <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
-        <div className={`container ${styles.headerInner}`}>
-          {/* Right Section (in RTL): Logo */}
-          <div className={styles.logoWrapper}>
+    <div className={styles.headerWrapper} dir="rtl">
+      <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
+        <div className={styles.headerInner}>
+          
+          {/* Brand & Basket (Right side in RTL) */}
+          <div className={styles.brandSection}>
             <a href="/" className={styles.logo}>
-              <span className={styles.logoIcon}>◆</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14.5 2L5 12H12L10 22L19.5 12H12.5L14.5 2Z" fill="#3B82F6"/>
+              </svg>
+              <span className={styles.logoText}>STEM</span>
             </a>
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav className={`${styles.desktopNav} ${styles.centerNav}`}>
-            {navLinks.map(link => (
-              <div key={link.href} className={styles.navItem}>
-                <a href={link.href} className={`${styles.navLink} ${pathname === link.href ? styles.activeNavLink : ''}`}>
-                  {link.topIcon && <span className={styles.topIconWrapper}>{link.topIcon}</span>}
-                  <span className={styles.navLabel}>{link.label}</span>
-                  {link.dropdown && <ChevronDown size={14} className={styles.dropdownIcon} />}
-                </a>
-                
-                {link.dropdown && (
-                  <div className={`${styles.dropdownMenu} ${link.isGrid ? styles.gridMenu : ''}`}>
-                    {link.dropdown.map(dropLink => (
-                      <a key={dropLink.href} href={dropLink.href} className={styles.dropdownItem}>
-                        {dropLink.icon && <span className={styles.dropIcon}>{dropLink.icon}</span>}
-                        <span className={styles.dropText}>{dropLink.label}</span>
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </nav>
-
-          {/* Left Section (in RTL): Actions */}
-          <div className={styles.actions}>
-            {/* Search Bubble Toggle */}
-            <div className={styles.searchContainer} ref={searchRef}>
-              <button 
-                className={`${styles.iconBtn} ${styles.searchBubbleBtn} ${isSearchOpen ? styles.active : ''}`}
-                onClick={() => setIsSearchOpen(!isSearchOpen)}
-                aria-label="جستجو"
-              >
-                {isSearchOpen ? <X size={16} /> : <Search size={16} />}
-              </button>
-
-              {/* Dropdown Search Bar */}
-              {isSearchOpen && (
-                <div className={styles.searchDropdown}>
-                  <div className={styles.searchInner}>
-                    <Search size={18} className={styles.searchIcon} />
-                    <input
-                      type="text"
-                      placeholder="جستجوی بازی‌ها، محصولات..."
-                      className={styles.searchInput}
-                      autoFocus
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <a href="/cart" className={styles.iconBtn} aria-label="سبد خرید">
-              <ShoppingCart size={16} />
+            
+            <a href="/cart" className={styles.basketBtn} aria-label="سبد خرید">
+              <ShoppingCart size={18} />
               <span className={styles.cartBadge}>۲</span>
             </a>
-
-            <div className={styles.desktopOnly}>
-              <a href="/signup" className={`${styles.iconBtn} ${styles.userBtn}`} aria-label="حساب کاربری">
-                <div className={styles.userIconWrapper}>
-                  <User size={16} />
-                </div>
-                <span>حساب کاربری</span>
-              </a>
-            </div>
           </div>
+
+          {/* Center Navigation */}
+          <nav className={styles.desktopNav}>
+            <div className={styles.navBackground}></div>
+            {navLinks.map(link => {
+              const isActive = pathname === link.href;
+              return (
+                <a 
+                  key={link.label} 
+                  href={link.href} 
+                  className={`${styles.navLink} ${isActive ? styles.activeNavLink : ''}`}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
+          </nav>
+
+          {/* Auth Actions (Left side in RTL) */}
+          <div className={styles.actions}>
+            <a href="/signin" className={styles.signInBtn}>
+              <LogIn size={16} />
+              <span>ورود</span>
+            </a>
+            <a href="/signup" className={styles.signUpBtn}>
+              ثبت نام
+            </a>
+          </div>
+
         </div>
       </header>
     </div>
-    </>
   );
 }
