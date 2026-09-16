@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { LogIn, ShoppingCart } from 'lucide-react';
+import { User, Search, ShoppingCart } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import styles from './Navbar.module.css';
 
@@ -37,11 +37,6 @@ export default function Navbar() {
               </svg>
               <span className={styles.logoText}>STEM</span>
             </a>
-            
-            <a href="/cart" className={styles.basketBtn} aria-label="سبد خرید">
-              <ShoppingCart size={18} />
-              <span className={styles.cartBadge}>۲</span>
-            </a>
           </div>
 
           {/* Center Navigation */}
@@ -61,14 +56,18 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Auth Actions (Left side in RTL) */}
+          {/* Actions (Left side in RTL) */}
           <div className={styles.actions}>
-            <a href="/signin" className={styles.signInBtn}>
-              <LogIn size={16} />
-              <span>ورود</span>
+            <button className={`${styles.glassBtn} ${styles.iconOnly}`} aria-label="جستجو">
+              <Search size={18} />
+            </button>
+            <a href="/cart" className={`${styles.glassBtn} ${styles.iconOnly}`} aria-label="سبد خرید">
+              <ShoppingCart size={18} />
+              <span className={styles.cartBadge}>۲</span>
             </a>
-            <a href="/signup" className={styles.signUpBtn}>
-              ثبت نام
+            <a href="/profile" className={styles.glassBtn}>
+              <User size={18} />
+              <span>حساب کاربری</span>
             </a>
           </div>
 
