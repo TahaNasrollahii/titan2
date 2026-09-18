@@ -31,7 +31,7 @@
   top: 0;
   left: 24px;
   right: 24px;
-  height: 64px;
+  height: 40px;
   background: #0d1117;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -45,6 +45,7 @@
   align-items: center;
   gap: 24px;
   height: 64px;
+  margin-top: 32px;
 }
 
 .logo {
@@ -208,7 +209,7 @@
 .navBackground::after {
   content: '';
   position: absolute;
-  top: 64px;
+  top: 40px;
   /* matches height of the thin bar */
   width: 24px;
   height: 21px;
@@ -286,6 +287,7 @@
   justify-content: flex-end;
   gap: 12px;
   height: 64px;
+  margin-top: 32px;
 }
 
 

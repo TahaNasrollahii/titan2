@@ -146,8 +146,13 @@ export default function PremiumHero() {
 
   return (
     <div className={styles.scrollContainer}>
-      <section className={styles.heroSection} dir="rtl">
+      <section 
+        className={styles.heroSection} 
+        dir="rtl"
+        style={{ '--active-bg-color': activeGame.color } as React.CSSProperties}
+      >
         <div className={styles.background} />
+        <div className={styles.gridOverlay} />
 
         {/* ==================== FIXED UI OVERLAY ==================== */}
         <div className={styles.fixedUI}>
