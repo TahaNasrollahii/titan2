@@ -698,7 +698,8 @@ i[data-icon] svg {
 .hero-tags {
   display: flex;
   align-items: center;
-  gap: 8px
+  gap: 8px;
+  transform: translateY(8px);
 }
 
 #plats {
