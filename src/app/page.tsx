@@ -407,11 +407,10 @@ function cardArt(g, idx) {
 
 const sc = $('#scroller');
 sc.innerHTML = GAMES.map((g, i) => `
-  <article class="gcard spot${i === 0 ? ' feat' : ''}" data-i="${i}" style="--d:${i}">
+  <article class="gcard spot${i === 3 ? ' feat' : ''}" data-i="${i}" style="--d:${i}">
     <div class="gart">${cardArt(g, i)}</div>
     <button class="gplay" data-play="${i}" aria-label="تماشای تریلر"><i data-icon="play"></i></button>
     <button class="gbuy" data-buy="${i}" aria-label="افزودن ${esc(g.t)} به سبد خرید"><i data-icon="bag"></i></button>
-    ${i === 0 ? '<span class="gcursor"><i data-icon="cursor"></i></span>' : ''}
     <div class="gbody">
       <h4>${esc(g.t)}</h4>
       <div class="gdesc"><p>${esc(g.d)}</p><span class="gprice">${esc(g.p)}</span></div>

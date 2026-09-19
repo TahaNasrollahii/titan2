@@ -1282,7 +1282,7 @@ i[data-icon] svg {
 
 .next {
   position: absolute;
-  right: 42px;
+  left: 42px;
   top: 50%;
   z-index: 5;
   width: 40px;
