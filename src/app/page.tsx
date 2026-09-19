@@ -461,48 +461,7 @@ $('#nextBtn').addEventListener('click', () => {
   sc.scrollTo({ left: end ? 0 : sc.scrollLeft + sc.clientWidth * .55, behavior: 'smooth' });
 });
 
-/* =====================================================
-   Downloads (simulated live progress)
-   ===================================================== */
-const dlEl = $('#dl'), dlEta = $('#dlEta'), dlSize = $('#dlSize'), dlToggle = $('#dlToggle');
-const dl = { total: 1230, done: 265, speed: 3.4, state: 'run', wait: 0 };
-function dlRender() {
-  dlEl.style.setProperty('--p', Math.min(1, dl.done / dl.total).toFixed(4));
-  dlEl.classList.toggle('paused', dl.state !== 'run');
-  const secs = (dl.total - dl.done) / dl.speed;
-  let eta;
-  if (dl.state === 'pause') eta = 'متوقف شد';
-  else if (dl.state === 'cancel') eta = 'لغو شد';
-  else if (dl.state === 'done') eta = 'آماده بازی';
-  else if (secs >= 3600) eta = `${Math.floor(secs / 3600)} ساعت ${Math.round(secs % 3600 / 60)} دقیقه.`;
-  else if (secs >= 60) eta = `${Math.floor(secs / 60)} دقیقه ${Math.round(secs % 60)} ثانیه`;
-  else eta = `${Math.max(1, Math.round(secs))} ثانیه`;
-  dlEta.textContent = eta;
-  dlSize.textContent = dl.state === 'done' ? '1.23 گیگابایت نصب شد' : `${Math.round(dl.done)} مگابایت از 1.23 GB`;
-  dlToggle.innerHTML = ico(dl.state === 'run' ? 'pause' : 'play');
-  dlToggle.setAttribute('aria-label', dl.state === 'run' ? 'Pause download' : dl.state === 'done' ? 'Launch game' : 'Resume download');
-}
-setInterval(() => {
-  if (dl.state === 'run') {
-    dl.speed = Math.max(1.8, Math.min(6.5, dl.speed + rand(-.5, .5)));
-    dl.done = Math.min(dl.total, dl.done + dl.speed);
-    if (dl.done >= dl.total) { dl.state = 'done'; dl.wait = 0; toast({ title: 'FIFA 23', text: 'نصب شد و آماده بازی است', icon: 'game' }); }
-  } else if (dl.state === 'done' && ++dl.wait > 8) {
-    dl.done = 120; dl.state = 'run'; dl.wait = 0;   // demo loop
-  }
-  dlRender();
-}, 1000);
-dlToggle.addEventListener('click', () => {
-  if (dl.state === 'run') dl.state = 'pause';
-  else if (dl.state === 'done') { toast({ title: 'FIFA 23', text: 'در حال اجرا...', icon: 'game' }); return; }
-  else { if (dl.state === 'cancel') dl.done = 0; dl.state = 'run'; }
-  dlRender();
-});
-$('#dlCancel').addEventListener('click', () => {
-  dl.state = 'cancel'; dl.done = 0; dlRender();
-  toast({ title: 'دانلود لغو شد', text: 'FIFA 23', icon: 'x' });
-});
-dlRender();
+
 
 /* =====================================================
    Statistic
@@ -711,26 +670,7 @@ requestAnimationFrame(loop);
           <button class="next" id="nextBtn" aria-label="بازی‌های بعدی"><i data-icon="chev"></i></button>
         </div>
 
-        <div class="sec-h"><h3>آخرین دانلودها</h3><a href="#downloads">مشاهده همه</a></div>
-        <article class="dl spot reveal" id="dl" style="--d:6">
-          <svg class="dl-lines" viewBox="0 0 600 100" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M330 -10C360 30 300 60 340 110" fill="none" stroke="#fff" stroke-opacity=".08"/>
-            <path d="M350 -10C380 30 320 60 360 110" fill="none" stroke="#fff" stroke-opacity=".06"/>
-            <path d="M370 -10C400 30 340 60 380 110" fill="none" stroke="#fff" stroke-opacity=".05"/>
-          </svg>
-          <div class="dl-fill">
-            <div class="dl-wave"><svg viewBox="0 0 26 200" preserveAspectRatio="none" aria-hidden="true"><path fill="#dc4f48" d="M0 0H14C26 12 2 38 14 50C26 62 2 88 14 100C26 112 2 138 14 150C26 162 2 188 14 200H0Z"/></svg></div>
-          </div>
-          <div class="dl-content">
-            <div class="dl-icon"><em>FIFA<b>23</b></em></div>
-            <div class="dl-info"><h4>FIFA 23</h4><span class="tag">شبیه‌ساز ورزشی</span></div>
-            <div class="dl-meta"><strong id="dlEta">—</strong><small id="dlSize">—</small></div>
-            <div class="dl-actions">
-              <button class="circle-btn btn-red" id="dlToggle" aria-label="توقف دانلود"><i data-icon="pause"></i></button>
-              <button class="circle-btn btn-white" id="dlCancel" aria-label="لغو دانلود"><i data-icon="x"></i></button>
-            </div>
-          </div>
-        </article>
+
       </section>
 
       <!-- ---- Column B ---- -->
