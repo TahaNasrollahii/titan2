@@ -212,9 +212,9 @@ const HRS = [
   { k: 'kills', name: 'تعداد کیل‌ها', v: 4500, c: '#7458d6', fg: '#fff' }
 ];
 const GLYPH = {
-  rank:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5.5a1.5 1.5 0 0 0 0 3H8M16 6h2.5a1.5 1.5 0 0 1 0 3H16"/><path d="M12 13v4M8.5 20.5h7M10 17h4v3.5h-4z"/></svg>',
-  wins:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>',
-  kills: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c.6 3.4 4.8 5 4.8 9.6a4.8 4.8 0 0 1-9.6 0c0-1.9.8-3.2 2-4.2.1 1.5.9 2.5 2 2.7C11 8.6 10.8 5.6 12 3z"/></svg>'
+  rank:  '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l6.5 8L5 20h4l7-8-7-8z"/><path d="M14 4h5l-5 5.5z" opacity=".8"/></svg>',
+  wins:  '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8l3.5 2.5-1.3 4h-4.4l-1.3-4z" fill="currentColor"/></svg>',
+  kills: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="6.5"/><path d="M12 2.5v5M12 16.5v5M2.5 12h5M16.5 12h5"/></svg>'
 };
 
 const FRIENDS = [
