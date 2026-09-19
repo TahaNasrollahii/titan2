@@ -1003,70 +1003,99 @@ i[data-icon] svg {
   transform-origin: left
 }
 
-/* ---------- Picks ---------- */
-.picks {
+/* ---------- Tournament Banner ---------- */
+.tourney-banner {
+  position: relative;
+  height: 212px;
+  border-radius: 34px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 10px
+  justify-content: center;
+  padding: 24px 32px;
+  color: #fff;
+  z-index: 1;
 }
 
-.pick {
+.tb-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, #4b2a86, #8e44ad);
+  border-radius: inherit;
+}
+
+.tb-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.15), transparent 60%);
+}
+
+.tb-content {
   position: relative;
+  z-index: 2;
   display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.tb-badge {
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-  height: 64px;
-  padding: 8px 16px 8px 8px;
-  border-radius: 24px;
-  background: var(--panel);
-  transition: transform .4s var(--spring), background .3s;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
 }
 
-.pick:hover {
-  transform: translateX(-5px);
-  background: #521a25
+.tb-badge i {
+  color: #ffcf8a;
 }
 
-.thumb {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  overflow: hidden;
-  flex: none;
-  transition: transform .4s var(--spring)
+.tourney-banner h3 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
 }
 
-.thumb svg {
-  width: 100%;
-  height: 100%
+.tourney-banner p {
+  font-size: 11px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 80%;
 }
 
-.pick:hover .thumb {
-  transform: scale(1.08) rotate(-4deg)
-}
-
-.pick-t {
-  flex: 1;
-  min-width: 0;
+.tb-btn {
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  border-radius: 12px;
+  background: #fff;
+  color: #4b2a86;
   font-size: 12.5px;
-  font-weight: 500;
-  line-height: 1.3
+  font-weight: 600;
+  transition: transform 0.3s var(--spring);
 }
 
-.pick-t em {
-  font-style: normal;
-  font-weight: 400;
-  color: #e38a90
+.tb-btn:hover {
+  transform: translateY(-2px);
 }
 
-.pick>i {
-  font-size: 16px;
-  color: #e9c6c6;
-  transition: transform .35s var(--spring)
-}
-
-.pick:hover>i {
-  transform: translateX(4px)
+.tb-art {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 200px;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.8;
 }
 
 /* ---------- New games carousel ---------- */

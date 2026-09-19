@@ -186,16 +186,7 @@ const SLIDES = window.__TITAN_DATA.slides || [
   { title: 'Counter-Strike 2',desc: 'Titan Major Qualifier — the classic bomb-defusal showdown. Register your five and lock in your map picks.',           reviews: '+71 Reviews', watch: 2310, eta: 26*60 + 52,          plats: ['steam'],        faces: [31,32,33] }
 ];
 
-const PICKS = window.__TITAN_DATA.picks || [
-  { t: 'Unravel 2',              s: '(Standard Edition + Starter Pass)' },
-  { t: 'Subway Surf',            s: '' },
-  { t: 'Red Dead Redemption 3',  s: '(Premium Pack)' }
-];
-const THUMBS = [
-  `<svg viewBox="0 0 48 48"><rect width="48" height="48" fill="#ffd9b0"/><circle cx="14" cy="14" r="5" fill="#ff8fa3"/><circle cx="34" cy="14" r="5" fill="#ff8fa3"/><circle cx="24" cy="26" r="14" fill="#ff8fa3"/><ellipse cx="24" cy="30" rx="6.5" ry="4.5" fill="#ffc2cf"/><circle cx="22" cy="30" r="1.1" fill="#b8455e"/><circle cx="26" cy="30" r="1.1" fill="#b8455e"/><circle cx="18" cy="23" r="1.7" fill="#3a1a22"/><circle cx="30" cy="23" r="1.7" fill="#3a1a22"/></svg>`,
-  `<svg viewBox="0 0 48 48"><rect width="48" height="48" fill="#3aa0ff"/><rect y="34" width="48" height="14" fill="#2b7fd0"/><circle cx="24" cy="26" r="10" fill="#f2c39a"/><path d="M13 24c1-9 8-12 15-11 5 1 8 5 8 11z" fill="#ffd23f"/><path d="M24 24h16l-2 4H24z" fill="#ffb800"/><circle cx="20.5" cy="27" r="1.3" fill="#2a1414"/><circle cx="27.5" cy="27" r="1.3" fill="#2a1414"/><path d="M14 44c2-7 6-9 10-9s8 2 10 9z" fill="#ff5a4f"/></svg>`,
-  `<svg viewBox="0 0 48 48"><rect width="48" height="48" fill="#b0602f"/><rect y="30" width="48" height="18" fill="#7d3b1c"/><circle cx="24" cy="29" r="9" fill="#e0a678"/><ellipse cx="24" cy="21.5" rx="17" ry="4.6" fill="#3a2010"/><path d="M14 21c0-9 5-13 10-13s10 4 10 13z" fill="#4b2a14"/><rect x="14" y="17" width="20" height="3" fill="#a5532a"/><path d="M19 33h10" stroke="#5a2f1a" stroke-width="1.6" stroke-linecap="round"/><circle cx="20.5" cy="28" r="1.2" fill="#2a1410"/><circle cx="27.5" cy="28" r="1.2" fill="#2a1410"/></svg>`
-];
+
 
 const GAMES = window.__TITAN_DATA.games || [
   { t: 'Uncharted 4',                   d: "The last chapter of Nathan Drake's story: a cinematic treasure hunt across the globe.", p: '$29.99', theme: 'noir'  },
@@ -287,7 +278,6 @@ $('#addSquad').addEventListener('click', () => toast({ title: 'تیم جدید',
 const CATALOG = [
   ...GAMES.map(g => ({ t: g.t, k: g.kind || 'Game' })),
   ...SLIDES.map(s => ({ t: s.title + ' Cup', k: 'Tournament' })),
-  ...PICKS.map(p => ({ t: p.t, k: 'Game' })),
   { t: 'FIFA 23', k: 'Game' }
 ];
 const searchEl = $('#search'), qEl = $('#q'), resEl = $('#results');
@@ -389,15 +379,7 @@ setInterval(tickCountdown, 1000);
   setTimeout(wobbleViewers, rand(1800, 3200));
 })();
 
-/* =====================================================
-   Picks (right column)
-   ===================================================== */
-$('#picks').innerHTML = PICKS.map((p, i) => `
-  <a class="pick reveal" href="#games" style="--d:${i + 2}">
-    <span class="thumb">${THUMBS[i]}</span>
-    <span class="pick-t">${esc(p.t)}${p.s ? ` <em>${esc(p.s)}</em>` : ''}</span>
-    <i data-icon="chev"></i>
-  </a>`).join('');
+
 
 /* =====================================================
    New Games carousel
@@ -753,7 +735,19 @@ requestAnimationFrame(loop);
 
       <!-- ---- Column B ---- -->
       <section class="col col-b">
-        <div class="picks" id="picks"></div>
+        <article class="tourney-banner spot reveal" style="--d:3">
+          <div class="tb-bg"></div>
+          <div class="tb-content">
+            <span class="tb-badge"><i data-icon="trophy"></i> تورنمنت‌های تایتان</span>
+            <h3>رقابت با بهترین‌ها</h3>
+            <p>جوایز نقدی بزرگ در انتظار شماست. تیم خود را ثبت‌نام کنید.</p>
+            <a href="#tournaments" class="tb-btn">اطلاعات بیشتر</a>
+          </div>
+          <svg class="tb-art" viewBox="0 0 200 200" preserveAspectRatio="none">
+            <circle cx="160" cy="40" r="80" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="30" />
+            <circle cx="160" cy="40" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="20" />
+          </svg>
+        </article>
 
         <div class="stat-wrap col">
           <div class="sec-h"><h3>آمار شما</h3><a class="arrow" href="#stats" aria-label="باز کردن آمار"><i data-icon="arrow"></i></a></div>
