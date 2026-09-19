@@ -24,13 +24,13 @@ export default function TitanPage() {
             plats: ['steam', 'epic'],
             faces: [11, 12, 13]
         })),
-        games: games.map(g => ({
+        games: games.map((g, i) => ({
             t: g.title,
             d: g.description,
             p: 'مشاهده',
-            theme: ['noir', 'flame', 'mist', 'neon', 'ice', 'ember'][Math.floor(Math.random() * 6)],
+            theme: ['noir', 'flame', 'mist', 'neon', 'ice', 'ember'][i % 6],
             fig: 'game',
-            crest: Math.random() > 0.5
+            crest: i % 2 === 0
         })),
         picks: games.slice(0, 3).map(g => ({
             t: g.title,
