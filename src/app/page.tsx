@@ -256,12 +256,9 @@ function toast({ title, text = '', icon = 'bell' }) {
 }
 
 /* =====================================================
-   Greeting
+   User Name
    ===================================================== */
 (() => {
-  const formatter = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Tehran', hour: 'numeric', hourCycle: 'h23' });
-  const h = parseInt(formatter.format(new Date()), 10);
-  $('#greetWord').textContent = h < 5 ? 'شب بخیر،' : h < 12 ? 'صبح بخیر،' : h < 18 ? 'ظهر بخیر،' : 'عصر بخیر،';
   $('#userName').textContent = CONFIG.userName;
 })();
 
@@ -582,8 +579,8 @@ setInterval(() => {              // one more ساعت played, every few seconds
    Right rail (friends + presence)
    ===================================================== */
 const tip = f => `${f.n} · ${f.s === 'game' ? 'در بازی — ' + f.g : f.s === 'online' ? 'آنلاین' : 'آفلاین'}`;
-$('#me').innerHTML = `<span class="face">${avatar(5)}</span>`;
-$('#me').innerHTML = `<span class="face">${avatar(5)}</span>`;
+$('#me').innerHTML = `<span class="face">${avatar(5)}</span><b id="userName"></b>`;
+
 (function announcements() {
   const list = [
     { title: 'Valorant Titan Cup', text: 'ثبت‌نام تا 10 دقیقه دیگر بسته می‌شود', icon: 'trophy' },
@@ -674,7 +671,6 @@ requestAnimationFrame(loop);
   <main class="main" id="home">
 
     <header class="topbar reveal" style="--d:1">
-      <h1 class="greet"><span id="greetWord">عصر بخیر،</span> <b id="userName">طاها</b></h1>
 
       <div class="search" id="search" role="search">
         <i data-icon="search"></i>
