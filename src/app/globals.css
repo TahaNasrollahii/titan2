@@ -103,7 +103,7 @@ i[data-icon] svg {
   border-radius: clamp(28px, 3.6vw, 52px);
   background: linear-gradient(160deg, var(--frame-a) 0%, #571c26 55%, var(--frame-b) 100%);
   display: grid;
-  grid-template-columns: 76px minmax(0, 1fr) 76px;
+  grid-template-columns: 76px minmax(0, 1fr);
   gap: clamp(14px, 1.8vw, 26px);
   padding: clamp(12px, 1.6vw, 22px);
   box-shadow: 0 50px 90px -30px rgba(122, 28, 48, .55), 0 20px 40px -20px rgba(122, 28, 48, .35);
@@ -2047,4 +2047,10 @@ html[dir="rtl"] .search input {
 
 html[dir="rtl"] .search kbd {
   margin-right: auto;
+}
+
+html[dir="rtl"] [data-icon="arrow"] svg,
+html[dir="rtl"] [data-icon="chev"] svg,
+html[dir="rtl"] .next svg {
+  transform: scaleX(-1);
 }

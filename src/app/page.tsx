@@ -583,41 +583,7 @@ setInterval(() => {              // one more ساعت played, every few seconds
    ===================================================== */
 const tip = f => `${f.n} · ${f.s === 'game' ? 'در بازی — ' + f.g : f.s === 'online' ? 'آنلاین' : 'آفلاین'}`;
 $('#me').innerHTML = `<span class="face">${avatar(5)}</span>`;
-$('#friends').innerHTML = FRIENDS.map((f, i) => `
-  <button class="av ${f.s}" data-f="${i}" data-tip="${esc(tip(f))}" aria-label="${esc(tip(f))}">
-    <span class="face">${avatar(f.seed)}</span><i class="st ${f.s}"></i><span class="ingame">در بازی</span>
-  </button>`).join('');
-$('#chats').innerHTML = CHATS.map((c, i) => `
-  <button class="av${c.group ? ' group' : ''}" data-c="${i}" data-tip="${esc(c.n)}" aria-label="${esc(c.n)}">
-    <span class="face">${c.group ? '<i data-icon="users"></i>' : avatar(c.seed)}</span>${c.unread ? '<i class="nt"></i>' : ''}
-  </button>`).join('');
-$('#friends').addEventListener('click', e => {
-  const b = e.target.closest('.av'); if (!b) return;
-  toast({ title: 'دعوت‌نامه ارسال شد', text: `${FRIENDS[b.dataset.f].n} آن را در لابی خود خواهد دید`, icon: 'users' });
-});
-$('#chats').addEventListener('click', e => {
-  const b = e.target.closest('.av'); if (!b) return;
-  const nt = $('.nt', b); if (nt) nt.remove();
-  toast({ title: CHATS[b.dataset.c].n, text: 'در حال باز کردن چت...', icon: 'chat' });
-});
-function setStatus(i, s) {
-  const f = FRIENDS[i], b = $(`.av[data-f="${i}"]`);
-  f.s = s; if (s === 'game') f.g = pickOne(GAMES_LIVE);
-  b.className = 'av ' + s;
-  $('.st', b).className = 'st ' + s;
-  b.dataset.tip = tip(f); b.setAttribute('aria-label', tip(f));
-  return f;
-}
-(function presenceLoop() {
-  setTimeout(() => {
-    const i = Math.floor(Math.random() * FRIENDS.length);
-    const next = pickOne(['online', 'away', 'game'].filter(s => s !== FRIENDS[i].s));
-    const f = setStatus(i, next);
-    if (next === 'game' && Math.random() < .7) liveToast({ title: f.n, text: `شروع به بازی کرد: ${f.g}`, icon: 'game' });
-    else if (next === 'online' && Math.random() < .5) liveToast({ title: f.n, text: 'آنلاین است', icon: 'users' });
-    presenceLoop();
-  }, rand(7000, 11000));
-})();
+$('#me').innerHTML = `<span class="face">${avatar(5)}</span>`;
 (function announcements() {
   const list = [
     { title: 'Valorant Titan Cup', text: 'ثبت‌نام تا 10 دقیقه دیگر بسته می‌شود', icon: 'trophy' },
@@ -720,6 +686,7 @@ requestAnimationFrame(loop);
       <div class="top-actions">
         <button class="round" id="cartBtn" aria-label="سبد خرید"><i data-icon="cart"></i><span class="badge" id="cartCount" hidden>0</span></button>
         <button class="round" id="bellBtn" aria-label="اعلان‌ها"><i data-icon="bell"></i><span class="dot" id="bellDot"></span></button>
+        <button class="me" id="me" aria-label="پروفایل شما"></button>
       </div>
     </header>
 
@@ -807,18 +774,7 @@ requestAnimationFrame(loop);
     </div>
   </main>
 
-  <!-- ===== Right rail ===== -->
-  <aside class="rail" aria-label="دوستان">
-    <div class="panel p1 reveal" style="--d:1">
-      <button class="me" id="me" aria-label="پروفایل شما"></button>
-      <i class="rail-ic" data-icon="users"></i>
-      <div class="list" id="friends"></div>
-    </div>
-    <div class="panel p2 reveal" style="--d:3">
-      <i class="rail-ic" data-icon="chat"></i>
-      <div class="list" id="chats"></div>
-    </div>
-  </aside>
+
 </div>
 
 <div class="toasts" id="toasts" aria-live="polite"></div>
