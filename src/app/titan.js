@@ -1,45 +1,4 @@
 
-// @ts-nocheck
-'use client';
-
-import { useEffect, useRef } from 'react';
-import { games } from '@/data/games';
-import { tournaments } from '@/data/tournaments';
-
-export default function TitanPage() {
-  const initialized = useRef(false);
-
-  useEffect(() => {
-    if (initialized.current) return;
-    initialized.current = true;
-
-    // Map Next.js data to Titan prototype data
-    (window as any).__TITAN_DATA = {
-        slides: tournaments.slice(0, 3).map(t => ({
-            title: t.gameName,
-            desc: t.title + ' — ' + t.description,
-            reviews: '+' + Math.floor(Math.random() * 100) + ' نظرات',
-            watch: t.participants,
-            eta: 2*3600 + 14*60 + 33, // static for now
-            plats: ['steam', 'epic'],
-            faces: [11, 12, 13]
-        })),
-        games: games.map(g => ({
-            t: g.title,
-            d: g.description,
-            p: 'مشاهده',
-            theme: ['noir', 'flame', 'mist', 'neon', 'ice', 'ember'][Math.floor(Math.random() * 6)],
-            fig: 'game',
-            crest: Math.random() > 0.5
-        })),
-        picks: games.slice(0, 3).map(g => ({
-            t: g.title,
-            s: g.genre
-        }))
-    };
-
-    // --- Titan Prototype Logic ---
-    
 (() => {
 'use strict';
 
@@ -47,7 +6,7 @@ export default function TitanPage() {
    Config — change these
    ===================================================== */
 const CONFIG = {
-  userName: 'طاها',   // shown in the greeting
+  userName: 'Player',   // shown in the greeting
   slideMs: 6500         // hero auto-rotation time
 };
 
@@ -180,13 +139,13 @@ const heroArt = k => `
 /* =====================================================
    Data
    ===================================================== */
-const SLIDES = window.__TITAN_DATA.slides || [
+const SLIDES = [
   { title: 'Valorant',        desc: 'Titan Cup — the 5v5 tactical shooter tournament. Squad up, climb the bracket and fight for the $5,000 prize pool.', reviews: '+53 Reviews', watch: 1284, eta: 2*3600 + 14*60 + 33, plats: ['steam','epic'], faces: [11,12,13] },
-  { title: 'Rocket League',   desc: 'Titan سری راکت — 3v3 aerial chaos. Weekly qualifiers are open and the top 8 teams reach the live finals.',       reviews: '+38 Reviews', watch: 842,  eta: 5*3600 + 41*60 + 8,  plats: ['steam','epic'], faces: [21,22,23] },
+  { title: 'Rocket League',   desc: 'Titan Rocket Series — 3v3 aerial chaos. Weekly qualifiers are open and the top 8 teams reach the live finals.',       reviews: '+38 Reviews', watch: 842,  eta: 5*3600 + 41*60 + 8,  plats: ['steam','epic'], faces: [21,22,23] },
   { title: 'Counter-Strike 2',desc: 'Titan Major Qualifier — the classic bomb-defusal showdown. Register your five and lock in your map picks.',           reviews: '+71 Reviews', watch: 2310, eta: 26*60 + 52,          plats: ['steam'],        faces: [31,32,33] }
 ];
 
-const PICKS = window.__TITAN_DATA.picks || [
+const PICKS = [
   { t: 'Unravel 2',              s: '(Standard Edition + Starter Pass)' },
   { t: 'Subway Surf',            s: '' },
   { t: 'Red Dead Redemption 3',  s: '(Premium Pack)' }
@@ -197,7 +156,7 @@ const THUMBS = [
   `<svg viewBox="0 0 48 48"><rect width="48" height="48" fill="#b0602f"/><rect y="30" width="48" height="18" fill="#7d3b1c"/><circle cx="24" cy="29" r="9" fill="#e0a678"/><ellipse cx="24" cy="21.5" rx="17" ry="4.6" fill="#3a2010"/><path d="M14 21c0-9 5-13 10-13s10 4 10 13z" fill="#4b2a14"/><rect x="14" y="17" width="20" height="3" fill="#a5532a"/><path d="M19 33h10" stroke="#5a2f1a" stroke-width="1.6" stroke-linecap="round"/><circle cx="20.5" cy="28" r="1.2" fill="#2a1410"/><circle cx="27.5" cy="28" r="1.2" fill="#2a1410"/></svg>`
 ];
 
-const GAMES = window.__TITAN_DATA.games || [
+const GAMES = [
   { t: 'Uncharted 4',                   d: "The last chapter of Nathan Drake's story: a cinematic treasure hunt across the globe.", p: '$29.99', theme: 'noir'  },
   { t: 'Dishonored : Standard Edition', d: 'Stealth, supernatural powers and a city on the brink. Play it your way.',                p: '$19.99', theme: 'flame', crest: true },
   { t: 'Elden Ring',                    d: "Explore a vast open world and take on the Lands Between's toughest bosses.",             p: '$39.99', theme: 'mist'  },
@@ -259,9 +218,8 @@ function toast({ title, text = '', icon = 'bell' }) {
    Greeting
    ===================================================== */
 (() => {
-  const formatter = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Tehran', hour: 'numeric', hourCycle: 'h23' });
-  const h = parseInt(formatter.format(new Date()), 10);
-  $('#greetWord').textContent = h < 5 ? 'شب بخیر،' : h < 12 ? 'صبح بخیر،' : h < 18 ? 'ظهر بخیر،' : 'عصر بخیر،';
+  const h = new Date().getHours();
+  $('#greetWord').textContent = h < 5 ? 'Good night,' : h < 12 ? 'Good morning,' : h < 18 ? 'Good afternoon,' : 'Good evening,';
   $('#userName').textContent = CONFIG.userName;
 })();
 
@@ -282,7 +240,7 @@ navItems.forEach(a => a.addEventListener('click', e => {
   moveInd(a);
 }));
 addEventListener('resize', () => moveInd($('.nav-item.active'), true));
-$('#addSquad').addEventListener('click', () => toast({ title: 'تیم جدید', text: 'دوستان خود را به لابی دعوت کنید', icon: 'users' }));
+$('#addSquad').addEventListener('click', () => toast({ title: 'New squad', text: 'Invite friends to your lobby', icon: 'users' }));
 
 /* =====================================================
    Search
@@ -297,9 +255,9 @@ const searchEl = $('#search'), qEl = $('#q'), resEl = $('#results');
 function renderResults(q) {
   const query = q.trim().toLowerCase();
   const list = (query ? CATALOG.filter(x => x.t.toLowerCase().includes(query)) : CATALOG).slice(0, 5);
-  resEl.innerHTML = (query ? '' : '<h5>جستجوهای پرطرفدار</h5>') + (list.length
+  resEl.innerHTML = (query ? '' : '<h5>Popular searches</h5>') + (list.length
     ? list.map(x => `<button type="button" data-t="${esc(x.t)}"><span>${esc(x.t)}</span><small>${x.k}</small></button>`).join('')
-    : `<div class="empty">بدون نتیجه برای “${esc(q.trim())}”</div>`);
+    : `<div class="empty">No results for “${esc(q.trim())}”</div>`);
 }
 qEl.addEventListener('focus', () => { renderResults(qEl.value); searchEl.classList.add('open'); });
 qEl.addEventListener('input', () => { renderResults(qEl.value); searchEl.classList.add('open'); });
@@ -312,7 +270,7 @@ resEl.addEventListener('mousedown', e => e.preventDefault());
 resEl.addEventListener('click', e => {
   const b = e.target.closest('button[data-t]');
   if (!b) return;
-  toast({ title: b.dataset.t, text: 'در حال باز کردن صفحه...', icon: 'search' });
+  toast({ title: b.dataset.t, text: 'Opening page…', icon: 'search' });
   qEl.value = ''; qEl.blur();
 });
 addEventListener('keydown', e => {
@@ -330,11 +288,11 @@ function addToCart(name) {
   cartBadge.textContent = cart;
   cartBadge.classList.remove('pop'); void cartBadge.offsetWidth; cartBadge.classList.add('pop');
   if (!reduce) cartBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.25) rotate(-8deg)' }, { transform: 'scale(1)' }], { duration: 450, easing: 'cubic-bezier(.3,1.6,.5,1)' });
-  toast({ title: 'به سبد خرید اضافه شد', text: name, icon: 'cart' });
+  toast({ title: 'Added to cart', text: name, icon: 'cart' });
 }
 $('#bellBtn').addEventListener('click', () => {
   bellDot.hidden = true;
-  toast({ title: "You're all caught up", text: 'اعلان جدیدی ندارید', icon: 'bell' });
+  toast({ title: "You're all caught up", text: 'No new notifications', icon: 'bell' });
 });
 const liveToast = t => { bellDot.hidden = false; toast(t); };
 
@@ -343,7 +301,7 @@ const liveToast = t => { bellDot.hidden = false; toast(t); };
    ===================================================== */
 const hero = $('#hero'), heroBody = $('#heroBody'), heroArtEl = $('#heroArt'), dashesEl = $('#dashes');
 heroArtEl.innerHTML = SLIDES.map((s, i) => `<div class="art${i === 0 ? ' on' : ''}" data-hue="${i}">${heroArt(i)}</div>`).join('');
-dashesEl.innerHTML = SLIDES.map((s, i) => `<button class="dash${i === 0 ? ' on' : ''}" aria-label="نمایش ${esc(s.title)}"><span><i></i></span></button>`).join('');
+dashesEl.innerHTML = SLIDES.map((s, i) => `<button class="dash${i === 0 ? ' on' : ''}" aria-label="Show ${esc(s.title)}"><span><i></i></span></button>`).join('');
 const arts = $$('.art', heroArtEl), bgLayers = $$('.hero-bg .l'), dashes = $$('.dash', dashesEl), dashFills = $$('.dash i', dashesEl);
 SLIDES.forEach(s => s.end = Date.now() + s.eta * 1000);
 const watchEl = $('#watch'), cdEl = $('#cd');
@@ -376,7 +334,7 @@ dashes.forEach((d, k) => d.addEventListener('click', () => { if (k !== cur) goTo
 ['pointerleave', 'focusout'].forEach(ev => hero.addEventListener(ev, () => paused = false));
 $('#likeBtn').addEventListener('click', e => {
   const b = e.currentTarget; b.classList.toggle('liked');
-  if (b.classList.contains('liked')) toast({ title: SLIDES[cur].title, text: 'به علاقه‌مندی‌های شما اضافه شد', icon: 'like' });
+  if (b.classList.contains('liked')) toast({ title: SLIDES[cur].title, text: 'Added to your favourites', icon: 'like' });
 });
 
 function tickCountdown() {
@@ -435,8 +393,8 @@ const sc = $('#scroller');
 sc.innerHTML = GAMES.map((g, i) => `
   <article class="gcard spot${i === 0 ? ' feat' : ''}" data-i="${i}" style="--d:${i}">
     <div class="gart">${cardArt(g, i)}</div>
-    <button class="gplay" data-play="${i}" aria-label="تماشای تریلر"><i data-icon="play"></i></button>
-    <button class="gbuy" data-buy="${i}" aria-label="افزودن ${esc(g.t)} به سبد خرید"><i data-icon="bag"></i></button>
+    <button class="gplay" data-play="${i}" aria-label="Watch trailer"><i data-icon="play"></i></button>
+    <button class="gbuy" data-buy="${i}" aria-label="Add ${esc(g.t)} to cart"><i data-icon="bag"></i></button>
     ${i === 0 ? '<span class="gcursor"><i data-icon="cursor"></i></span>' : ''}
     <div class="gbody">
       <h4>${esc(g.t)}</h4>
@@ -475,7 +433,7 @@ sc.addEventListener('click', e => {
   if (dragMoved) { dragMoved = false; return; }
   const buy = e.target.closest('[data-buy]'), play = e.target.closest('[data-play]');
   if (buy) addToCart(GAMES[buy.dataset.buy].t);
-  if (play) toast({ title: GAMES[play.dataset.play].t, text: 'در حال بارگذاری تریلر...', icon: 'play' });
+  if (play) toast({ title: GAMES[play.dataset.play].t, text: 'Loading trailer…', icon: 'play' });
 });
 $('#nextBtn').addEventListener('click', () => {
   const end = sc.scrollLeft + sc.clientWidth >= sc.scrollWidth - 8;
@@ -492,14 +450,14 @@ function dlRender() {
   dlEl.classList.toggle('paused', dl.state !== 'run');
   const secs = (dl.total - dl.done) / dl.speed;
   let eta;
-  if (dl.state === 'pause') eta = 'متوقف شد';
-  else if (dl.state === 'cancel') eta = 'لغو شد';
-  else if (dl.state === 'done') eta = 'آماده بازی';
-  else if (secs >= 3600) eta = `${Math.floor(secs / 3600)} ساعت ${Math.round(secs % 3600 / 60)} دقیقه.`;
-  else if (secs >= 60) eta = `${Math.floor(secs / 60)} دقیقه ${Math.round(secs % 60)} ثانیه`;
-  else eta = `${Math.max(1, Math.round(secs))} ثانیه`;
+  if (dl.state === 'pause') eta = 'Paused';
+  else if (dl.state === 'cancel') eta = 'Cancelled';
+  else if (dl.state === 'done') eta = 'Ready to play';
+  else if (secs >= 3600) eta = `${Math.floor(secs / 3600)} hour ${Math.round(secs % 3600 / 60)} min.`;
+  else if (secs >= 60) eta = `${Math.floor(secs / 60)} min ${Math.round(secs % 60)} s`;
+  else eta = `${Math.max(1, Math.round(secs))} s`;
   dlEta.textContent = eta;
-  dlSize.textContent = dl.state === 'done' ? '1.23 گیگابایت نصب شد' : `${Math.round(dl.done)} مگابایت از 1.23 GB`;
+  dlSize.textContent = dl.state === 'done' ? '1.23 GB installed' : `${Math.round(dl.done)} MB of 1.23 GB`;
   dlToggle.innerHTML = ico(dl.state === 'run' ? 'pause' : 'play');
   dlToggle.setAttribute('aria-label', dl.state === 'run' ? 'Pause download' : dl.state === 'done' ? 'Launch game' : 'Resume download');
 }
@@ -507,7 +465,7 @@ setInterval(() => {
   if (dl.state === 'run') {
     dl.speed = Math.max(1.8, Math.min(6.5, dl.speed + rand(-.5, .5)));
     dl.done = Math.min(dl.total, dl.done + dl.speed);
-    if (dl.done >= dl.total) { dl.state = 'done'; dl.wait = 0; toast({ title: 'FIFA 23', text: 'نصب شد و آماده بازی است', icon: 'game' }); }
+    if (dl.done >= dl.total) { dl.state = 'done'; dl.wait = 0; toast({ title: 'FIFA 23', text: 'Installed and ready to play', icon: 'game' }); }
   } else if (dl.state === 'done' && ++dl.wait > 8) {
     dl.done = 120; dl.state = 'run'; dl.wait = 0;   // demo loop
   }
@@ -515,13 +473,13 @@ setInterval(() => {
 }, 1000);
 dlToggle.addEventListener('click', () => {
   if (dl.state === 'run') dl.state = 'pause';
-  else if (dl.state === 'done') { toast({ title: 'FIFA 23', text: 'در حال اجرا...', icon: 'game' }); return; }
+  else if (dl.state === 'done') { toast({ title: 'FIFA 23', text: 'Launching…', icon: 'game' }); return; }
   else { if (dl.state === 'cancel') dl.done = 0; dl.state = 'run'; }
   dlRender();
 });
 $('#dlCancel').addEventListener('click', () => {
   dl.state = 'cancel'; dl.done = 0; dlRender();
-  toast({ title: 'دانلود لغو شد', text: 'FIFA 23', icon: 'x' });
+  toast({ title: 'Download cancelled', text: 'FIFA 23', icon: 'x' });
 });
 dlRender();
 
@@ -561,31 +519,31 @@ ghRow.innerHTML = HRS.map((h, i) => `
 $$('.gh', ghRow).forEach(b => {
   const i = +b.dataset.i;
   const on = () => { hovering = i; setCore(HRS[i].name, HRS[i].v, 550); };
-  const off = () => { hovering = -1; setCore('مجموع ساعات', total, 550); };
+  const off = () => { hovering = -1; setCore('Total hours', total, 550); };
   b.addEventListener('pointerenter', on); b.addEventListener('pointerleave', off);
   b.addEventListener('focus', on);        b.addEventListener('blur', off);
 });
 setTimeout(() => {
-  setCore('مجموع ساعات', total, 1900);
+  setCore('Total hours', total, 1900);
   HRS.forEach((h, i) => countTo($('#gv' + i), h.v, 1900));
 }, 650);
-setInterval(() => {              // one more ساعت played, every few seconds
+setInterval(() => {              // one more hour played, every few seconds
   const i = Math.floor(Math.random() * HRS.length);
   HRS[i].v++; total++;
   $('#gv' + i).textContent = fmt(HRS[i].v) + 'h';
   const b = $(`.gh[data-i="${i}"]`); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
-  if (hovering === -1) setCore('مجموع ساعات', total, 500);
+  if (hovering === -1) setCore('Total hours', total, 500);
   else if (hovering === i) setCore(HRS[i].name, HRS[i].v, 500);
 }, 9000);
 
 /* =====================================================
    Right rail (friends + presence)
    ===================================================== */
-const tip = f => `${f.n} · ${f.s === 'game' ? 'در بازی — ' + f.g : f.s === 'online' ? 'آنلاین' : 'آفلاین'}`;
+const tip = f => `${f.n} · ${f.s === 'game' ? 'In game — ' + f.g : f.s === 'online' ? 'Online' : 'Away'}`;
 $('#me').innerHTML = `<span class="face">${avatar(5)}</span>`;
 $('#friends').innerHTML = FRIENDS.map((f, i) => `
   <button class="av ${f.s}" data-f="${i}" data-tip="${esc(tip(f))}" aria-label="${esc(tip(f))}">
-    <span class="face">${avatar(f.seed)}</span><i class="st ${f.s}"></i><span class="ingame">در بازی</span>
+    <span class="face">${avatar(f.seed)}</span><i class="st ${f.s}"></i><span class="ingame">In Game</span>
   </button>`).join('');
 $('#chats').innerHTML = CHATS.map((c, i) => `
   <button class="av${c.group ? ' group' : ''}" data-c="${i}" data-tip="${esc(c.n)}" aria-label="${esc(c.n)}">
@@ -593,12 +551,12 @@ $('#chats').innerHTML = CHATS.map((c, i) => `
   </button>`).join('');
 $('#friends').addEventListener('click', e => {
   const b = e.target.closest('.av'); if (!b) return;
-  toast({ title: 'دعوت‌نامه ارسال شد', text: `${FRIENDS[b.dataset.f].n} آن را در لابی خود خواهد دید`, icon: 'users' });
+  toast({ title: 'Invite sent', text: `${FRIENDS[b.dataset.f].n} will see it in their lobby`, icon: 'users' });
 });
 $('#chats').addEventListener('click', e => {
   const b = e.target.closest('.av'); if (!b) return;
   const nt = $('.nt', b); if (nt) nt.remove();
-  toast({ title: CHATS[b.dataset.c].n, text: 'در حال باز کردن چت...', icon: 'chat' });
+  toast({ title: CHATS[b.dataset.c].n, text: 'Opening chat…', icon: 'chat' });
 });
 function setStatus(i, s) {
   const f = FRIENDS[i], b = $(`.av[data-f="${i}"]`);
@@ -613,16 +571,16 @@ function setStatus(i, s) {
     const i = Math.floor(Math.random() * FRIENDS.length);
     const next = pickOne(['online', 'away', 'game'].filter(s => s !== FRIENDS[i].s));
     const f = setStatus(i, next);
-    if (next === 'game' && Math.random() < .7) liveToast({ title: f.n, text: `شروع به بازی کرد: ${f.g}`, icon: 'game' });
-    else if (next === 'online' && Math.random() < .5) liveToast({ title: f.n, text: 'آنلاین است', icon: 'users' });
+    if (next === 'game' && Math.random() < .7) liveToast({ title: f.n, text: `started playing ${f.g}`, icon: 'game' });
+    else if (next === 'online' && Math.random() < .5) liveToast({ title: f.n, text: 'is online', icon: 'users' });
     presenceLoop();
   }, rand(7000, 11000));
 })();
 (function announcements() {
   const list = [
-    { title: 'Valorant Titan Cup', text: 'ثبت‌نام تا 10 دقیقه دیگر بسته می‌شود', icon: 'trophy' },
-    { title: 'فروش ویژه', text: 'هدست تایتان پرو — 20٪ تخفیف برای یک ساعت آینده', icon: 'bag' },
-    { title: 'سری راکت', text: 'براکت دور دوم شروع شد', icon: 'trophy' }
+    { title: 'Valorant Titan Cup', text: 'Registration closes in 10 minutes', icon: 'trophy' },
+    { title: 'Flash sale', text: 'Titan Pro Headset — 20% off for the next hour', icon: 'bag' },
+    { title: 'Rocket Series', text: 'Round 2 bracket is live', icon: 'trophy' }
   ];
   let n = 0;
   setTimeout(function again() {
@@ -674,156 +632,3 @@ moveInd($('.nav-item.active'), true);
 addEventListener('load', () => moveInd($('.nav-item.active'), true));
 requestAnimationFrame(loop);
 })();
-
-    // --- End Logic ---
-
-  }, []);
-
-  return (
-    <div 
-        suppressHydrationWarning 
-        dangerouslySetInnerHTML={{ __html: `
-<div class="frame" id="frame">
-
-  <!-- ===== Left navigation ===== -->
-  <aside class="nav panel reveal" style="--d:0" aria-label="منوی اصلی">
-    <a class="logo" href="#home" aria-label="خانه تایتان">
-      <svg viewBox="0 0 34 34" width="34" height="34" aria-hidden="true"><path d="M3 4h28v8H21v18h-8V12H3z" fill="#fff"/><path d="M3 4h11L3 15z" fill="#e2453f"/></svg>
-    </a>
-    <nav class="nav-list" id="navList">
-      <span class="nav-ind" id="navInd"></span>
-      <!-- Replace the hash links with your real routes -->
-      <a class="nav-item active" href="#home" data-label="خانه"><i data-icon="home"></i></a>
-      <a class="nav-item" href="#games" data-label="بازی‌ها"><i data-icon="game"></i></a>
-      <a class="nav-item" href="#gift-cards" data-label="گیفت کارت"><i data-icon="gift"></i></a>
-      <a class="nav-item" href="#tournaments" data-label="تورنمنت‌ها"><i data-icon="trophy"></i></a>
-      <a class="nav-item" href="#stats" data-label="آمار"><i data-icon="chart"></i></a>
-      <a class="nav-item" href="#store" data-label="فروشگاه تجهیزات"><i data-icon="bag"></i></a>
-      <a class="nav-item" href="#messages" data-label="پیام‌ها"><i data-icon="chat"></i></a>
-    </nav>
-    <button class="add-btn" id="addSquad" data-label="ساخت تیم" aria-label="ساخت تیم"><span class="plus"><i data-icon="plus"></i></span></button>
-  </aside>
-
-  <!-- ===== Main ===== -->
-  <main class="main" id="home">
-
-    <header class="topbar reveal" style="--d:1">
-      <h1 class="greet"><span id="greetWord">عصر بخیر،</span> <b id="userName">طاها</b></h1>
-
-      <div class="search" id="search" role="search">
-        <i data-icon="search"></i>
-        <input id="q" type="search" placeholder="جستجو" autocomplete="off" aria-label="جستجوی بازی‌ها، تجهیزات و تورنمنت‌ها">
-        <kbd aria-hidden="true">/</kbd>
-        <div class="results" id="results"></div>
-      </div>
-
-      <div class="top-actions">
-        <button class="round" id="cartBtn" aria-label="سبد خرید"><i data-icon="cart"></i><span class="badge" id="cartCount" hidden>0</span></button>
-        <button class="round" id="bellBtn" aria-label="اعلان‌ها"><i data-icon="bell"></i><span class="dot" id="bellDot"></span></button>
-      </div>
-    </header>
-
-    <div class="cols">
-
-      <!-- ---- Column A ---- -->
-      <section class="col col-a">
-
-        <article class="hero spot reveal" id="hero" style="--d:2">
-          <div class="hero-bg" aria-hidden="true">
-            <i class="l l0 on"></i><i class="l l1"></i><i class="l l2"></i>
-            <span class="ring r1"></span><span class="ring r2"></span>
-            <span class="sheen"></span>
-          </div>
-
-          <div class="hero-body" id="heroBody">
-            <div class="hero-tags">
-              <span class="badge-pop"><i data-icon="flame"></i>محبوب</span>
-              <div id="plats"></div>
-            </div>
-            <h2 id="heroTitle">Valorant</h2>
-            <p id="heroDesc"></p>
-            <div class="hero-foot">
-              <div class="faces" id="faces"></div>
-              <button class="pill-white" id="likeBtn"><i data-icon="like"></i><span id="heroReviews">+53 Reviews</span></button>
-            </div>
-          </div>
-
-          <div class="hero-art" id="heroArt" aria-hidden="true"></div>
-
-          <div class="hero-live" aria-live="off">
-            <span class="live-dot"></span>
-            <span>شروع در <b id="cd">02:14:33</b></span>
-            <span class="sep"></span>
-            <span><b id="watch">1,284</b> در حال تماشا</span>
-          </div>
-
-          <div class="dashes" id="dashes"></div>
-        </article>
-
-        <div class="sec-h"><h3>بازی‌های جدید</h3><a href="#games">مشاهده همه</a></div>
-        <div class="carousel">
-          <div class="scroller" id="scroller" tabindex="0" aria-label="بازی‌های جدید"></div>
-          <button class="next" id="nextBtn" aria-label="بازی‌های بعدی"><i data-icon="chev"></i></button>
-        </div>
-
-        <div class="sec-h"><h3>آخرین دانلودها</h3><a href="#downloads">مشاهده همه</a></div>
-        <article class="dl spot reveal" id="dl" style="--d:6">
-          <svg class="dl-lines" viewBox="0 0 600 100" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M330 -10C360 30 300 60 340 110" fill="none" stroke="#fff" stroke-opacity=".08"/>
-            <path d="M350 -10C380 30 320 60 360 110" fill="none" stroke="#fff" stroke-opacity=".06"/>
-            <path d="M370 -10C400 30 340 60 380 110" fill="none" stroke="#fff" stroke-opacity=".05"/>
-          </svg>
-          <div class="dl-fill">
-            <div class="dl-wave"><svg viewBox="0 0 26 200" preserveAspectRatio="none" aria-hidden="true"><path fill="#dc4f48" d="M0 0H14C26 12 2 38 14 50C26 62 2 88 14 100C26 112 2 138 14 150C26 162 2 188 14 200H0Z"/></svg></div>
-          </div>
-          <div class="dl-content">
-            <div class="dl-icon"><em>FIFA<b>23</b></em></div>
-            <div class="dl-info"><h4>FIFA 23</h4><span class="tag">شبیه‌ساز ورزشی</span></div>
-            <div class="dl-meta"><strong id="dlEta">—</strong><small id="dlSize">—</small></div>
-            <div class="dl-actions">
-              <button class="circle-btn btn-red" id="dlToggle" aria-label="توقف دانلود"><i data-icon="pause"></i></button>
-              <button class="circle-btn btn-white" id="dlCancel" aria-label="لغو دانلود"><i data-icon="x"></i></button>
-            </div>
-          </div>
-        </article>
-      </section>
-
-      <!-- ---- Column B ---- -->
-      <section class="col col-b">
-        <div class="picks" id="picks"></div>
-
-        <div class="stat-wrap col">
-          <div class="sec-h"><h3>آمار شما</h3><a class="arrow" href="#stats" aria-label="باز کردن آمار"><i data-icon="arrow"></i></a></div>
-          <article class="stat spot reveal" style="--d:5">
-            <div class="blob" id="blob">
-              <i class="b1"></i><i class="b2"></i><i class="b3"></i>
-              <div class="core"><small id="coreLabel">مجموع ساعات</small><strong id="coreVal">0h</strong></div>
-            </div>
-            <div class="gh-row" id="ghRow"></div>
-          </article>
-        </div>
-      </section>
-
-    </div>
-  </main>
-
-  <!-- ===== Right rail ===== -->
-  <aside class="rail" aria-label="دوستان">
-    <div class="panel p1 reveal" style="--d:1">
-      <button class="me" id="me" aria-label="پروفایل شما"></button>
-      <i class="rail-ic" data-icon="users"></i>
-      <div class="list" id="friends"></div>
-    </div>
-    <div class="panel p2 reveal" style="--d:3">
-      <i class="rail-ic" data-icon="chat"></i>
-      <div class="list" id="chats"></div>
-    </div>
-  </aside>
-</div>
-
-<div class="toasts" id="toasts" aria-live="polite"></div>
-
-` }} 
-    />
-  );
-}
