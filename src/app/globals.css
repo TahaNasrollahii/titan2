@@ -1023,6 +1023,7 @@ i[data-icon] svg {
   z-index: -1;
   background: linear-gradient(135deg, #4b2a86, #8e44ad);
   border-radius: inherit;
+  overflow: hidden;
 }
 
 .tb-bg::before {

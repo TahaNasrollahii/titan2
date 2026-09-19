@@ -670,7 +670,10 @@ requestAnimationFrame(loop);
       <!-- ---- Column B ---- -->
       <section class="col col-b">
         <article class="tourney-banner spot reveal" style="--d:3">
-          <div class="tb-bg"></div>
+          <div class="tb-bg" aria-hidden="true">
+            <span class="ring r1"></span><span class="ring r2"></span>
+            <span class="sheen"></span>
+          </div>
           <div class="tb-content">
             <span class="tb-badge"><i data-icon="trophy"></i> تورنمنت‌های تایتان</span>
             <h3>رقابت با بهترین‌ها</h3>
