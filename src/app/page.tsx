@@ -658,17 +658,6 @@ requestAnimationFrame(loop);
           <div class="dashes" id="dashes"></div>
         </article>
 
-        <div class="sec-h"><h3>دسته‌بندی‌ها</h3><a href="#games">مشاهده همه</a></div>
-        <div class="carousel">
-          <div class="scroller" id="scroller" tabindex="0" aria-label="دسته‌بندی‌ها"></div>
-          <button class="next" id="nextBtn" aria-label="بازی‌های بعدی"><i data-icon="chev"></i></button>
-        </div>
-
-
-      </section>
-
-      <!-- ---- Column B ---- -->
-      <section class="col col-b">
         <article class="tourney-banner spot reveal" style="--d:3">
           <div class="tb-bg" aria-hidden="true">
             <span class="ring r1"></span><span class="ring r2"></span>
@@ -685,6 +674,19 @@ requestAnimationFrame(loop);
             <circle cx="160" cy="40" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="20" />
           </svg>
         </article>
+
+        <div class="sec-h"><h3>دسته‌بندی‌ها</h3><a href="#games">مشاهده همه</a></div>
+        <div class="carousel">
+          <div class="scroller" id="scroller" tabindex="0" aria-label="دسته‌بندی‌ها"></div>
+          <button class="next" id="nextBtn" aria-label="بازی‌های بعدی"><i data-icon="chev"></i></button>
+        </div>
+
+
+      </section>
+
+      <!-- ---- Column B ---- -->
+      <section class="col col-b">
+
 
         <div class="stat-wrap col">
           <div class="sec-h"><h3>امتیاز شما</h3><a class="arrow" href="#stats" aria-label="باز کردن آمار"><i data-icon="arrow"></i></a></div>
