@@ -1006,7 +1006,7 @@ i[data-icon] svg {
 /* ---------- Tournament Banner ---------- */
 .tourney-banner {
   position: relative;
-  height: 212px;
+  height: clamp(224px, 22vw, 262px);
   border-radius: 34px;
   overflow: hidden;
   display: flex;

@@ -15,111 +15,111 @@ export default function TitanPage() {
 
     // Map Next.js data to Titan prototype data
     (window as any).__TITAN_DATA = {
-        slides: tournaments.slice(0, 3).map(t => ({
-            title: t.gameName,
-            desc: t.title + ' — ' + t.description,
-            reviews: '+' + Math.floor(Math.random() * 100) + ' نظرات',
-            watch: t.participants,
-            eta: 2*3600 + 14*60 + 33, // static for now
-            plats: ['steam', 'epic'],
-            faces: [11, 12, 13]
-        })),
-        games: games.map((g, i) => ({
-            t: g.title,
-            d: g.description,
-            p: 'مشاهده',
-            theme: ['noir', 'flame', 'mist', 'neon', 'ice', 'ember'][i % 6],
-            fig: 'game',
-            crest: i % 2 === 0
-        })),
-        picks: games.slice(0, 3).map(g => ({
-            t: g.title,
-            s: g.genre
-        }))
+      slides: tournaments.slice(0, 3).map(t => ({
+        title: t.gameName,
+        desc: t.title + ' — ' + t.description,
+        reviews: '+' + Math.floor(Math.random() * 100) + ' نظرات',
+        watch: t.participants,
+        eta: 2 * 3600 + 14 * 60 + 33, // static for now
+        plats: ['steam', 'epic'],
+        faces: [11, 12, 13]
+      })),
+      games: games.map((g, i) => ({
+        t: g.title,
+        d: g.description,
+        p: 'مشاهده',
+        theme: ['noir', 'flame', 'mist', 'neon', 'ice', 'ember'][i % 6],
+        fig: 'game',
+        crest: i % 2 === 0
+      })),
+      picks: games.slice(0, 3).map(g => ({
+        t: g.title,
+        s: g.genre
+      }))
     };
 
     // --- Titan Prototype Logic ---
-    
-(() => {
-'use strict';
 
-/* =====================================================
-   Config — change these
-   ===================================================== */
-const CONFIG = {
-  userName: 'طاها',   // shown in the greeting
-  slideMs: 6500         // hero auto-rotation time
-};
+    (() => {
+      'use strict';
 
-/* =====================================================
-   Helpers
-   ===================================================== */
-const $  = (s, r = document) => r.querySelector(s);
-const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const rand = (a, b) => Math.random() * (b - a) + a;
-const pickOne = a => a[Math.floor(Math.random() * a.length)];
-const fmt = n => Math.round(n).toLocaleString('en-US');
-const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const frame = $('#frame');
+      /* =====================================================
+         Config — change these
+         ===================================================== */
+      const CONFIG = {
+        userName: 'طاها',   // shown in the greeting
+        slideMs: 6500         // hero auto-rotation time
+      };
 
-/* =====================================================
-   Icons  ([svg-inner, filled?])
-   ===================================================== */
-const I = {
-  home:  ['<path d="M3.5 10.8 12 3.5l8.5 7.3V20a1 1 0 0 1-1 1H15v-6H9v6H4.5a1 1 0 0 1-1-1z"/>'],
-  game:  ['<path d="M7.5 7h9A4.5 4.5 0 0 1 21 11.5v1a4.5 4.5 0 0 1-4.5 4.5h-1.2l-1.8-2h-3l-1.8 2H7.5A4.5 4.5 0 0 1 3 12.5v-1A4.5 4.5 0 0 1 7.5 7z"/><path d="M8 10v3M6.5 11.5h3"/><circle cx="15.6" cy="10.8" r=".6"/><circle cx="17.6" cy="12.6" r=".6"/>'],
-  gift:  ['<rect x="3.5" y="9" width="17" height="11.5" rx="2"/><rect x="2.5" y="6" width="19" height="3.5" rx="1"/><path d="M12 6v14.5"/><path d="M12 6c-.5-2.5-4-3.3-4.5-1.5C7 6 9.5 6 12 6zM12 6c.5-2.5 4-3.3 4.5-1.5C17 6 14.5 6 12 6z"/>'],
-  trophy:['<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5.5a1.5 1.5 0 0 0 0 3H8M16 6h2.5a1.5 1.5 0 0 1 0 3H16"/><path d="M12 13v4M8.5 20.5h7M10 17h4v3.5h-4z"/>'],
-  chart: ['<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5V12h8.5"/>'],
-  bag:   ['<path d="M5 8.5h14l-1 11.5H6z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/>'],
-  chat:  ['<path d="M4 5.5h16v11H10l-4.5 4v-4H4z"/><path d="M8 10h8M8 13h5"/>'],
-  search:['<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>'],
-  cart:  ['<path d="M3 4h2.6l2 10.5h10.2L20 7.5H6.4"/><circle cx="9.5" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/>'],
-  bell:  ['<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.8 2H4.2z"/><path d="M10 21h4"/>'],
-  users: ['<circle cx="9" cy="8.5" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9.5" r="2.5"/><path d="M17 14.5a4.5 4.5 0 0 1 4.5 4.5"/>'],
-  play:  ['<path d="M8 5.2v13.6a.6.6 0 0 0 .9.5l11-6.8a.6.6 0 0 0 0-1L8.9 4.7a.6.6 0 0 0-.9.5z"/>', true],
-  pause: ['<rect x="6.5" y="5" width="4" height="14" rx="1.2"/><rect x="13.5" y="5" width="4" height="14" rx="1.2"/>', true],
-  x:     ['<path d="M6 6l12 12M18 6 6 18"/>'],
-  like:  ['<path d="M2.5 10.5h4v10h-4z"/><path d="M6.5 10.5 10.5 3c1.9 0 3 1.4 2.6 3.3L12.4 9.5h6.3a2 2 0 0 1 2 2.4l-1.4 6.6a2 2 0 0 1-2 1.5H6.5z"/>', true],
-  chev:  ['<path d="m9.5 5.5 6.5 6.5-6.5 6.5"/>'],
-  arrow: ['<path d="M4 12h15.5M13.5 6l6 6-6 6"/>'],
-  flame: ['<path d="M12 3c.6 3.4 4.8 5 4.8 9.6a4.8 4.8 0 0 1-9.6 0c0-1.9.8-3.2 2-4.2.1 1.5.9 2.5 2 2.7C11 8.6 10.8 5.6 12 3z"/>'],
-  steam: ['<circle cx="15.2" cy="9" r="3.4"/><circle cx="8" cy="15.6" r="2.3"/><path d="m9.8 14 3.2-3M3.3 13.4l3.3 1.3"/>'],
-  epic:  ['<path d="M6 3.5h12v12.6L12 20.5l-6-4.4z"/><path d="M10 8h4M10 8v5.5h4M10 10.7h3"/>'],
-  plus:  ['<path d="M12 5v14M5 12h14"/>'],
-  cursor:['<path d="M5 3l14 7-6 2-2 6z"/>', true]
-};
-const ico = name => {
-  const [inner, filled] = I[name];
-  return `<svg viewBox="0 0 24 24" fill="${filled ? 'currentColor' : 'none'}" stroke="${filled ? 'none' : 'currentColor'}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
-};
-const paint = (root = document) => $$('[data-icon]', root).forEach(el => { if (!el.childElementCount) el.innerHTML = ico(el.dataset.icon); });
+      /* =====================================================
+         Helpers
+         ===================================================== */
+      const $ = (s, r = document) => r.querySelector(s);
+      const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const rand = (a, b) => Math.random() * (b - a) + a;
+      const pickOne = a => a[Math.floor(Math.random() * a.length)];
+      const fmt = n => Math.round(n).toLocaleString('en-US');
+      const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      const frame = $('#frame');
 
-/* =====================================================
-   Procedural avatars (swap for real user photos later)
-   ===================================================== */
-let _uid = 0;
-function avatar(seed) {
-  const id = 'av' + (_uid++);
-  const bgs = [['#ffcf8a','#ff8a5c'],['#9be8b0','#37b57a'],['#a5c6ff','#6272f2'],['#ffe17a','#ffa02e'],['#f7b0dd','#c862dc'],['#a6dcff','#4aa0e6']];
-  const skins = ['#f4cfa8','#e6b088','#c98d62','#f8dcc4','#a8714a','#dca47a'];
-  const hairs = ['#2b1b17','#5b3a26','#d9a441','#151515','#8a2e2e','#3a2a5c'];
-  const shirts = ['#2f2a4a','#c9403f','#1f6f6b','#f0f0f0','#3a5bd0','#222'];
-  const s = Math.abs(seed | 0);
-  const bg = bgs[s % 6], sk = skins[(s * 7 + 1) % 6], hr = hairs[(s * 5 + 2) % 6], sh = shirts[(s * 3 + 4) % 6], style = (s * 11 + 3) % 4;
-  let hair;
-  if (style === 0) hair = `<path d="M10.5 19c-.6-7.5 4-10.5 9.5-10.5S30 11.5 29.5 19c-1.8-3.6-5.2-5-9.5-5s-7.7 1.4-9.5 5z" fill="${hr}"/>`;
-  else if (style === 1) hair = `<circle cx="13" cy="13" r="4.5" fill="${hr}"/><circle cx="20" cy="10.5" r="5" fill="${hr}"/><circle cx="27" cy="13" r="4.5" fill="${hr}"/>`;
-  else if (style === 2) hair = `<path d="M9.5 24c-1.5-9 2-16 10.5-16s12 7 10.5 16c-1.2-2-2-5-2-8-3.5 1-11 1-14.5 0 0 3-.8 6-2 8z" fill="${hr}"/>`;
-  else hair = `<path d="M11 17.5c1-5 4.5-7 9-7s8 2 9 7c-3-2.5-6-3-9-3s-6 .5-9 3z" fill="${hr}"/>`;
-  return `<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${bg[0]}"/><stop offset="1" stop-color="${bg[1]}"/></linearGradient></defs><rect width="40" height="40" fill="url(#${id})"/><ellipse cx="20" cy="42" rx="15" ry="11" fill="${sh}"/><rect x="17" y="26" width="6" height="6" rx="3" fill="${sk}"/><circle cx="20" cy="20" r="8.6" fill="${sk}"/>${hair}<circle cx="16.8" cy="20.3" r="1" fill="#2a1414"/><circle cx="23.2" cy="20.3" r="1" fill="#2a1414"/><path d="M17.2 24c1.8 1.6 3.8 1.6 5.6 0" fill="none" stroke="#7a3a2a" stroke-width="1.1" stroke-linecap="round"/></svg>`;
-}
+      /* =====================================================
+         Icons  ([svg-inner, filled?])
+         ===================================================== */
+      const I = {
+        home: ['<path d="M3.5 10.8 12 3.5l8.5 7.3V20a1 1 0 0 1-1 1H15v-6H9v6H4.5a1 1 0 0 1-1-1z"/>'],
+        game: ['<path d="M7.5 7h9A4.5 4.5 0 0 1 21 11.5v1a4.5 4.5 0 0 1-4.5 4.5h-1.2l-1.8-2h-3l-1.8 2H7.5A4.5 4.5 0 0 1 3 12.5v-1A4.5 4.5 0 0 1 7.5 7z"/><path d="M8 10v3M6.5 11.5h3"/><circle cx="15.6" cy="10.8" r=".6"/><circle cx="17.6" cy="12.6" r=".6"/>'],
+        gift: ['<rect x="3.5" y="9" width="17" height="11.5" rx="2"/><rect x="2.5" y="6" width="19" height="3.5" rx="1"/><path d="M12 6v14.5"/><path d="M12 6c-.5-2.5-4-3.3-4.5-1.5C7 6 9.5 6 12 6zM12 6c.5-2.5 4-3.3 4.5-1.5C17 6 14.5 6 12 6z"/>'],
+        trophy: ['<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5.5a1.5 1.5 0 0 0 0 3H8M16 6h2.5a1.5 1.5 0 0 1 0 3H16"/><path d="M12 13v4M8.5 20.5h7M10 17h4v3.5h-4z"/>'],
+        chart: ['<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5V12h8.5"/>'],
+        bag: ['<path d="M5 8.5h14l-1 11.5H6z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/>'],
+        chat: ['<path d="M4 5.5h16v11H10l-4.5 4v-4H4z"/><path d="M8 10h8M8 13h5"/>'],
+        search: ['<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>'],
+        cart: ['<path d="M3 4h2.6l2 10.5h10.2L20 7.5H6.4"/><circle cx="9.5" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/>'],
+        bell: ['<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.8 2H4.2z"/><path d="M10 21h4"/>'],
+        users: ['<circle cx="9" cy="8.5" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9.5" r="2.5"/><path d="M17 14.5a4.5 4.5 0 0 1 4.5 4.5"/>'],
+        play: ['<path d="M8 5.2v13.6a.6.6 0 0 0 .9.5l11-6.8a.6.6 0 0 0 0-1L8.9 4.7a.6.6 0 0 0-.9.5z"/>', true],
+        pause: ['<rect x="6.5" y="5" width="4" height="14" rx="1.2"/><rect x="13.5" y="5" width="4" height="14" rx="1.2"/>', true],
+        x: ['<path d="M6 6l12 12M18 6 6 18"/>'],
+        like: ['<path d="M2.5 10.5h4v10h-4z"/><path d="M6.5 10.5 10.5 3c1.9 0 3 1.4 2.6 3.3L12.4 9.5h6.3a2 2 0 0 1 2 2.4l-1.4 6.6a2 2 0 0 1-2 1.5H6.5z"/>', true],
+        chev: ['<path d="m9.5 5.5 6.5 6.5-6.5 6.5"/>'],
+        arrow: ['<path d="M4 12h15.5M13.5 6l6 6-6 6"/>'],
+        flame: ['<path d="M12 3c.6 3.4 4.8 5 4.8 9.6a4.8 4.8 0 0 1-9.6 0c0-1.9.8-3.2 2-4.2.1 1.5.9 2.5 2 2.7C11 8.6 10.8 5.6 12 3z"/>'],
+        steam: ['<circle cx="15.2" cy="9" r="3.4"/><circle cx="8" cy="15.6" r="2.3"/><path d="m9.8 14 3.2-3M3.3 13.4l3.3 1.3"/>'],
+        epic: ['<path d="M6 3.5h12v12.6L12 20.5l-6-4.4z"/><path d="M10 8h4M10 8v5.5h4M10 10.7h3"/>'],
+        plus: ['<path d="M12 5v14M5 12h14"/>'],
+        cursor: ['<path d="M5 3l14 7-6 2-2 6z"/>', true]
+      };
+      const ico = name => {
+        const [inner, filled] = I[name];
+        return `<svg viewBox="0 0 24 24" fill="${filled ? 'currentColor' : 'none'}" stroke="${filled ? 'none' : 'currentColor'}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
+      };
+      const paint = (root = document) => $$('[data-icon]', root).forEach(el => { if (!el.childElementCount) el.innerHTML = ico(el.dataset.icon); });
 
-/* =====================================================
-   Hero key art (SVG). Replace with your own <img> per slide
-   ===================================================== */
-const heroArt = k => `
+      /* =====================================================
+         Procedural avatars (swap for real user photos later)
+         ===================================================== */
+      let _uid = 0;
+      function avatar(seed) {
+        const id = 'av' + (_uid++);
+        const bgs = [['#ffcf8a', '#ff8a5c'], ['#9be8b0', '#37b57a'], ['#a5c6ff', '#6272f2'], ['#ffe17a', '#ffa02e'], ['#f7b0dd', '#c862dc'], ['#a6dcff', '#4aa0e6']];
+        const skins = ['#f4cfa8', '#e6b088', '#c98d62', '#f8dcc4', '#a8714a', '#dca47a'];
+        const hairs = ['#2b1b17', '#5b3a26', '#d9a441', '#151515', '#8a2e2e', '#3a2a5c'];
+        const shirts = ['#2f2a4a', '#c9403f', '#1f6f6b', '#f0f0f0', '#3a5bd0', '#222'];
+        const s = Math.abs(seed | 0);
+        const bg = bgs[s % 6], sk = skins[(s * 7 + 1) % 6], hr = hairs[(s * 5 + 2) % 6], sh = shirts[(s * 3 + 4) % 6], style = (s * 11 + 3) % 4;
+        let hair;
+        if (style === 0) hair = `<path d="M10.5 19c-.6-7.5 4-10.5 9.5-10.5S30 11.5 29.5 19c-1.8-3.6-5.2-5-9.5-5s-7.7 1.4-9.5 5z" fill="${hr}"/>`;
+        else if (style === 1) hair = `<circle cx="13" cy="13" r="4.5" fill="${hr}"/><circle cx="20" cy="10.5" r="5" fill="${hr}"/><circle cx="27" cy="13" r="4.5" fill="${hr}"/>`;
+        else if (style === 2) hair = `<path d="M9.5 24c-1.5-9 2-16 10.5-16s12 7 10.5 16c-1.2-2-2-5-2-8-3.5 1-11 1-14.5 0 0 3-.8 6-2 8z" fill="${hr}"/>`;
+        else hair = `<path d="M11 17.5c1-5 4.5-7 9-7s8 2 9 7c-3-2.5-6-3-9-3s-6 .5-9 3z" fill="${hr}"/>`;
+        return `<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${bg[0]}"/><stop offset="1" stop-color="${bg[1]}"/></linearGradient></defs><rect width="40" height="40" fill="url(#${id})"/><ellipse cx="20" cy="42" rx="15" ry="11" fill="${sh}"/><rect x="17" y="26" width="6" height="6" rx="3" fill="${sk}"/><circle cx="20" cy="20" r="8.6" fill="${sk}"/>${hair}<circle cx="16.8" cy="20.3" r="1" fill="#2a1414"/><circle cx="23.2" cy="20.3" r="1" fill="#2a1414"/><path d="M17.2 24c1.8 1.6 3.8 1.6 5.6 0" fill="none" stroke="#7a3a2a" stroke-width="1.1" stroke-linecap="round"/></svg>`;
+      }
+
+      /* =====================================================
+         Hero key art (SVG). Replace with your own <img> per slide
+         ===================================================== */
+      const heroArt = k => `
 <svg viewBox="0 0 460 360" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="hA${k}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a678ea"/><stop offset="1" stop-color="#4b2a86"/></linearGradient>
@@ -177,223 +177,223 @@ const heroArt = k => `
   </g>
 </svg>`;
 
-/* =====================================================
-   Data
-   ===================================================== */
-const SLIDES = window.__TITAN_DATA.slides || [
-  { title: 'Valorant',        desc: 'Titan Cup — the 5v5 tactical shooter tournament. Squad up, climb the bracket and fight for the $5,000 prize pool.', reviews: '+53 Reviews', watch: 1284, eta: 2*3600 + 14*60 + 33, plats: ['steam','epic'], faces: [11,12,13] },
-  { title: 'Rocket League',   desc: 'Titan سری راکت — 3v3 aerial chaos. Weekly qualifiers are open and the top 8 teams reach the live finals.',       reviews: '+38 Reviews', watch: 842,  eta: 5*3600 + 41*60 + 8,  plats: ['steam','epic'], faces: [21,22,23] },
-  { title: 'Counter-Strike 2',desc: 'Titan Major Qualifier — the classic bomb-defusal showdown. Register your five and lock in your map picks.',           reviews: '+71 Reviews', watch: 2310, eta: 26*60 + 52,          plats: ['steam'],        faces: [31,32,33] }
-];
+      /* =====================================================
+         Data
+         ===================================================== */
+      const SLIDES = window.__TITAN_DATA.slides || [
+        { title: 'Valorant', desc: 'Titan Cup — the 5v5 tactical shooter tournament. Squad up, climb the bracket and fight for the $5,000 prize pool.', reviews: '+53 Reviews', watch: 1284, eta: 2 * 3600 + 14 * 60 + 33, plats: ['steam', 'epic'], faces: [11, 12, 13] },
+        { title: 'Rocket League', desc: 'Titan سری راکت — 3v3 aerial chaos. Weekly qualifiers are open and the top 8 teams reach the live finals.', reviews: '+38 Reviews', watch: 842, eta: 5 * 3600 + 41 * 60 + 8, plats: ['steam', 'epic'], faces: [21, 22, 23] },
+        { title: 'Counter-Strike 2', desc: 'Titan Major Qualifier — the classic bomb-defusal showdown. Register your five and lock in your map picks.', reviews: '+71 Reviews', watch: 2310, eta: 26 * 60 + 52, plats: ['steam'], faces: [31, 32, 33] }
+      ];
 
 
 
-const GAMES = window.__TITAN_DATA.games || [
-  { t: 'Uncharted 4',                   d: "The last chapter of Nathan Drake's story: a cinematic treasure hunt across the globe.", p: '$29.99', theme: 'noir'  },
-  { t: 'Dishonored : Standard Edition', d: 'Stealth, supernatural powers and a city on the brink. Play it your way.',                p: '$19.99', theme: 'flame', crest: true },
-  { t: 'Elden Ring',                    d: "Explore a vast open world and take on the Lands Between's toughest bosses.",             p: '$39.99', theme: 'mist'  },
-  { t: 'Titan Pro Headset',             d: '7.1 surround sound and a detachable mic, built for long ranked nights.',                 p: '$89.00', theme: 'neon',  fig: 'headset',  kind: 'Gear' },
-  { t: 'God of War Ragnarök',           d: 'Kratos and Atreus face the end of the world in a Norse epic.',                            p: '$44.99', theme: 'ice'   },
-  { t: 'Titan K1 Keyboard',             d: 'Hot-swappable switches and per-key RGB for a board that feels like yours.',              p: '$109.00',theme: 'ember', fig: 'keyboard', kind: 'Gear' }
-];
+      const GAMES = window.__TITAN_DATA.games || [
+        { t: 'Uncharted 4', d: "The last chapter of Nathan Drake's story: a cinematic treasure hunt across the globe.", p: '$29.99', theme: 'noir' },
+        { t: 'Dishonored : Standard Edition', d: 'Stealth, supernatural powers and a city on the brink. Play it your way.', p: '$19.99', theme: 'flame', crest: true },
+        { t: 'Elden Ring', d: "Explore a vast open world and take on the Lands Between's toughest bosses.", p: '$39.99', theme: 'mist' },
+        { t: 'Titan Pro Headset', d: '7.1 surround sound and a detachable mic, built for long ranked nights.', p: '$89.00', theme: 'neon', fig: 'headset', kind: 'Gear' },
+        { t: 'God of War Ragnarök', d: 'Kratos and Atreus face the end of the world in a Norse epic.', p: '$44.99', theme: 'ice' },
+        { t: 'Titan K1 Keyboard', d: 'Hot-swappable switches and per-key RGB for a board that feels like yours.', p: '$109.00', theme: 'ember', fig: 'keyboard', kind: 'Gear' }
+      ];
 
-const THEME = {
-  noir:  { a: '#120c14', b: '#3a2a30', glow: '#c98d92', fig: '#08050a' },
-  flame: { a: '#7d2410', b: '#f27a20', glow: '#ffd58a', fig: '#3a1508' },
-  mist:  { a: '#2e1216', b: '#6b323a', glow: '#e0a3a8', fig: '#1b070b' },
-  neon:  { a: '#160f3a', b: '#6b33d6', glow: '#ff6ab0', fig: '#0b0722' },
-  ice:   { a: '#0f2436', b: '#2f86b8', glow: '#c6ecff', fig: '#06131f' },
-  ember: { a: '#3a0e28', b: '#cf3f5c', glow: '#ffb9a6', fig: '#1a0512' }
-};
+      const THEME = {
+        noir: { a: '#120c14', b: '#3a2a30', glow: '#c98d92', fig: '#08050a' },
+        flame: { a: '#7d2410', b: '#f27a20', glow: '#ffd58a', fig: '#3a1508' },
+        mist: { a: '#2e1216', b: '#6b323a', glow: '#e0a3a8', fig: '#1b070b' },
+        neon: { a: '#160f3a', b: '#6b33d6', glow: '#ff6ab0', fig: '#0b0722' },
+        ice: { a: '#0f2436', b: '#2f86b8', glow: '#c6ecff', fig: '#06131f' },
+        ember: { a: '#3a0e28', b: '#cf3f5c', glow: '#ffb9a6', fig: '#1a0512' }
+      };
 
-const HRS = [
-  { k: 'rank',  name: 'رتبه شما',      v: 12,   c: '#d9443f', fg: '#fff' },
-  { k: 'wins',  name: 'تعداد بردها',   v: 240,  c: '#fff1b8', fg: '#2b1013' },
-  { k: 'kills', name: 'تعداد کیل‌ها', v: 4500, c: '#7458d6', fg: '#fff' }
-];
-const GLYPH = {
-  rank:  '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l6.5 8L5 20h4l7-8-7-8z"/><path d="M14 4h5l-5 5.5z" opacity=".8"/></svg>',
-  wins:  '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8l3.5 2.5-1.3 4h-4.4l-1.3-4z" fill="currentColor"/></svg>',
-  kills: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="6.5"/><path d="M12 2.5v5M12 16.5v5M2.5 12h5M16.5 12h5"/></svg>'
-};
+      const HRS = [
+        { k: 'rank', name: 'رتبه شما', v: 12, c: '#d9443f', fg: '#fff' },
+        { k: 'wins', name: 'تعداد بردها', v: 240, c: '#fff1b8', fg: '#2b1013' },
+        { k: 'kills', name: 'تعداد کیل‌ها', v: 4500, c: '#7458d6', fg: '#fff' }
+      ];
+      const GLYPH = {
+        rank: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l6.5 8L5 20h4l7-8-7-8z"/><path d="M14 4h5l-5 5.5z" opacity=".8"/></svg>',
+        wins: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8l3.5 2.5-1.3 4h-4.4l-1.3-4z" fill="currentColor"/></svg>',
+        kills: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="6.5"/><path d="M12 2.5v5M12 16.5v5M2.5 12h5M16.5 12h5"/></svg>'
+      };
 
-const FRIENDS = [
-  { n: 'Mia',   s: 'game',   g: 'Valorant', seed: 3 },
-  { n: 'Alex',  s: 'online', seed: 8 },
-  { n: 'Sara',  s: 'away',   seed: 14 },
-  { n: 'Kian',  s: 'online', seed: 19 },
-  { n: 'Bita',  s: 'online', seed: 25 },
-  { n: 'Arman', s: 'away',   seed: 30 }
-];
-const CHATS = [
-  { n: 'Squad chat', group: true, unread: true },
-  { n: 'Nima',  seed: 41 },
-  { n: 'Leyla', seed: 47, unread: true }
-];
-const GAMES_LIVE = ['Valorant', 'Rocket League', 'Counter-Strike 2', 'Dota 2'];
+      const FRIENDS = [
+        { n: 'Mia', s: 'game', g: 'Valorant', seed: 3 },
+        { n: 'Alex', s: 'online', seed: 8 },
+        { n: 'Sara', s: 'away', seed: 14 },
+        { n: 'Kian', s: 'online', seed: 19 },
+        { n: 'Bita', s: 'online', seed: 25 },
+        { n: 'Arman', s: 'away', seed: 30 }
+      ];
+      const CHATS = [
+        { n: 'Squad chat', group: true, unread: true },
+        { n: 'Nima', seed: 41 },
+        { n: 'Leyla', seed: 47, unread: true }
+      ];
+      const GAMES_LIVE = ['Valorant', 'Rocket League', 'Counter-Strike 2', 'Dota 2'];
 
-/* =====================================================
-   Toasts
-   ===================================================== */
-const toastsEl = $('#toasts');
-function toast({ title, text = '', icon = 'bell' }) {
-  const el = document.createElement('div');
-  el.className = 'toast';
-  el.innerHTML = `<span class="t-ic"><i data-icon="${icon}"></i></span><div><b>${esc(title)}</b>${text ? `<span class="tx">${esc(text)}</span>` : ''}</div>`;
-  paint(el);
-  toastsEl.appendChild(el);
-  while (toastsEl.children.length > 3) toastsEl.firstChild.remove();
-  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 450); }, 4300);
-}
-
-
-
-/* =====================================================
-   Left nav: sliding indicator
-   ===================================================== */
-const navItems = $$('.nav-item');
-const navInd = $('#navInd');
-function moveInd(el, instant) {
-  if (instant) navInd.style.transition = 'none';
-  navInd.style.transform = `translate(${el.offsetLeft}px,${el.offsetTop}px)`;
-  if (instant) { void navInd.offsetWidth; navInd.style.transition = ''; }
-}
-navItems.forEach(a => a.addEventListener('click', e => {
-  e.preventDefault(); // remove this line once the links point to real pages
-  navItems.forEach(x => x.classList.remove('active'));
-  a.classList.add('active');
-  moveInd(a);
-}));
-addEventListener('resize', () => moveInd($('.nav-item.active'), true));
-$('#addSquad').addEventListener('click', () => toast({ title: 'تیم جدید', text: 'دوستان خود را به لابی دعوت کنید', icon: 'users' }));
-
-/* =====================================================
-   Search
-   ===================================================== */
-const CATALOG = [
-  ...GAMES.map(g => ({ t: g.t, k: g.kind || 'Game' })),
-  ...SLIDES.map(s => ({ t: s.title + ' Cup', k: 'Tournament' })),
-  { t: 'FIFA 23', k: 'Game' }
-];
-const searchEl = $('#search'), qEl = $('#q'), resEl = $('#results');
-function renderResults(q) {
-  const query = q.trim().toLowerCase();
-  const list = (query ? CATALOG.filter(x => x.t.toLowerCase().includes(query)) : CATALOG).slice(0, 5);
-  resEl.innerHTML = (query ? '' : '<h5>جستجوهای پرطرفدار</h5>') + (list.length
-    ? list.map(x => `<button type="button" data-t="${esc(x.t)}"><span>${esc(x.t)}</span><small>${x.k}</small></button>`).join('')
-    : `<div class="empty">بدون نتیجه برای “${esc(q.trim())}”</div>`);
-}
-qEl.addEventListener('focus', () => { renderResults(qEl.value); searchEl.classList.add('open'); });
-qEl.addEventListener('input', () => { renderResults(qEl.value); searchEl.classList.add('open'); });
-qEl.addEventListener('blur', () => setTimeout(() => searchEl.classList.remove('open'), 160));
-qEl.addEventListener('keydown', e => {
-  if (e.key === 'Escape') qEl.blur();
-  if (e.key === 'Enter') { const b = $('button', resEl); if (b) b.click(); }
-});
-resEl.addEventListener('mousedown', e => e.preventDefault());
-resEl.addEventListener('click', e => {
-  const b = e.target.closest('button[data-t]');
-  if (!b) return;
-  toast({ title: b.dataset.t, text: 'در حال باز کردن صفحه...', icon: 'search' });
-  qEl.value = ''; qEl.blur();
-});
-addEventListener('keydown', e => {
-  if (e.key === '/' && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) { e.preventDefault(); qEl.focus(); }
-});
-
-/* =====================================================
-   Cart & bell
-   ===================================================== */
-let cart = 0;
-const cartBtn = $('#cartBtn'), cartBadge = $('#cartCount'), bellDot = $('#bellDot');
-function addToCart(name) {
-  cart++;
-  cartBadge.hidden = false;
-  cartBadge.textContent = cart;
-  cartBadge.classList.remove('pop'); void cartBadge.offsetWidth; cartBadge.classList.add('pop');
-  if (!reduce) cartBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.25) rotate(-8deg)' }, { transform: 'scale(1)' }], { duration: 450, easing: 'cubic-bezier(.3,1.6,.5,1)' });
-  toast({ title: 'به سبد خرید اضافه شد', text: name, icon: 'cart' });
-}
-$('#bellBtn').addEventListener('click', () => {
-  bellDot.hidden = true;
-  toast({ title: "You're all caught up", text: 'اعلان جدیدی ندارید', icon: 'bell' });
-});
-const liveToast = t => { bellDot.hidden = false; toast(t); };
-
-/* =====================================================
-   Hero
-   ===================================================== */
-const hero = $('#hero'), heroBody = $('#heroBody'), heroArtEl = $('#heroArt'), dashesEl = $('#dashes');
-heroArtEl.innerHTML = SLIDES.map((s, i) => `<div class="art${i === 0 ? ' on' : ''}" data-hue="${i}">${heroArt(i)}</div>`).join('');
-dashesEl.innerHTML = SLIDES.map((s, i) => `<button class="dash${i === 0 ? ' on' : ''}" aria-label="نمایش ${esc(s.title)}"><span><i></i></span></button>`).join('');
-const arts = $$('.art', heroArtEl), bgLayers = $$('.hero-bg .l'), dashes = $$('.dash', dashesEl), dashFills = $$('.dash i', dashesEl);
-SLIDES.forEach(s => s.end = Date.now() + s.eta * 1000);
-const watchEl = $('#watch'), cdEl = $('#cd');
-let cur = 0, elapsed = 0, paused = false;
-
-function applySlide() {
-  const s = SLIDES[cur];
-  $('#heroTitle').textContent = s.title;
-  $('#heroDesc').textContent = s.desc;
-  $('#heroReviews').textContent = s.reviews;
-  $('#likeBtn').classList.remove('liked');
-  $('#plats').innerHTML = s.plats.map(p => `<span class="plat"><i data-icon="${p}"></i></span>`).join('');
-  $('#faces').innerHTML = s.faces.map(n => `<span class="face">${avatar(n)}</span>`).join('');
-  paint(hero);
-  watchEl.textContent = fmt(s.watch);
-  tickCountdown();
-}
-function goTo(i, first) {
-  cur = i; elapsed = 0;
-  arts.forEach((a, k) => a.classList.toggle('on', k === i));
-  bgLayers.forEach((a, k) => a.classList.toggle('on', k === i));
-  dashes.forEach((d, k) => d.classList.toggle('on', k === i));
-  dashFills.forEach(f => f.style.transform = 'scaleX(0)');
-  if (first || reduce) { applySlide(); return; }
-  heroBody.classList.add('swap');
-  setTimeout(() => { applySlide(); heroBody.classList.remove('swap'); }, 290);
-}
-dashes.forEach((d, k) => d.addEventListener('click', () => { if (k !== cur) goTo(k); }));
-['pointerenter', 'focusin'].forEach(ev => hero.addEventListener(ev, () => paused = true));
-['pointerleave', 'focusout'].forEach(ev => hero.addEventListener(ev, () => paused = false));
-$('#likeBtn').addEventListener('click', e => {
-  const b = e.currentTarget; b.classList.toggle('liked');
-  if (b.classList.contains('liked')) toast({ title: SLIDES[cur].title, text: 'به علاقه‌مندی‌های شما اضافه شد', icon: 'like' });
-});
-
-function tickCountdown() {
-  const left = Math.max(0, Math.floor((SLIDES[cur].end - Date.now()) / 1000));
-  const p = n => String(n).padStart(2, '0');
-  cdEl.textContent = `${p(Math.floor(left / 3600))}:${p(Math.floor(left % 3600 / 60))}:${p(left % 60)}`;
-}
-setInterval(tickCountdown, 1000);
-(function wobbleViewers() {
-  const s = SLIDES[cur];
-  s.watch = Math.max(100, s.watch + Math.round(rand(-9, 15)));
-  watchEl.textContent = fmt(s.watch);
-  setTimeout(wobbleViewers, rand(1800, 3200));
-})();
+      /* =====================================================
+         Toasts
+         ===================================================== */
+      const toastsEl = $('#toasts');
+      function toast({ title, text = '', icon = 'bell' }) {
+        const el = document.createElement('div');
+        el.className = 'toast';
+        el.innerHTML = `<span class="t-ic"><i data-icon="${icon}"></i></span><div><b>${esc(title)}</b>${text ? `<span class="tx">${esc(text)}</span>` : ''}</div>`;
+        paint(el);
+        toastsEl.appendChild(el);
+        while (toastsEl.children.length > 3) toastsEl.firstChild.remove();
+        setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 450); }, 4300);
+      }
 
 
 
-/* =====================================================
-   New Games carousel
-   ===================================================== */
-function cardArt(g, idx) {
-  const t = THEME[g.theme], id = 'c' + idx;
-  let topo = '';
-  for (let i = 1; i <= 6; i++) topo += `<ellipse cx="${60 + (idx * 13) % 40}" cy="70" rx="${i * 24}" ry="${i * 16}" fill="none" stroke="${t.glow}" stroke-opacity="${(0.24 - i * 0.03).toFixed(2)}" transform="rotate(${-20 + idx * 9} 100 110)"/>`;
-  let fig;
-  if (g.fig === 'headset') {
-    fig = `<path d="M52 128a48 48 0 0 1 96 0" fill="none" stroke="${t.fig}" stroke-width="9" stroke-linecap="round"/><rect x="40" y="120" width="22" height="42" rx="10" fill="${t.fig}"/><rect x="138" y="120" width="22" height="42" rx="10" fill="${t.fig}"/><path d="M50 158q0 20 30 22" stroke="${t.fig}" fill="none" stroke-width="5" stroke-linecap="round"/><circle cx="84" cy="181" r="5" fill="${t.glow}"/>`;
-  } else if (g.fig === 'keyboard') {
-    let k = '';
-    for (let r = 0; r < 4; r++) for (let c = 0; c < 9; c++) k += `<rect x="${26 + c * 16}" y="${112 + r * 17}" width="12" height="12" rx="3" fill="${t.glow}" opacity="${(0.25 + ((r * 9 + c) % 5) * 0.12).toFixed(2)}"/>`;
-    fig = `<rect x="16" y="102" width="168" height="80" rx="14" fill="${t.fig}" transform="rotate(-8 100 142)"/><g transform="rotate(-8 100 142)">${k}</g>`;
-  } else {
-    fig = `${g.crest ? `<path d="M80 100l6-34 10 24 8-30 8 30 10-24 6 34z" fill="${t.glow}" opacity=".85"/>` : ''}<circle cx="100" cy="112" r="24" fill="${t.fig}"/><path d="M40 230c2-46 26-74 60-74s58 28 60 74z" fill="${t.fig}"/>`;
-  }
-  return `<svg viewBox="0 0 200 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      /* =====================================================
+         Left nav: sliding indicator
+         ===================================================== */
+      const navItems = $$('.nav-item');
+      const navInd = $('#navInd');
+      function moveInd(el, instant) {
+        if (instant) navInd.style.transition = 'none';
+        navInd.style.transform = `translate(${el.offsetLeft}px,${el.offsetTop}px)`;
+        if (instant) { void navInd.offsetWidth; navInd.style.transition = ''; }
+      }
+      navItems.forEach(a => a.addEventListener('click', e => {
+        e.preventDefault(); // remove this line once the links point to real pages
+        navItems.forEach(x => x.classList.remove('active'));
+        a.classList.add('active');
+        moveInd(a);
+      }));
+      addEventListener('resize', () => moveInd($('.nav-item.active'), true));
+      $('#addSquad').addEventListener('click', () => toast({ title: 'تیم جدید', text: 'دوستان خود را به لابی دعوت کنید', icon: 'users' }));
+
+      /* =====================================================
+         Search
+         ===================================================== */
+      const CATALOG = [
+        ...GAMES.map(g => ({ t: g.t, k: g.kind || 'Game' })),
+        ...SLIDES.map(s => ({ t: s.title + ' Cup', k: 'Tournament' })),
+        { t: 'FIFA 23', k: 'Game' }
+      ];
+      const searchEl = $('#search'), qEl = $('#q'), resEl = $('#results');
+      function renderResults(q) {
+        const query = q.trim().toLowerCase();
+        const list = (query ? CATALOG.filter(x => x.t.toLowerCase().includes(query)) : CATALOG).slice(0, 5);
+        resEl.innerHTML = (query ? '' : '<h5>جستجوهای پرطرفدار</h5>') + (list.length
+          ? list.map(x => `<button type="button" data-t="${esc(x.t)}"><span>${esc(x.t)}</span><small>${x.k}</small></button>`).join('')
+          : `<div class="empty">بدون نتیجه برای “${esc(q.trim())}”</div>`);
+      }
+      qEl.addEventListener('focus', () => { renderResults(qEl.value); searchEl.classList.add('open'); });
+      qEl.addEventListener('input', () => { renderResults(qEl.value); searchEl.classList.add('open'); });
+      qEl.addEventListener('blur', () => setTimeout(() => searchEl.classList.remove('open'), 160));
+      qEl.addEventListener('keydown', e => {
+        if (e.key === 'Escape') qEl.blur();
+        if (e.key === 'Enter') { const b = $('button', resEl); if (b) b.click(); }
+      });
+      resEl.addEventListener('mousedown', e => e.preventDefault());
+      resEl.addEventListener('click', e => {
+        const b = e.target.closest('button[data-t]');
+        if (!b) return;
+        toast({ title: b.dataset.t, text: 'در حال باز کردن صفحه...', icon: 'search' });
+        qEl.value = ''; qEl.blur();
+      });
+      addEventListener('keydown', e => {
+        if (e.key === '/' && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) { e.preventDefault(); qEl.focus(); }
+      });
+
+      /* =====================================================
+         Cart & bell
+         ===================================================== */
+      let cart = 0;
+      const cartBtn = $('#cartBtn'), cartBadge = $('#cartCount'), bellDot = $('#bellDot');
+      function addToCart(name) {
+        cart++;
+        cartBadge.hidden = false;
+        cartBadge.textContent = cart;
+        cartBadge.classList.remove('pop'); void cartBadge.offsetWidth; cartBadge.classList.add('pop');
+        if (!reduce) cartBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.25) rotate(-8deg)' }, { transform: 'scale(1)' }], { duration: 450, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+        toast({ title: 'به سبد خرید اضافه شد', text: name, icon: 'cart' });
+      }
+      $('#bellBtn').addEventListener('click', () => {
+        bellDot.hidden = true;
+        toast({ title: "You're all caught up", text: 'اعلان جدیدی ندارید', icon: 'bell' });
+      });
+      const liveToast = t => { bellDot.hidden = false; toast(t); };
+
+      /* =====================================================
+         Hero
+         ===================================================== */
+      const hero = $('#hero'), heroBody = $('#heroBody'), heroArtEl = $('#heroArt'), dashesEl = $('#dashes');
+      heroArtEl.innerHTML = SLIDES.map((s, i) => `<div class="art${i === 0 ? ' on' : ''}" data-hue="${i}">${heroArt(i)}</div>`).join('');
+      dashesEl.innerHTML = SLIDES.map((s, i) => `<button class="dash${i === 0 ? ' on' : ''}" aria-label="نمایش ${esc(s.title)}"><span><i></i></span></button>`).join('');
+      const arts = $$('.art', heroArtEl), bgLayers = $$('.hero-bg .l'), dashes = $$('.dash', dashesEl), dashFills = $$('.dash i', dashesEl);
+      SLIDES.forEach(s => s.end = Date.now() + s.eta * 1000);
+      const watchEl = $('#watch'), cdEl = $('#cd');
+      let cur = 0, elapsed = 0, paused = false;
+
+      function applySlide() {
+        const s = SLIDES[cur];
+        $('#heroTitle').textContent = s.title;
+        $('#heroDesc').textContent = s.desc;
+        $('#heroReviews').textContent = s.reviews;
+        $('#likeBtn').classList.remove('liked');
+        $('#plats').innerHTML = s.plats.map(p => `<span class="plat"><i data-icon="${p}"></i></span>`).join('');
+        $('#faces').innerHTML = s.faces.map(n => `<span class="face">${avatar(n)}</span>`).join('');
+        paint(hero);
+        watchEl.textContent = fmt(s.watch);
+        tickCountdown();
+      }
+      function goTo(i, first) {
+        cur = i; elapsed = 0;
+        arts.forEach((a, k) => a.classList.toggle('on', k === i));
+        bgLayers.forEach((a, k) => a.classList.toggle('on', k === i));
+        dashes.forEach((d, k) => d.classList.toggle('on', k === i));
+        dashFills.forEach(f => f.style.transform = 'scaleX(0)');
+        if (first || reduce) { applySlide(); return; }
+        heroBody.classList.add('swap');
+        setTimeout(() => { applySlide(); heroBody.classList.remove('swap'); }, 290);
+      }
+      dashes.forEach((d, k) => d.addEventListener('click', () => { if (k !== cur) goTo(k); }));
+      ['pointerenter', 'focusin'].forEach(ev => hero.addEventListener(ev, () => paused = true));
+      ['pointerleave', 'focusout'].forEach(ev => hero.addEventListener(ev, () => paused = false));
+      $('#likeBtn').addEventListener('click', e => {
+        const b = e.currentTarget; b.classList.toggle('liked');
+        if (b.classList.contains('liked')) toast({ title: SLIDES[cur].title, text: 'به علاقه‌مندی‌های شما اضافه شد', icon: 'like' });
+      });
+
+      function tickCountdown() {
+        const left = Math.max(0, Math.floor((SLIDES[cur].end - Date.now()) / 1000));
+        const p = n => String(n).padStart(2, '0');
+        cdEl.textContent = `${p(Math.floor(left / 3600))}:${p(Math.floor(left % 3600 / 60))}:${p(left % 60)}`;
+      }
+      setInterval(tickCountdown, 1000);
+      (function wobbleViewers() {
+        const s = SLIDES[cur];
+        s.watch = Math.max(100, s.watch + Math.round(rand(-9, 15)));
+        watchEl.textContent = fmt(s.watch);
+        setTimeout(wobbleViewers, rand(1800, 3200));
+      })();
+
+
+
+      /* =====================================================
+         New Games carousel
+         ===================================================== */
+      function cardArt(g, idx) {
+        const t = THEME[g.theme], id = 'c' + idx;
+        let topo = '';
+        for (let i = 1; i <= 6; i++) topo += `<ellipse cx="${60 + (idx * 13) % 40}" cy="70" rx="${i * 24}" ry="${i * 16}" fill="none" stroke="${t.glow}" stroke-opacity="${(0.24 - i * 0.03).toFixed(2)}" transform="rotate(${-20 + idx * 9} 100 110)"/>`;
+        let fig;
+        if (g.fig === 'headset') {
+          fig = `<path d="M52 128a48 48 0 0 1 96 0" fill="none" stroke="${t.fig}" stroke-width="9" stroke-linecap="round"/><rect x="40" y="120" width="22" height="42" rx="10" fill="${t.fig}"/><rect x="138" y="120" width="22" height="42" rx="10" fill="${t.fig}"/><path d="M50 158q0 20 30 22" stroke="${t.fig}" fill="none" stroke-width="5" stroke-linecap="round"/><circle cx="84" cy="181" r="5" fill="${t.glow}"/>`;
+        } else if (g.fig === 'keyboard') {
+          let k = '';
+          for (let r = 0; r < 4; r++) for (let c = 0; c < 9; c++) k += `<rect x="${26 + c * 16}" y="${112 + r * 17}" width="12" height="12" rx="3" fill="${t.glow}" opacity="${(0.25 + ((r * 9 + c) % 5) * 0.12).toFixed(2)}"/>`;
+          fig = `<rect x="16" y="102" width="168" height="80" rx="14" fill="${t.fig}" transform="rotate(-8 100 142)"/><g transform="rotate(-8 100 142)">${k}</g>`;
+        } else {
+          fig = `${g.crest ? `<path d="M80 100l6-34 10 24 8-30 8 30 10-24 6 34z" fill="${t.glow}" opacity=".85"/>` : ''}<circle cx="100" cy="112" r="24" fill="${t.fig}"/><path d="M40 230c2-46 26-74 60-74s58 28 60 74z" fill="${t.fig}"/>`;
+        }
+        return `<svg viewBox="0 0 200 220" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <defs>
       <linearGradient id="${id}b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${t.a}"/><stop offset="1" stop-color="${t.b}"/></linearGradient>
       <radialGradient id="${id}g"><stop offset="0" stop-color="${t.glow}" stop-opacity=".75"/><stop offset="1" stop-color="${t.glow}" stop-opacity="0"/></radialGradient>
@@ -403,10 +403,10 @@ function cardArt(g, idx) {
     <circle cx="150" cy="52" r="46" fill="url(#${id}g)"/>
     ${fig}
   </svg>`;
-}
+      }
 
-const sc = $('#scroller');
-sc.innerHTML = GAMES.map((g, i) => `
+      const sc = $('#scroller');
+      sc.innerHTML = GAMES.map((g, i) => `
   <article class="gcard spot${i === 3 ? ' feat' : ''}" data-i="${i}" style="--d:${i}">
     <div class="gart">${cardArt(g, i)}</div>
     <button class="gplay" data-play="${i}" aria-label="تماشای تریلر"><i data-icon="play"></i></button>
@@ -417,170 +417,171 @@ sc.innerHTML = GAMES.map((g, i) => `
     </div>
   </article>`).join('');
 
-/* 3D tilt */
-if (matchMedia('(pointer:fine)').matches && !reduce) {
-  $$('.gcard', sc).forEach(card => {
-    card.addEventListener('pointermove', e => {
-      if (sc.classList.contains('drag')) return;
-      const r = card.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-      card.style.transition = 'transform .1s ease-out, box-shadow .4s';
-      card.style.transform = `perspective(800px) rotateX(${(-y * 12).toFixed(2)}deg) rotateY(${(x * 14).toFixed(2)}deg) translateY(-6px) scale(1.035)`;
-    });
-    card.addEventListener('pointerleave', () => { card.style.transition = ''; card.style.transform = ''; });
-  });
-}
+      /* 3D tilt */
+      if (matchMedia('(pointer:fine)').matches && !reduce) {
+        $$('.gcard', sc).forEach(card => {
+          card.addEventListener('pointermove', e => {
+            if (sc.classList.contains('drag')) return;
+            const r = card.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+            card.style.transition = 'transform .1s ease-out, box-shadow .4s';
+            card.style.transform = `perspective(800px) rotateX(${(-y * 12).toFixed(2)}deg) rotateY(${(x * 14).toFixed(2)}deg) translateY(-6px) scale(1.035)`;
+          });
+          card.addEventListener('pointerleave', () => { card.style.transition = ''; card.style.transform = ''; });
+        });
+      }
 
-/* drag to scroll + click handling */
-let dragging = false, dragMoved = false, startX = 0, startL = 0;
-sc.addEventListener('pointerdown', e => {
-  if (e.pointerType === 'touch' || e.target.closest('button')) return;
-  dragging = true; dragMoved = false; startX = e.clientX; startL = sc.scrollLeft;
-});
-addEventListener('pointermove', e => {
-  if (!dragging) return;
-  const dx = e.clientX - startX;
-  if (Math.abs(dx) > 4) { dragMoved = true; sc.classList.add('drag'); }
-  if (dragMoved) sc.scrollLeft = startL - dx;
-});
-addEventListener('pointerup', () => { dragging = false; sc.classList.remove('drag'); });
-sc.addEventListener('click', e => {
-  if (dragMoved) { dragMoved = false; return; }
-  const buy = e.target.closest('[data-buy]'), play = e.target.closest('[data-play]');
-  if (buy) addToCart(GAMES[buy.dataset.buy].t);
-  if (play) toast({ title: GAMES[play.dataset.play].t, text: 'در حال بارگذاری تریلر...', icon: 'play' });
-});
-$('#nextBtn').addEventListener('click', () => {
-  const end = sc.scrollLeft + sc.clientWidth >= sc.scrollWidth - 8;
-  sc.scrollTo({ left: end ? 0 : sc.scrollLeft + sc.clientWidth * .55, behavior: 'smooth' });
-});
+      /* drag to scroll + click handling */
+      let dragging = false, dragMoved = false, startX = 0, startL = 0;
+      sc.addEventListener('pointerdown', e => {
+        if (e.pointerType === 'touch' || e.target.closest('button')) return;
+        dragging = true; dragMoved = false; startX = e.clientX; startL = sc.scrollLeft;
+      });
+      addEventListener('pointermove', e => {
+        if (!dragging) return;
+        const dx = e.clientX - startX;
+        if (Math.abs(dx) > 4) { dragMoved = true; sc.classList.add('drag'); }
+        if (dragMoved) sc.scrollLeft = startL - dx;
+      });
+      addEventListener('pointerup', () => { dragging = false; sc.classList.remove('drag'); });
+      sc.addEventListener('click', e => {
+        if (dragMoved) { dragMoved = false; return; }
+        const buy = e.target.closest('[data-buy]'), play = e.target.closest('[data-play]');
+        if (buy) addToCart(GAMES[buy.dataset.buy].t);
+        if (play) toast({ title: GAMES[play.dataset.play].t, text: 'در حال بارگذاری تریلر...', icon: 'play' });
+      });
+      $('#nextBtn').addEventListener('click', () => {
+        const end = sc.scrollLeft + sc.clientWidth >= sc.scrollWidth - 8;
+        sc.scrollTo({ left: end ? 0 : sc.scrollLeft + sc.clientWidth * .55, behavior: 'smooth' });
+      });
 
 
 
-/* =====================================================
-   Statistic
-   ===================================================== */
-const coreLabel = $('#coreLabel'), coreVal = $('#coreVal'), ghRow = $('#ghRow');
-let total = HRS.reduce((a, h) => a + h.v, 0), coreShown = 0, coreRaf = 0, hovering = -1;
-function setCore(label, val, dur = 700) {
-  coreLabel.textContent = label;
-  cancelAnimationFrame(coreRaf);
-  if (reduce) { coreShown = val; coreVal.textContent = fmt(val); return; }
-  const from = coreShown, t0 = performance.now();
-  const step = t => {
-    const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
-    coreShown = from + (val - from) * e;
-    coreVal.textContent = fmt(coreShown);
-    if (p < 1) coreRaf = requestAnimationFrame(step);
-  };
-  coreRaf = requestAnimationFrame(step);
-}
-function countTo(el, to, dur = 1600) {
-  if (reduce) { el.textContent = fmt(to) + 'h'; return; }
-  const t0 = performance.now();
-  const step = t => {
-    const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
-    el.textContent = fmt(to * e) + 'h';
-    if (p < 1) requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
-}
-ghRow.innerHTML = HRS.map((h, i) => `
+      /* =====================================================
+         Statistic
+         ===================================================== */
+      const coreLabel = $('#coreLabel'), coreVal = $('#coreVal'), ghRow = $('#ghRow');
+      let total = HRS.reduce((a, h) => a + h.v, 0), coreShown = 0, coreRaf = 0, hovering = -1;
+      function setCore(label, val, dur = 700) {
+        coreLabel.textContent = label;
+        cancelAnimationFrame(coreRaf);
+        if (reduce) { coreShown = val; coreVal.textContent = fmt(val); return; }
+        const from = coreShown, t0 = performance.now();
+        const step = t => {
+          const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+          coreShown = from + (val - from) * e;
+          coreVal.textContent = fmt(coreShown);
+          if (p < 1) coreRaf = requestAnimationFrame(step);
+        };
+        coreRaf = requestAnimationFrame(step);
+      }
+      function countTo(el, to, dur = 1600) {
+        if (reduce) { el.textContent = fmt(to) + 'h'; return; }
+        const t0 = performance.now();
+        const step = t => {
+          const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+          el.textContent = fmt(to * e) + 'h';
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      }
+      ghRow.innerHTML = HRS.map((h, i) => `
   <button class="gh" data-i="${i}" style="--c:${h.c}" aria-label="${esc(h.name)}">
     <span class="ic" style="background:${h.c};color:${h.fg}">${GLYPH[h.k]}</span>
     <span class="gv" id="gv${i}">0</span>
   </button>`).join('');
-$$('.gh', ghRow).forEach(b => {
-  const i = +b.dataset.i;
-  const on = () => { hovering = i; setCore(HRS[i].name, HRS[i].v, 550); };
-  const off = () => { hovering = -1; setCore('مجموع امتیاز', total, 550); };
-  b.addEventListener('pointerenter', on); b.addEventListener('pointerleave', off);
-  b.addEventListener('focus', on);        b.addEventListener('blur', off);
-});
-setTimeout(() => {
-  setCore('مجموع امتیاز', total, 1900);
-  HRS.forEach((h, i) => countTo($('#gv' + i), h.v, 1900));
-}, 650);
-setInterval(() => {              // one more ساعت played, every few seconds
-  const i = Math.floor(Math.random() * HRS.length);
-  HRS[i].v++; total++;
-  $('#gv' + i).textContent = fmt(HRS[i].v);
-  const b = $(`.gh[data-i="${i}"]`); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
-  if (hovering === -1) setCore('مجموع امتیاز', total, 500);
-  else if (hovering === i) setCore(HRS[i].name, HRS[i].v, 500);
-}, 9000);
+      $$('.gh', ghRow).forEach(b => {
+        const i = +b.dataset.i;
+        const on = () => { hovering = i; setCore(HRS[i].name, HRS[i].v, 550); };
+        const off = () => { hovering = -1; setCore('مجموع امتیاز', total, 550); };
+        b.addEventListener('pointerenter', on); b.addEventListener('pointerleave', off);
+        b.addEventListener('focus', on); b.addEventListener('blur', off);
+      });
+      setTimeout(() => {
+        setCore('مجموع امتیاز', total, 1900);
+        HRS.forEach((h, i) => countTo($('#gv' + i), h.v, 1900));
+      }, 650);
+      setInterval(() => {              // one more ساعت played, every few seconds
+        const i = Math.floor(Math.random() * HRS.length);
+        HRS[i].v++; total++;
+        $('#gv' + i).textContent = fmt(HRS[i].v);
+        const b = $(`.gh[data-i="${i}"]`); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
+        if (hovering === -1) setCore('مجموع امتیاز', total, 500);
+        else if (hovering === i) setCore(HRS[i].name, HRS[i].v, 500);
+      }, 9000);
 
-/* =====================================================
-   Right rail (friends + presence)
-   ===================================================== */
-const tip = f => `${f.n} · ${f.s === 'game' ? 'در بازی — ' + f.g : f.s === 'online' ? 'آنلاین' : 'آفلاین'}`;
-$('#me').innerHTML = `<span class="face">${avatar(5)}</span><b id="userName">${esc(CONFIG.userName)}</b>`;
+      /* =====================================================
+         Right rail (friends + presence)
+         ===================================================== */
+      const tip = f => `${f.n} · ${f.s === 'game' ? 'در بازی — ' + f.g : f.s === 'online' ? 'آنلاین' : 'آفلاین'}`;
+      $('#me').innerHTML = `<span class="face">${avatar(5)}</span><b id="userName">${esc(CONFIG.userName)}</b>`;
 
-(function announcements() {
-  const list = [
-    { title: 'Valorant Titan Cup', text: 'ثبت‌نام تا 10 دقیقه دیگر بسته می‌شود', icon: 'trophy' },
-    { title: 'فروش ویژه', text: 'هدست تایتان پرو — 20٪ تخفیف برای یک ساعت آینده', icon: 'bag' },
-    { title: 'سری راکت', text: 'براکت دور دوم شروع شد', icon: 'trophy' }
-  ];
-  let n = 0;
-  setTimeout(function again() {
-    liveToast(list[n++ % list.length]);
-    setTimeout(again, rand(24000, 36000));
-  }, 6500);
-})();
+      (function announcements() {
+        const list = [
+          { title: 'Valorant Titan Cup', text: 'ثبت‌نام تا 10 دقیقه دیگر بسته می‌شود', icon: 'trophy' },
+          { title: 'فروش ویژه', text: 'هدست تایتان پرو — 20٪ تخفیف برای یک ساعت آینده', icon: 'bag' },
+          { title: 'سری راکت', text: 'براکت دور دوم شروع شد', icon: 'trophy' }
+        ];
+        let n = 0;
+        setTimeout(function again() {
+          liveToast(list[n++ % list.length]);
+          setTimeout(again, rand(24000, 36000));
+        }, 6500);
+      })();
 
-/* =====================================================
-   Cursor spotlight, parallax and the main animation loop
-   ===================================================== */
-document.addEventListener('pointermove', e => {
-  const t = e.target.closest && e.target.closest('.spot');
-  if (!t) return;
-  const r = t.getBoundingClientRect();
-  t.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-  t.style.setProperty('--my', (e.clientY - r.top) + 'px');
-}, { passive: true });
+      /* =====================================================
+         Cursor spotlight, parallax and the main animation loop
+         ===================================================== */
+      document.addEventListener('pointermove', e => {
+        const t = e.target.closest && e.target.closest('.spot');
+        if (!t) return;
+        const r = t.getBoundingClientRect();
+        t.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        t.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      }, { passive: true });
 
-let tx = 0, ty = 0, cx = 0, cy = 0, pointerActive = false;
-if (matchMedia('(pointer:fine)').matches) {
-  addEventListener('pointermove', e => { pointerActive = true; tx = (e.clientX / innerWidth - .5) * 2; ty = (e.clientY / innerHeight - .5) * 2; }, { passive: true });
-  document.addEventListener('pointerleave', () => pointerActive = false);
-}
-let last = performance.now();
-function loop(t) {
-  const dt = Math.min(t - last, 100); last = t;
-  if (!reduce) {
-    const gx = pointerActive ? tx : Math.sin(t / 3200) * .55;   // gentle idle drift when the pointer is away
-    const gy = pointerActive ? ty : Math.cos(t / 4100) * .4;
-    cx += (gx - cx) * .07; cy += (gy - cy) * .07;
-    frame.style.setProperty('--px', cx.toFixed(3));
-    frame.style.setProperty('--py', cy.toFixed(3));
-    if (!paused && !document.hidden) {
-      elapsed += dt;
-      if (elapsed >= CONFIG.slideMs) goTo((cur + 1) % SLIDES.length);
-    }
-    dashFills[cur].style.transform = `scaleX(${Math.min(1, elapsed / CONFIG.slideMs).toFixed(4)})`;
-  }
-  requestAnimationFrame(loop);
-}
+      let tx = 0, ty = 0, cx = 0, cy = 0, pointerActive = false;
+      if (matchMedia('(pointer:fine)').matches) {
+        addEventListener('pointermove', e => { pointerActive = true; tx = (e.clientX / innerWidth - .5) * 2; ty = (e.clientY / innerHeight - .5) * 2; }, { passive: true });
+        document.addEventListener('pointerleave', () => pointerActive = false);
+      }
+      let last = performance.now();
+      function loop(t) {
+        const dt = Math.min(t - last, 100); last = t;
+        if (!reduce) {
+          const gx = pointerActive ? tx : Math.sin(t / 3200) * .55;   // gentle idle drift when the pointer is away
+          const gy = pointerActive ? ty : Math.cos(t / 4100) * .4;
+          cx += (gx - cx) * .07; cy += (gy - cy) * .07;
+          frame.style.setProperty('--px', cx.toFixed(3));
+          frame.style.setProperty('--py', cy.toFixed(3));
+          if (!paused && !document.hidden) {
+            elapsed += dt;
+            if (elapsed >= CONFIG.slideMs) goTo((cur + 1) % SLIDES.length);
+          }
+          dashFills[cur].style.transform = `scaleX(${Math.min(1, elapsed / CONFIG.slideMs).toFixed(4)})`;
+        }
+        requestAnimationFrame(loop);
+      }
 
-/* =====================================================
-   Boot
-   ===================================================== */
-paint();
-goTo(0, true);
-moveInd($('.nav-item.active'), true);
-addEventListener('load', () => moveInd($('.nav-item.active'), true));
-requestAnimationFrame(loop);
-})();
+      /* =====================================================
+         Boot
+         ===================================================== */
+      paint();
+      goTo(0, true);
+      moveInd($('.nav-item.active'), true);
+      addEventListener('load', () => moveInd($('.nav-item.active'), true));
+      requestAnimationFrame(loop);
+    })();
 
     // --- End Logic ---
 
   }, []);
 
   return (
-    <div 
-        suppressHydrationWarning 
-        dangerouslySetInnerHTML={{ __html: `
+    <div
+      suppressHydrationWarning
+      dangerouslySetInnerHTML={{
+        __html: `
 <div class="frame" id="frame">
 
   <!-- ===== Left navigation ===== -->
@@ -658,6 +659,17 @@ requestAnimationFrame(loop);
           <div class="dashes" id="dashes"></div>
         </article>
 
+        <div class="sec-h"><h3>دسته‌بندی‌ها</h3><a href="#games">مشاهده همه</a></div>
+        <div class="carousel">
+          <div class="scroller" id="scroller" tabindex="0" aria-label="دسته‌بندی‌ها"></div>
+          <button class="next" id="nextBtn" aria-label="بازی‌های بعدی"><i data-icon="chev"></i></button>
+        </div>
+
+
+      </section>
+
+      <!-- ---- Column B ---- -->
+      <section class="col col-b">
         <article class="tourney-banner spot reveal" style="--d:3">
           <div class="tb-bg" aria-hidden="true">
             <span class="ring r1"></span><span class="ring r2"></span>
@@ -674,19 +686,6 @@ requestAnimationFrame(loop);
             <circle cx="160" cy="40" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="20" />
           </svg>
         </article>
-
-        <div class="sec-h"><h3>دسته‌بندی‌ها</h3><a href="#games">مشاهده همه</a></div>
-        <div class="carousel">
-          <div class="scroller" id="scroller" tabindex="0" aria-label="دسته‌بندی‌ها"></div>
-          <button class="next" id="nextBtn" aria-label="بازی‌های بعدی"><i data-icon="chev"></i></button>
-        </div>
-
-
-      </section>
-
-      <!-- ---- Column B ---- -->
-      <section class="col col-b">
-
 
         <div class="stat-wrap col">
           <div class="sec-h"><h3>امتیاز شما</h3><a class="arrow" href="#stats" aria-label="باز کردن آمار"><i data-icon="arrow"></i></a></div>
@@ -708,7 +707,7 @@ requestAnimationFrame(loop);
 
 <div class="toasts" id="toasts" aria-live="polite"></div>
 
-` }} 
+` }}
     />
   );
 }
