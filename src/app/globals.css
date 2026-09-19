@@ -2054,3 +2054,18 @@ html[dir="rtl"] [data-icon="chev"] svg,
 html[dir="rtl"] .next svg {
   transform: scaleX(-1);
 }
+
+html[dir="rtl"] .art {
+  right: auto;
+  left: 8%;
+  bottom: -6%;
+  transform: translateX(-46px) scale(.94);
+}
+
+@media (max-width:860px) {
+  html[dir="rtl"] .art {
+    right: auto;
+    left: -10%;
+    bottom: -6%;
+  }
+}
