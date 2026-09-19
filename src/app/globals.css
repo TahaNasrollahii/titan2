@@ -2057,15 +2057,20 @@ html[dir="rtl"] .next svg {
 
 html[dir="rtl"] .art {
   right: auto;
-  left: 8%;
+  left: 6%;
   bottom: -6%;
   transform: translateX(-46px) scale(.94);
+}
+
+html[dir="rtl"] .hero-live {
+  right: auto;
+  left: 20px;
 }
 
 @media (max-width:860px) {
   html[dir="rtl"] .art {
     right: auto;
-    left: -10%;
+    left: -8%;
     bottom: -6%;
   }
 }

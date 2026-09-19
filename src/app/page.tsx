@@ -727,9 +727,9 @@ requestAnimationFrame(loop);
           <div class="dashes" id="dashes"></div>
         </article>
 
-        <div class="sec-h"><h3>بازی‌های جدید</h3><a href="#games">مشاهده همه</a></div>
+        <div class="sec-h"><h3>دسته‌بندی‌ها</h3><a href="#games">مشاهده همه</a></div>
         <div class="carousel">
-          <div class="scroller" id="scroller" tabindex="0" aria-label="بازی‌های جدید"></div>
+          <div class="scroller" id="scroller" tabindex="0" aria-label="دسته‌بندی‌ها"></div>
           <button class="next" id="nextBtn" aria-label="بازی‌های بعدی"><i data-icon="chev"></i></button>
         </div>
 
