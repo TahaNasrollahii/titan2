@@ -1334,110 +1334,51 @@ i[data-icon] svg {
 }
 
 .blob {
+  --kick: 0;
   position: relative;
-  width: min(230px, 74%);
+  width: min(250px, 78%);
   aspect-ratio: 1;
-  margin-top: 6px;
-  filter: drop-shadow(0 16px 34px rgba(226, 69, 63, .32));
+  margin-top: 4px;
+  filter: drop-shadow(0 16px 34px rgba(226, 69, 63, .26));
   transition: transform .6s var(--spring)
 }
 
 .stat:hover .blob {
-  transform: scale(1.05)
+  transform: scale(1.04)
 }
 
-.blob>i {
+.blob canvas {
   position: absolute;
-  display: block
-}
-
-.b1 {
   inset: 0;
-  background: conic-gradient(from 0deg, #e5463f, #f28a5c, #fff1b8, #f28a5c, #e5463f);
-  animation: morph1 9s ease-in-out infinite, spin 18s linear infinite
-}
-
-.b2 {
-  inset: 7%;
-  background: conic-gradient(from 90deg, #7458d6, #b06be0, #f2a1c8, #7458d6);
-  mix-blend-mode: screen;
-  opacity: .85;
-  animation: morph2 11s ease-in-out infinite, spin 24s linear infinite reverse
-}
-
-.b3 {
-  inset: 14%;
-  background: radial-gradient(circle at 30% 30%, #fff5c9, #f9c7a0 42%, transparent 72%);
-  opacity: .8;
-  animation: morph3 7s ease-in-out infinite, spin 30s linear infinite
-}
-
-@keyframes morph1 {
-
-  0%,
-  100% {
-    border-radius: 58% 42% 55% 45%/46% 55% 45% 54%
-  }
-
-  33% {
-    border-radius: 44% 56% 42% 58%/58% 44% 56% 42%
-  }
-
-  66% {
-    border-radius: 52% 48% 60% 40%/42% 60% 40% 58%
-  }
-}
-
-@keyframes morph2 {
-
-  0%,
-  100% {
-    border-radius: 42% 58% 46% 54%/55% 42% 58% 45%
-  }
-
-  50% {
-    border-radius: 60% 40% 52% 48%/44% 58% 42% 56%
-  }
-}
-
-@keyframes morph3 {
-
-  0%,
-  100% {
-    border-radius: 50% 50% 42% 58%/50% 42% 58% 50%
-  }
-
-  50% {
-    border-radius: 40% 60% 56% 44%/58% 50% 50% 42%
-  }
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
 }
 
 .core {
   position: absolute;
-  inset: 23%;
+  inset: 20%;
   border-radius: 50%;
+  z-index: 10;
   display: grid;
   place-content: center;
   text-align: center;
-  gap: 2px;
-  background: radial-gradient(circle at 50% 28%, #4a1620, #2a0a11);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .09), 0 0 34px rgba(0, 0, 0, .5);
+  gap: 3px;
+  background: radial-gradient(circle at 50% 30%, #4a1620, #2d0b12 78%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .07), 0 0 40px rgba(0, 0, 0, .55);
+  transform: scale(calc(1 + var(--kick)*.03));
 }
 
 .core::before {
   content: "";
   position: absolute;
-  inset: -9px;
+  inset: 8px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, .09);
-  animation: corering 3.4s ease-in-out infinite
-}
-
-@keyframes corering {
-  50% {
-    transform: scale(1.07);
-    opacity: .4
-  }
+  border: 1px solid rgba(255, 255, 255, .1);
+  pointer-events: none;
+  opacity: calc(.5 + var(--kick)*.5);
+  transform: scale(calc(1 - var(--kick)*.025));
 }
 
 .core small {

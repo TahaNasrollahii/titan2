@@ -207,9 +207,9 @@ export default function TitanPage() {
       };
 
       const HRS = [
-        { k: 'rank', name: 'رتبه شما', v: 12, c: '#d9443f', fg: '#fff' },
-        { k: 'wins', name: 'تعداد بردها', v: 240, c: '#fff1b8', fg: '#2b1013' },
-        { k: 'kills', name: 'تعداد کیل‌ها', v: 4500, c: '#7458d6', fg: '#fff' }
+        { k: 'rank', name: 'رتبه شما', v: 12, c: '#d9443f', fg: '#fff', bpm: 92 },
+        { k: 'wins', name: 'تعداد بردها', v: 240, c: '#fff1b8', fg: '#2b1013', bpm: 128 },
+        { k: 'kills', name: 'تعداد کیل‌ها', v: 4500, c: '#7458d6', fg: '#fff', bpm: 110 }
       ];
       const GLYPH = {
         rank: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l6.5 8L5 20h4l7-8-7-8z"/><path d="M14 4h5l-5 5.5z" opacity=".8"/></svg>',
@@ -485,6 +485,91 @@ export default function TitanPage() {
         };
         requestAnimationFrame(step);
       }
+      /* ---- Total-hours blob: a flower that "plays music" ----
+         A beat clock (kick / snare / hats) drives six "frequency bands"; every petal is
+         one band, so the petals bounce like a circular equalizer. Hovering a game
+         changes the tempo. Swap simulateBands() for a real AnalyserNode to react to actual audio. */
+      const BASE_BPM = 104;
+      let bpmTarget = BASE_BPM;
+      const blobEl = $('#blob'), cv = $('#blobCanvas'), cctx = cv.getContext('2d');
+      let cvSize = 0, dpr = 1;
+      const LAYERS = [
+        { n: 5, rot: .3, spd: .10, off: 0, rs: 1.00, a: .96, g: [0, -1, 0, .95], st: [[0, '#f5524a'], [.5, '#c2343b'], [1, 'rgba(90,24,40,0)']], rim: 'rgba(255,150,140,.30)' },
+        { n: 6, rot: 1.4, spd: -.06, off: 3, rs: .96, a: .45, g: [.7, -.5, -.5, .9], st: [[0, '#ff9a90'], [1, 'rgba(255,120,120,0)']], rim: 'rgba(255,190,180,.18)' },
+        { n: 5, rot: 1.1, spd: -.07, off: 2, rs: .95, a: .94, g: [-1, -.2, .75, .3], st: [[0, '#fff6d2'], [.45, '#ebcf9c'], [1, 'rgba(190,130,110,0)']], rim: 'rgba(255,255,255,.42)' },
+        { n: 6, rot: .4, spd: .055, off: 4, rs: .92, a: .93, g: [-.7, 1, .45, -.25], st: [[0, '#bdb1ff'], [.5, '#6f5ad9'], [1, 'rgba(80,60,190,0)']], rim: 'rgba(215,205,255,.40)' }
+      ];
+      const bands = [.2, .2, .2, .2, .2, .2];
+      let beat = 0, bpm = BASE_BPM, kickSm = 0;
+
+      function sizeCanvas() {
+        dpr = Math.min(2, devicePixelRatio || 1);
+        cvSize = blobEl.offsetWidth;
+        cv.width = cv.height = Math.round(cvSize * dpr);
+      }
+      function simulateBands(t, dt) {
+        bpm += (bpmTarget - bpm) * (1 - Math.exp(-dt * 2.5));
+        beat += dt * bpm / 60;
+        const b = beat % 4;
+        const hit = (times, decay) => { let m = 4; for (const x of times) m = Math.min(m, (b - x + 4) % 4); return Math.exp(-m * decay); };
+        const kick = hit([0, 2, 2.75], 5.5);
+        const snare = hit([1, 3], 5);
+        const hat = Math.exp(-((b * 2) % 1) * 7) * (Math.floor(b * 2) % 2 ? 1 : .55);
+        const wob = k => .5 + .5 * Math.sin(t * (1.1 + k * .37) + k * 1.9);
+        const target = [
+          kick * .95 + .10 * wob(0),
+          kick * .60 + snare * .30 + .15 * wob(1),
+          snare * .85 + .15 * wob(2),
+          snare * .40 + hat * .50 + .20 * wob(3),
+          hat * .80 + .20 * wob(4),
+          hat * .50 + kick * .15 + .30 * wob(5)
+        ];
+        for (let k = 0; k < 6; k++) {
+          const rate = 1 - Math.exp(-dt * (target[k] > bands[k] ? 28 : 7));   // fast attack, slow release
+          bands[k] += (target[k] - bands[k]) * rate;
+        }
+        kickSm += (kick - kickSm) * (1 - Math.exp(-dt * (kick > kickSm ? 30 : 8)));
+      }
+      function drawBlob(dt) {
+        const s = cvSize, R = s * .5, ctx = cctx;
+        const scale = 1 + .055 * kickSm;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        ctx.clearRect(0, 0, s, s);
+        ctx.translate(R, R);
+        for (const L of LAYERS) {
+          L.rot += dt * L.spd * (1 + 3 * kickSm);
+          const R0 = s * .41 * L.rs * scale, sigma = .36 * (Math.PI * 2 / L.n), N = 150;
+          ctx.beginPath();
+          for (let i = 0; i <= N; i++) {
+            const th = i / N * Math.PI * 2;
+            let r = .84;
+            for (let j = 0; j < L.n; j++) {
+              let d = th - (L.rot + j * 2 * Math.PI / L.n);
+              d = Math.atan2(Math.sin(d), Math.cos(d));
+              r += (.20 + .17 * bands[(j + L.off) % 6]) * Math.exp(-(d * d) / (sigma * sigma));
+            }
+            const x = Math.cos(th) * r * R0, y = Math.sin(th) * r * R0;
+            i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+          }
+          ctx.closePath();
+          const g = ctx.createLinearGradient(L.g[0] * R, L.g[1] * R, L.g[2] * R, L.g[3] * R);
+          L.st.forEach(([o, c]) => g.addColorStop(o, c));
+          ctx.globalAlpha = L.a; ctx.fillStyle = g; ctx.fill();
+          ctx.globalAlpha = 1; ctx.lineWidth = 1.2; ctx.strokeStyle = L.rim; ctx.stroke();
+        }
+        blobEl.style.setProperty('--kick', kickSm.toFixed(3));
+      }
+      let blobVisible = true, blobLast = performance.now();
+      function blobLoop(now) {
+        const dt = Math.min((now - blobLast) / 1000, .1); blobLast = now;
+        if (blobVisible && !document.hidden) { simulateBands(now / 1000, dt); drawBlob(dt); }
+        requestAnimationFrame(blobLoop);
+      }
+      new ResizeObserver(() => { sizeCanvas(); if (reduce) { simulateBands(1.3, .016); drawBlob(0); } }).observe(blobEl);
+      new IntersectionObserver(([en]) => blobVisible = en.isIntersecting).observe(blobEl);
+      sizeCanvas();
+      if (reduce) { simulateBands(1.3, .016); drawBlob(0); } else requestAnimationFrame(blobLoop);
+
       ghRow.innerHTML = HRS.map((h, i) => `
   <button class="gh" data-i="${i}" style="--c:${h.c}" aria-label="${esc(h.name)}">
     <span class="ic" style="background:${h.c};color:${h.fg}">${GLYPH[h.k]}</span>
@@ -492,8 +577,8 @@ export default function TitanPage() {
   </button>`).join('');
       $$('.gh', ghRow).forEach(b => {
         const i = +b.dataset.i;
-        const on = () => { hovering = i; setCore(HRS[i].name, HRS[i].v, 550); };
-        const off = () => { hovering = -1; setCore('مجموع امتیاز', total, 550); };
+        const on = () => { hovering = i; bpmTarget = HRS[i].bpm; setCore(HRS[i].name, HRS[i].v, 550); };
+        const off = () => { hovering = -1; bpmTarget = BASE_BPM; setCore('مجموع امتیاز', total, 550); };
         b.addEventListener('pointerenter', on); b.addEventListener('pointerleave', off);
         b.addEventListener('focus', on); b.addEventListener('blur', off);
       });
@@ -691,7 +776,7 @@ export default function TitanPage() {
           <div class="sec-h"><h3>امتیاز شما</h3><a class="arrow" href="#stats" aria-label="باز کردن آمار"><i data-icon="arrow"></i></a></div>
           <article class="stat spot reveal" style="--d:5">
             <div class="blob" id="blob">
-              <i class="b1"></i><i class="b2"></i><i class="b3"></i>
+              <canvas id="blobCanvas" aria-hidden="true"></canvas>
               <div class="core"><small id="coreLabel">مجموع امتیاز</small><strong id="coreVal">0</strong></div>
             </div>
             <div class="gh-row" id="ghRow"></div>
