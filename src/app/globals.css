@@ -1112,8 +1112,8 @@ i[data-icon] svg {
   scroll-snap-type: x proximity;
   scrollbar-width: none;
   cursor: grab;
-  -webkit-mask-image: linear-gradient(270deg, #000 0, #000 76%, transparent 100%);
-  mask-image: linear-gradient(270deg, #000 0, #000 76%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 15%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 15%, #000 100%);
 }
 
 .scroller::-webkit-scrollbar {
@@ -1265,7 +1265,7 @@ i[data-icon] svg {
 .gcursor {
   position: absolute;
   z-index: 4;
-  right: 24%;
+  left: 24%;
   bottom: 33%;
   font-size: 22px;
   color: #fff;
@@ -1541,13 +1541,14 @@ i[data-icon] svg {
   padding: 3px;
   padding-left: 16px;
   border-radius: 999px;
-  background: #fff;
-  color: #2a0a11;
-  transition: transform .4s var(--spring)
+  background: var(--panel);
+  color: #fff;
+  transition: transform .4s var(--spring), background .25s;
 }
 
 .me:hover {
-  transform: scale(1.05) rotate(-3deg)
+  transform: scale(1.05) rotate(-3deg);
+  background: #4d1822;
 }
 
 .me .face {

@@ -246,12 +246,7 @@ function toast({ title, text = '', icon = 'bell' }) {
   setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 450); }, 4300);
 }
 
-/* =====================================================
-   User Name
-   ===================================================== */
-(() => {
-  $('#userName').textContent = CONFIG.userName;
-})();
+
 
 /* =====================================================
    Left nav: sliding indicator
@@ -520,7 +515,7 @@ setInterval(() => {              // one more ساعت played, every few seconds
    Right rail (friends + presence)
    ===================================================== */
 const tip = f => `${f.n} · ${f.s === 'game' ? 'در بازی — ' + f.g : f.s === 'online' ? 'آنلاین' : 'آفلاین'}`;
-$('#me').innerHTML = `<span class="face">${avatar(5)}</span><b id="userName"></b>`;
+$('#me').innerHTML = `<span class="face">${avatar(5)}</span><b id="userName">${esc(CONFIG.userName)}</b>`;
 
 (function announcements() {
   const list = [
