@@ -212,9 +212,9 @@ const HRS = [
   { k: 'kills', name: 'تعداد کیل‌ها', v: 4500, c: '#7458d6', fg: '#fff' }
 ];
 const GLYPH = {
-  rank:  '<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5.5a1.5 1.5 0 0 0 0 3H8M16 6h2.5a1.5 1.5 0 0 1 0 3H16"/><path d="M12 13v4M8.5 20.5h7M10 17h4v3.5h-4z"/>',
-  wins:  '<path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
-  kills: '<path d="M12 3c.6 3.4 4.8 5 4.8 9.6a4.8 4.8 0 0 1-9.6 0c0-1.9.8-3.2 2-4.2.1 1.5.9 2.5 2 2.7C11 8.6 10.8 5.6 12 3z"/>'
+  rank:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5.5a1.5 1.5 0 0 0 0 3H8M16 6h2.5a1.5 1.5 0 0 1 0 3H16"/><path d="M12 13v4M8.5 20.5h7M10 17h4v3.5h-4z"/></svg>',
+  wins:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>',
+  kills: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c.6 3.4 4.8 5 4.8 9.6a4.8 4.8 0 0 1-9.6 0c0-1.9.8-3.2 2-4.2.1 1.5.9 2.5 2 2.7C11 8.6 10.8 5.6 12 3z"/></svg>'
 };
 
 const FRIENDS = [
@@ -493,12 +493,12 @@ ghRow.innerHTML = HRS.map((h, i) => `
 $$('.gh', ghRow).forEach(b => {
   const i = +b.dataset.i;
   const on = () => { hovering = i; setCore(HRS[i].name, HRS[i].v, 550); };
-  const off = () => { hovering = -1; setCore('امتیاز شما', total, 550); };
+  const off = () => { hovering = -1; setCore('مجموع امتیاز', total, 550); };
   b.addEventListener('pointerenter', on); b.addEventListener('pointerleave', off);
   b.addEventListener('focus', on);        b.addEventListener('blur', off);
 });
 setTimeout(() => {
-  setCore('امتیاز شما', total, 1900);
+  setCore('مجموع امتیاز', total, 1900);
   HRS.forEach((h, i) => countTo($('#gv' + i), h.v, 1900));
 }, 650);
 setInterval(() => {              // one more ساعت played, every few seconds
@@ -506,7 +506,7 @@ setInterval(() => {              // one more ساعت played, every few seconds
   HRS[i].v++; total++;
   $('#gv' + i).textContent = fmt(HRS[i].v);
   const b = $(`.gh[data-i="${i}"]`); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
-  if (hovering === -1) setCore('امتیاز شما', total, 500);
+  if (hovering === -1) setCore('مجموع امتیاز', total, 500);
   else if (hovering === i) setCore(HRS[i].name, HRS[i].v, 500);
 }, 9000);
 
@@ -688,7 +688,7 @@ requestAnimationFrame(loop);
           <article class="stat spot reveal" style="--d:5">
             <div class="blob" id="blob">
               <i class="b1"></i><i class="b2"></i><i class="b3"></i>
-              <div class="core"><small id="coreLabel">امتیاز شما</small><strong id="coreVal">0</strong></div>
+              <div class="core"><small id="coreLabel">مجموع امتیاز</small><strong id="coreVal">0</strong></div>
             </div>
             <div class="gh-row" id="ghRow"></div>
           </article>
