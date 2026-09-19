@@ -207,14 +207,14 @@ const THEME = {
 };
 
 const HRS = [
-  { k: 'dota', name: 'Dota 2',           v: 2340, c: '#d9443f', fg: '#fff' },
-  { k: 'rl',   name: 'Rocket League',    v: 5420, c: '#fff1b8', fg: '#2b1013' },
-  { k: 'cs',   name: 'Counter-Strike 2', v: 4580, c: '#7458d6', fg: '#fff' }
+  { k: 'rank',  name: 'رتبه شما',      v: 12,   c: '#d9443f', fg: '#fff' },
+  { k: 'wins',  name: 'تعداد بردها',   v: 240,  c: '#fff1b8', fg: '#2b1013' },
+  { k: 'kills', name: 'تعداد کیل‌ها', v: 4500, c: '#7458d6', fg: '#fff' }
 ];
 const GLYPH = {
-  dota: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l6.5 8L5 20h4l7-8-7-8z"/><path d="M14 4h5l-5 5.5z" opacity=".8"/></svg>',
-  rl:   '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8l3.5 2.5-1.3 4h-4.4l-1.3-4z" fill="currentColor"/></svg>',
-  cs:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="6.5"/><path d="M12 2.5v5M12 16.5v5M2.5 12h5M16.5 12h5"/></svg>'
+  rank:  '<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5.5a1.5 1.5 0 0 0 0 3H8M16 6h2.5a1.5 1.5 0 0 1 0 3H16"/><path d="M12 13v4M8.5 20.5h7M10 17h4v3.5h-4z"/>',
+  wins:  '<path d="M20 6L9 17l-5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  kills: '<path d="M12 3c.6 3.4 4.8 5 4.8 9.6a4.8 4.8 0 0 1-9.6 0c0-1.9.8-3.2 2-4.2.1 1.5.9 2.5 2 2.7C11 8.6 10.8 5.6 12 3z"/>'
 };
 
 const FRIENDS = [
@@ -466,12 +466,12 @@ let total = HRS.reduce((a, h) => a + h.v, 0), coreShown = 0, coreRaf = 0, hoveri
 function setCore(label, val, dur = 700) {
   coreLabel.textContent = label;
   cancelAnimationFrame(coreRaf);
-  if (reduce) { coreShown = val; coreVal.textContent = fmt(val) + 'h'; return; }
+  if (reduce) { coreShown = val; coreVal.textContent = fmt(val); return; }
   const from = coreShown, t0 = performance.now();
   const step = t => {
     const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
     coreShown = from + (val - from) * e;
-    coreVal.textContent = fmt(coreShown) + 'h';
+    coreVal.textContent = fmt(coreShown);
     if (p < 1) coreRaf = requestAnimationFrame(step);
   };
   coreRaf = requestAnimationFrame(step);
@@ -489,25 +489,25 @@ function countTo(el, to, dur = 1600) {
 ghRow.innerHTML = HRS.map((h, i) => `
   <button class="gh" data-i="${i}" style="--c:${h.c}" aria-label="${esc(h.name)}">
     <span class="ic" style="background:${h.c};color:${h.fg}">${GLYPH[h.k]}</span>
-    <span class="gv" id="gv${i}">0h</span>
+    <span class="gv" id="gv${i}">0</span>
   </button>`).join('');
 $$('.gh', ghRow).forEach(b => {
   const i = +b.dataset.i;
   const on = () => { hovering = i; setCore(HRS[i].name, HRS[i].v, 550); };
-  const off = () => { hovering = -1; setCore('مجموع ساعات', total, 550); };
+  const off = () => { hovering = -1; setCore('امتیاز شما', total, 550); };
   b.addEventListener('pointerenter', on); b.addEventListener('pointerleave', off);
   b.addEventListener('focus', on);        b.addEventListener('blur', off);
 });
 setTimeout(() => {
-  setCore('مجموع ساعات', total, 1900);
+  setCore('امتیاز شما', total, 1900);
   HRS.forEach((h, i) => countTo($('#gv' + i), h.v, 1900));
 }, 650);
 setInterval(() => {              // one more ساعت played, every few seconds
   const i = Math.floor(Math.random() * HRS.length);
   HRS[i].v++; total++;
-  $('#gv' + i).textContent = fmt(HRS[i].v) + 'h';
+  $('#gv' + i).textContent = fmt(HRS[i].v);
   const b = $(`.gh[data-i="${i}"]`); b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump');
-  if (hovering === -1) setCore('مجموع ساعات', total, 500);
+  if (hovering === -1) setCore('امتیاز شما', total, 500);
   else if (hovering === i) setCore(HRS[i].name, HRS[i].v, 500);
 }, 9000);
 
@@ -685,11 +685,11 @@ requestAnimationFrame(loop);
         </article>
 
         <div class="stat-wrap col">
-          <div class="sec-h"><h3>آمار شما</h3><a class="arrow" href="#stats" aria-label="باز کردن آمار"><i data-icon="arrow"></i></a></div>
+          <div class="sec-h"><h3>امتیاز شما</h3><a class="arrow" href="#stats" aria-label="باز کردن آمار"><i data-icon="arrow"></i></a></div>
           <article class="stat spot reveal" style="--d:5">
             <div class="blob" id="blob">
               <i class="b1"></i><i class="b2"></i><i class="b3"></i>
-              <div class="core"><small id="coreLabel">مجموع ساعات</small><strong id="coreVal">0h</strong></div>
+              <div class="core"><small id="coreLabel">امتیاز شما</small><strong id="coreVal">0</strong></div>
             </div>
             <div class="gh-row" id="ghRow"></div>
           </article>
