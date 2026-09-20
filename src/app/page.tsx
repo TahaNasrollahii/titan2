@@ -120,7 +120,7 @@ export default function TitanPage() {
          Hero key art (SVG). Replace with your own <img> per slide
          ===================================================== */
       const heroImages = ['fortnite', 'valorant', 'apexlegends'];
-      const heroArt = k => `<img src="/images/hero/characters/${heroImages[k]}.png" class="hero-char" alt="" />`;
+      const heroArt = k => `<img src="/images/hero/characters/${heroImages[k]}.png" class="hero-char ${heroImages[k]}" alt="" />`;
 
       /* =====================================================
          Data

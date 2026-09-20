@@ -584,6 +584,10 @@ html[dir="rtl"] .hero-char {
   transform-origin: left bottom;
 }
 
+.hero-char.valorant {
+  transform: scale(1.15) translateY(24px);
+}
+
 .hero-bg .l {
   position: absolute;
   inset: 0;
