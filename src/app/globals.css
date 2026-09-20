@@ -40,9 +40,9 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   background:
-    radial-gradient(1100px 560px at 15% -10%, #ffece8 0%, transparent 60%),
-    radial-gradient(900px 500px at 100% 100%, #f6bcc3 0%, transparent 55%),
-    var(--bg-page);
+    radial-gradient(1000px 520px at 20% -10%, rgba(226,69,63,.20), transparent 65%),
+    radial-gradient(800px 500px at 100% 100%, rgba(122,80,230,.15), transparent 60%),
+    linear-gradient(180deg, #26080f, #170409) fixed;
 }
 
 button {
@@ -106,7 +106,7 @@ i[data-icon] svg {
   grid-template-columns: 76px minmax(0, 1fr);
   gap: clamp(14px, 1.8vw, 26px);
   padding: clamp(12px, 1.6vw, 22px);
-  box-shadow: 0 50px 90px -30px rgba(122, 28, 48, .55), 0 20px 40px -20px rgba(122, 28, 48, .35);
+  box-shadow: 0 50px 100px -30px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.05);
   animation: frameIn 1s var(--ease-out) backwards;
 }
 
