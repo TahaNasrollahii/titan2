@@ -61,7 +61,7 @@ export const tournaments: Tournament[] = [
     slug: 'titan-fc-league',
     title: 'لیگ فوتبال تایتان',
     gameId: 'ea-fc',
-    gameName: 'ای‌ای اف‌سی',
+    gameName: 'ایپکس لجندز',
     gameImage: '/images/games/ea-fc.jpg',
     status: 'upcoming',
     prizePool: '۵,۰۰۰ دلار',

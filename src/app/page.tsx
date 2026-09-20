@@ -119,63 +119,8 @@ export default function TitanPage() {
       /* =====================================================
          Hero key art (SVG). Replace with your own <img> per slide
          ===================================================== */
-      const heroArt = k => `
-<svg viewBox="0 0 460 360" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="hA${k}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a678ea"/><stop offset="1" stop-color="#4b2a86"/></linearGradient>
-    <linearGradient id="hP${k}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb37a"/><stop offset="1" stop-color="#c6567a"/></linearGradient>
-    <linearGradient id="hH${k}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a2c68"/><stop offset="1" stop-color="#22103a"/></linearGradient>
-    <linearGradient id="hC${k}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f2ff8a"/><stop offset="1" stop-color="#8fc92a"/></linearGradient>
-    <linearGradient id="hB${k}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c4f4ff"/><stop offset="1" stop-color="#3a78e0"/></linearGradient>
-    <radialGradient id="hO${k}"><stop offset="0" stop-color="#fffbc4"/><stop offset=".45" stop-color="#ffcb3d"/><stop offset="1" stop-color="#ff7a1a"/></radialGradient>
-    <radialGradient id="hG${k}"><stop offset="0" stop-color="#efffc4"/><stop offset=".5" stop-color="#6fdc6a"/><stop offset="1" stop-color="#1c8a48"/></radialGradient>
-    <radialGradient id="hHalo${k}"><stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-    <filter id="hBlur${k}" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="9"/></filter>
-  </defs>
-
-  <g class="pl0">
-    <circle cx="230" cy="180" r="170" fill="url(#hHalo${k})"/>
-    <path class="fl" d="M46 74l34-26 8 44z" fill="#fff" fill-opacity=".2"/>
-    <path class="fl f2" d="M398 96l32-30 12 52z" fill="#fff" fill-opacity=".16"/>
-    <path class="fl f3" d="M372 296l26-30 22 44z" fill="#fff" fill-opacity=".14"/>
-    <circle class="fl f2" cx="120" cy="60" r="5" fill="#fff" fill-opacity=".5"/>
-    <circle class="fl" cx="432" cy="204" r="4" fill="#fff" fill-opacity=".45"/>
-  </g>
-
-  <g class="pl1">
-    <path d="M64 360C72 268 128 230 200 220h62c72 10 128 48 136 140z" fill="url(#hA${k})"/>
-    <path d="M200 222l30 80 32-80M230 302v58" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="2"/>
-    <ellipse cx="108" cy="262" rx="48" ry="34" fill="url(#hP${k})" transform="rotate(-14 108 262)"/>
-    <ellipse cx="352" cy="262" rx="48" ry="34" fill="url(#hP${k})" transform="rotate(14 352 262)"/>
-    <path d="M204 196h52v34a26 12 0 0 1-52 0z" fill="#2a1640"/>
-    <path d="M166 94Q230 50 294 94L308 160Q302 214 262 228H198Q158 214 152 160z" fill="url(#hH${k})"/>
-    <path d="M166 94Q156 130 152 160Q158 214 198 228" fill="none" stroke="#ff9a78" stroke-width="3" stroke-linecap="round"/>
-    <path class="orb" d="M176 140h108l-8 30h-92z" fill="#ffd66b" filter="url(#hBlur${k})" opacity=".8"/>
-    <path d="M178 140h104l-8 28h-88z" fill="#fff0b0"/>
-    <path d="M230 170v46M196 196h68" stroke="#fff" stroke-opacity=".14" stroke-width="2" fill="none"/>
-    <path d="M194 88L204 24l20 46 16-60 16 58 22-42-6 66z" fill="url(#hC${k})"/>
-    <circle cx="230" cy="306" r="34" fill="#2a1640"/>
-    <circle class="orb" cx="230" cy="306" r="26" fill="url(#hG${k})"/>
-    <circle cx="230" cy="306" r="30" fill="none" stroke="#ffb37a" stroke-width="3"/>
-  </g>
-
-  <g class="pl2">
-    <g class="fl">
-      <circle class="orb" cx="74" cy="196" r="62" fill="#ffb52e" opacity=".55" filter="url(#hBlur${k})"/>
-      <path d="M28 214q8 40 50 42 38 0 54-32l-26-16-52 2z" fill="#5a3792"/>
-      <circle class="orb" cx="74" cy="196" r="36" fill="url(#hO${k})"/>
-      <circle class="spin" cx="74" cy="196" r="46" fill="none" stroke="#fff3a8" stroke-opacity=".6" stroke-width="2" stroke-dasharray="4 6"/>
-      <ellipse cx="46" cy="222" rx="9" ry="14" fill="#6d48ac" transform="rotate(24 46 222)"/>
-      <ellipse cx="74" cy="232" rx="9" ry="14" fill="#7a52bd"/>
-      <ellipse cx="102" cy="222" rx="9" ry="14" fill="#6d48ac" transform="rotate(-24 102 222)"/>
-    </g>
-    <g class="fl f2">
-      <path d="M372 92l40 52-12 70-54 8-16-66z" fill="#7fd6ff" opacity=".28" filter="url(#hBlur${k})"/>
-      <path d="M372 92l40 52-12 70-54 8-16-66z" fill="url(#hB${k})"/>
-      <path d="M372 92l-8 100M372 92l28 122M412 144l-48 48" stroke="#fff" stroke-opacity=".45" stroke-width="2" fill="none"/>
-    </g>
-  </g>
-</svg>`;
+      const heroImages = ['fortnite', 'valorant', 'apexlegends'];
+      const heroArt = k => `<img src="/images/hero/characters/${heroImages[k]}.png" style="width: 100%; height: 100%; object-fit: contain; object-position: left bottom; transform: scale(1.15); transform-origin: left bottom; pointer-events: none; opacity: 0.9;" alt="" />`;
 
       /* =====================================================
          Data
