@@ -1239,12 +1239,20 @@ html[dir="rtl"] .hero-char {
   color: rgba(255, 255, 255, .88)
 }
 
-.gprice {
+.gbtn-view {
   display: inline-block;
-  margin-top: 5px;
+  margin-top: 10px;
+  padding: 6px 14px;
   font-size: 11px;
   font-weight: 600;
-  color: #ffd0c6
+  color: #2a0a11;
+  background: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform .3s var(--spring), opacity .3s;
+}
+.gbtn-view:hover {
+  transform: translateY(-2px);
 }
 
 .gcard:hover .gdesc {
@@ -1253,51 +1261,7 @@ html[dir="rtl"] .hero-char {
   margin-top: 8px
 }
 
-.gplay,
-.gbuy {
-  position: absolute;
-  top: 14px;
-  z-index: 3;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  opacity: 0;
-  transform: scale(.5);
-  transition: transform .45s var(--spring), opacity .3s;
-}
 
-.gplay {
-  left: 14px;
-  background: var(--red);
-  color: #fff;
-  font-size: 16px;
-  box-shadow: 0 8px 20px rgba(226, 69, 63, .5)
-}
-
-.gbuy {
-  right: 14px;
-  background: #fff;
-  color: var(--red);
-  font-size: 17px
-}
-
-.gcard:hover .gplay,
-.gcard:hover .gbuy {
-  opacity: 1;
-  transform: scale(1)
-}
-
-.gplay:hover,
-.gbuy:hover {
-  transform: scale(1.15) !important
-}
-
-.gplay:active,
-.gbuy:active {
-  transform: scale(.9) !important
-}
 
 .gcursor {
   position: absolute;

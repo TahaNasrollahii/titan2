@@ -371,11 +371,9 @@ export default function TitanPage() {
       sc.innerHTML = GAMES.map((g, i) => `
   <article class="gcard spot${i === 3 ? ' feat' : ''}" data-i="${i}" style="--d:${i}">
     <div class="gart">${cardArt(g, i)}</div>
-    <button class="gplay" data-play="${i}" aria-label="تماشای تریلر"><i data-icon="play"></i></button>
-    <button class="gbuy" data-buy="${i}" aria-label="افزودن ${esc(g.t)} به سبد خرید"><i data-icon="bag"></i></button>
     <div class="gbody">
       <h4>${esc(g.t)}</h4>
-      <div class="gdesc"><p>${esc(g.d)}</p><span class="gprice">${esc(g.p)}</span></div>
+      <div class="gdesc"><p>${esc(g.d)}</p><button class="gbtn-view" data-view="${i}">${esc(g.p)}</button></div>
     </div>
   </article>`).join('');
 
@@ -408,9 +406,8 @@ export default function TitanPage() {
       addEventListener('pointerup', () => { dragging = false; sc.classList.remove('drag'); });
       sc.addEventListener('click', e => {
         if (dragMoved) { dragMoved = false; return; }
-        const buy = e.target.closest('[data-buy]'), play = e.target.closest('[data-play]');
-        if (buy) addToCart(GAMES[buy.dataset.buy].t);
-        if (play) toast({ title: GAMES[play.dataset.play].t, text: 'در حال بارگذاری تریلر...', icon: 'play' });
+        const view = e.target.closest('[data-view]');
+        if (view) toast({ title: GAMES[view.dataset.view].t, text: 'در حال بارگذاری...', icon: 'play' });
       });
       $('#nextBtn').addEventListener('click', () => {
         const end = sc.scrollLeft + sc.clientWidth >= sc.scrollWidth - 8;
