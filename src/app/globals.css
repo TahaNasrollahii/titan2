@@ -1124,6 +1124,18 @@ html[dir="rtl"] .hero-char {
   opacity: 0.8;
 }
 
+.tb-img {
+  position: absolute;
+  bottom: 15;
+  left: -20px;
+  height: 90%;
+  width: auto;
+  object-fit: contain;
+  object-position: left bottom;
+  z-index: 1;
+  pointer-events: none;
+}
+
 /* ---------- New games carousel ---------- */
 .carousel {
   position: relative;

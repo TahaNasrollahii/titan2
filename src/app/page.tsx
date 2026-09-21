@@ -722,6 +722,7 @@ export default function TitanPage() {
             <p>جوایز نقدی بزرگ در انتظار شماست. تیم خود را ثبت‌نام کنید.</p>
             <a href="#tournaments" class="tb-btn">اطلاعات بیشتر</a>
           </div>
+          <img src="/images/tournoment-banner.png" alt="" class="tb-img" />
           <svg class="tb-art" viewBox="0 0 200 200" preserveAspectRatio="none">
             <circle cx="160" cy="40" r="80" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="30" />
             <circle cx="160" cy="40" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="20" />
