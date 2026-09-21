@@ -30,7 +30,9 @@ export default function TitanPage() {
         p: 'مشاهده',
         theme: ['noir', 'flame', 'mist', 'neon', 'ice', 'ember'][i % 6],
         fig: 'game',
-        crest: i % 2 === 0
+        crest: i % 2 === 0,
+        slug: g.slug.replace('-', ''),
+        hasCustomImages: ['fortnite', 'valorant', 'apexlegends'].includes(g.slug.replace('-', ''))
       })),
       picks: games.slice(0, 3).map(g => ({
         t: g.title,
@@ -325,6 +327,15 @@ export default function TitanPage() {
          New Games carousel
          ===================================================== */
       function cardArt(g, idx) {
+        if (g.hasCustomImages) {
+          const bgUrl = `/images/games/${g.slug}-background.png`;
+          const charUrl = `/images/games/${g.slug}-character.png`;
+          return `
+            <img src="${bgUrl}" alt="${g.t}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; opacity:0.85;" />
+            <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,5,15,0.95) 0%, rgba(10,5,15,0.3) 50%, transparent 100%); z-index:2;"></div>
+            <img src="${charUrl}" alt="${g.t}" style="position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:100%; height:95%; object-fit:contain; object-position:bottom; z-index:3; pointer-events:none;" />
+          `;
+        }
         const t = THEME[g.theme], id = 'c' + idx;
         let topo = '';
         for (let i = 1; i <= 6; i++) topo += `<ellipse cx="${60 + (idx * 13) % 40}" cy="70" rx="${i * 24}" ry="${i * 16}" fill="none" stroke="${t.glow}" stroke-opacity="${(0.24 - i * 0.03).toFixed(2)}" transform="rotate(${-20 + idx * 9} 100 110)"/>`;
