@@ -1065,6 +1065,7 @@ html[dir="rtl"] .hero-char {
   flex-direction: column;
   gap: 8px;
   align-items: flex-start;
+  max-width: 60%;
 }
 
 .tb-badge {
@@ -1126,9 +1127,9 @@ html[dir="rtl"] .hero-char {
 
 .tb-img {
   position: absolute;
-  bottom: 15;
-  left: -20px;
-  height: 90%;
+  bottom: 20;
+  left: -15px;
+  height: 80%;
   width: auto;
   object-fit: contain;
   object-position: left bottom;
