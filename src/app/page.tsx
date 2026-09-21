@@ -32,7 +32,7 @@ export default function TitanPage() {
         fig: 'game',
         crest: i % 2 === 0,
         slug: g.slug.replace('-', ''),
-        hasCustomImages: ['fortnite', 'valorant', 'apexlegends'].includes(g.slug.replace('-', ''))
+        hasCustomImages: ['fortnite', 'valorant', 'apexlegends', 'premium'].includes(g.slug.replace('-', ''))
       })),
       picks: games.slice(0, 3).map(g => ({
         t: g.title,
@@ -328,6 +328,12 @@ export default function TitanPage() {
          ===================================================== */
       function cardArt(g, idx) {
         if (g.hasCustomImages) {
+          if (g.slug === 'premium') {
+            return `
+              <img src="/images/games/premium.png" alt="${g.t}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1;" />
+              <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,5,15,0.95) 0%, rgba(10,5,15,0.3) 50%, transparent 100%); z-index:2;"></div>
+            `;
+          }
           const bgUrl = `/images/games/${g.slug}-background.png`;
           const charUrl = `/images/games/${g.slug}-character.png`;
           return `
