@@ -1139,14 +1139,15 @@ html[dir="rtl"] .hero-char {
 /* ---------- New games carousel ---------- */
 .carousel {
   position: relative;
-  margin: 0 -22px
+  margin-inline-end: -22px;
 }
 
 .scroller {
   display: flex;
   gap: 18px;
   overflow-x: auto;
-  padding: 18px 22px 20px;
+  padding: 18px 0 20px;
+  padding-inline-end: 22px;
   scroll-snap-type: x proximity;
   scrollbar-width: none;
   cursor: grab;
@@ -1245,8 +1246,7 @@ html[dir="rtl"] .hero-char {
   color: #ffd0c6
 }
 
-.gcard:hover .gdesc,
-.gcard.feat .gdesc {
+.gcard:hover .gdesc {
   max-height: 84px;
   opacity: 1;
   margin-top: 8px
@@ -1283,9 +1283,7 @@ html[dir="rtl"] .hero-char {
 }
 
 .gcard:hover .gplay,
-.gcard:hover .gbuy,
-.gcard.feat .gplay,
-.gcard.feat .gbuy {
+.gcard:hover .gbuy {
   opacity: 1;
   transform: scale(1)
 }
