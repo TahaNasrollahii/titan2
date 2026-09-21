@@ -1127,9 +1127,9 @@ html[dir="rtl"] .hero-char {
 
 .tb-img {
   position: absolute;
-  bottom: 20;
+  bottom: 30;
   left: -15px;
-  height: 80%;
+  height: 72%;
   width: auto;
   object-fit: contain;
   object-position: left bottom;
