@@ -214,7 +214,9 @@ export default function TitanPage() {
         if (instant) { void navInd.offsetWidth; navInd.style.transition = ''; }
       }
       navItems.forEach(a => a.addEventListener('click', e => {
-        e.preventDefault(); // remove this line once the links point to real pages
+        if (a.getAttribute('href').startsWith('#')) {
+          e.preventDefault();
+        }
         navItems.forEach(x => x.classList.remove('active'));
         a.classList.add('active');
         moveInd(a);
@@ -636,12 +638,12 @@ export default function TitanPage() {
     <nav class="nav-list" id="navList">
       <span class="nav-ind" id="navInd"></span>
       <!-- Replace the hash links with your real routes -->
-      <a class="nav-item active" href="#home" data-label="خانه"><i data-icon="home"></i></a>
+      <a class="nav-item active" href="/" data-label="خانه"><i data-icon="home"></i></a>
+      <a class="nav-item" href="/store" data-label="فروشگاه"><i data-icon="bag"></i></a>
       <a class="nav-item" href="#games" data-label="بازی‌ها"><i data-icon="game"></i></a>
       <a class="nav-item" href="#gift-cards" data-label="گیفت کارت"><i data-icon="gift"></i></a>
       <a class="nav-item" href="#tournaments" data-label="تورنمنت‌ها"><i data-icon="trophy"></i></a>
       <a class="nav-item" href="#stats" data-label="آمار"><i data-icon="chart"></i></a>
-      <a class="nav-item" href="#store" data-label="فروشگاه تجهیزات"><i data-icon="bag"></i></a>
       <a class="nav-item" href="#messages" data-label="پیام‌ها"><i data-icon="chat"></i></a>
     </nav>
     <button class="add-btn" id="addSquad" data-label="ساخت تیم" aria-label="ساخت تیم"><span class="plus"><i data-icon="plus"></i></span></button>

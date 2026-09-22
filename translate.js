@@ -9,7 +9,7 @@ const replacements = {
   'data-label="Gift cards"': 'data-label="گیفت کارت"',
   'data-label="Tournaments"': 'data-label="تورنمنت‌ها"',
   'data-label="Statistics"': 'data-label="آمار"',
-  'data-label="Gear store"': 'data-label="فروشگاه تجهیزات"',
+  'data-label="Gear store"': 'data-label="فروشگاه"',
   'data-label="Messages"': 'data-label="پیام‌ها"',
   'data-label="Create a squad"': 'data-label="ساخت تیم"',
   'aria-label="Create a squad"': 'aria-label="ساخت تیم"',
