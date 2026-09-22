@@ -124,18 +124,19 @@
 }
 
 .store-filter-chev {
+  transform: rotate(90deg);
   transition: transform 0.4s var(--spring);
 }
 
 .store-filter-chev.open {
-  transform: rotate(-180deg);
+  transform: rotate(-90deg);
 }
 
 .store-filters-panel {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
-  padding: 0 24px 24px;
+  padding: 0 24px 0;
   max-height: 0;
   opacity: 0;
   overflow: hidden;
@@ -144,6 +145,7 @@
 
 .store-filters-panel.open {
   max-height: 300px;
+  padding: 0 24px 24px;
   opacity: 1;
 }
 
