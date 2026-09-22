@@ -185,11 +185,20 @@ export default function TitanPage() {
       function toast({ title, text = '', icon = 'bell' }) {
         const el = document.createElement('div');
         el.className = 'toast';
-        el.innerHTML = `<span class="t-ic"><i data-icon="${icon}"></i></span><div><b>${esc(title)}</b>${text ? `<span class="tx">${esc(text)}</span>` : ''}</div>`;
+        el.innerHTML = `<span class="t-ic"><i data-icon="${icon}"></i></span><div><b>${esc(title)}</b>${text ? `<span class="tx">${esc(text)}</span>` : ''}</div><button class="t-close" aria-label="بستن"><i data-icon="x"></i></button>`;
+        const closeBtn = el.querySelector('.t-close');
+        function dismiss() {
+          el.classList.add('out');
+          setTimeout(() => el.remove(), 450);
+        }
+        let timer = setTimeout(dismiss, 4300);
+        closeBtn.addEventListener('click', () => {
+          clearTimeout(timer);
+          dismiss();
+        });
         paint(el);
         toastsEl.appendChild(el);
         while (toastsEl.children.length > 3) toastsEl.firstChild.remove();
-        setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 450); }, 4300);
       }
 
 
@@ -281,7 +290,6 @@ export default function TitanPage() {
         const s = SLIDES[cur];
         $('#heroTitle').textContent = s.title;
         $('#heroDesc').textContent = s.desc;
-        $('#plats').innerHTML = s.plats.map(p => `<span class="plat"><i data-icon="${p}"></i></span>`).join('');
         paint(hero);
         watchEl.textContent = fmt(s.watch);
         tickCountdown();
@@ -673,7 +681,6 @@ export default function TitanPage() {
           <div class="hero-body" id="heroBody">
             <div class="hero-tags">
               <span class="badge-pop"><i data-icon="flame"></i>محبوب</span>
-              <div id="plats"></div>
             </div>
             <h2 id="heroTitle">Valorant</h2>
             <p id="heroDesc"></p>

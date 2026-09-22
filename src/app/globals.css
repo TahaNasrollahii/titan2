@@ -537,13 +537,26 @@ i[data-icon] svg {
 }
 
 .sec-h a.arrow {
-  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 18px;
   color: #fff;
-  transition: transform .35s var(--spring)
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
 }
 
 .sec-h a.arrow:hover {
-  transform: translateX(5px)
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateX(-4px) scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3), 0 0 12px rgba(255, 255, 255, 0.1);
 }
 
 /* spotlight that follows the cursor */
@@ -834,29 +847,24 @@ html[dir="rtl"] .hero-char {
 .pill-white {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  height: 34px;
-  padding: 0 14px;
+  height: 38px;
+  padding: 0 20px;
   border-radius: 999px;
-  background: #fff;
-  color: #1d0a0d;
-  font-weight: 500;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+  color: #1a0508;
+  font-weight: 600;
   font-size: 13px;
-  transition: transform .3s var(--spring), box-shadow .3s
-}
-
-.pill-white i {
-  font-size: 15px
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1), inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  text-decoration: none;
 }
 
 .pill-white:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, .25)
-}
-
-.pill-white.liked i {
-  color: var(--red);
-  animation: pop .4s var(--spring)
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2), inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+  background: #fff;
 }
 
 .hero-art {
@@ -1051,8 +1059,8 @@ html[dir="rtl"] .hero-char {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 24px 32px;
+  justify-content: flex-start;
+  padding: 22px 26px;
   color: #fff;
   z-index: 1;
 }
@@ -1081,6 +1089,7 @@ html[dir="rtl"] .hero-char {
   gap: 8px;
   align-items: flex-start;
   max-width: 60%;
+  height: 100%;
 }
 
 .tb-badge {
@@ -1113,20 +1122,26 @@ html[dir="rtl"] .hero-char {
 }
 
 .tb-btn {
-  margin-top: 6px;
+  margin-top: auto;
   display: inline-flex;
   align-items: center;
-  padding: 8px 18px;
-  border-radius: 12px;
-  background: #fff;
+  justify-content: center;
+  height: 38px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
   color: #4b2a86;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 600;
-  transition: transform 0.3s var(--spring);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15), inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  text-decoration: none;
 }
 
 .tb-btn:hover {
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25), inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+  background: #fff;
 }
 
 .tb-art {
@@ -1673,6 +1688,29 @@ html[dir="rtl"] .hero-char {
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   animation: toastIn .55s var(--spring) backwards;
+  pointer-events: auto;
+}
+
+.t-close {
+  margin-right: auto;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s;
+}
+
+.t-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.t-close i {
+  font-size: 14px;
 }
 
 .toast.out {
