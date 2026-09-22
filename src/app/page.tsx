@@ -702,7 +702,7 @@ export default function TitanPage() {
           <div class="dashes" id="dashes"></div>
         </article>
 
-        <div class="sec-h"><h3>دسته‌بندی‌ها</h3><a href="#games">مشاهده همه</a></div>
+        <div class="sec-h"><h3>دسته‌بندی‌ها</h3></div>
         <div class="carousel">
           <div class="scroller" id="scroller" tabindex="0" aria-label="دسته‌بندی‌ها"></div>
           <button class="next" id="nextBtn" aria-label="بازی‌های بعدی"><i data-icon="chev"></i></button>
@@ -713,6 +713,9 @@ export default function TitanPage() {
             <path d="M330 -10C360 30 300 60 340 110" fill="none" stroke="#fff" stroke-opacity=".08"/>
             <path d="M350 -10C380 30 320 60 360 110" fill="none" stroke="#fff" stroke-opacity=".06"/>
             <path d="M370 -10C400 30 340 60 380 110" fill="none" stroke="#fff" stroke-opacity=".05"/>
+            <path d="M50 -10C80 30 20 60 60 110" fill="none" stroke="#fff" stroke-opacity=".08"/>
+            <path d="M70 -10C100 30 40 60 80 110" fill="none" stroke="#fff" stroke-opacity=".06"/>
+            <path d="M90 -10C120 30 60 60 100 110" fill="none" stroke="#fff" stroke-opacity=".05"/>
           </svg>
           <div class="dl-content trust-content">
             <div class="trust-item">
