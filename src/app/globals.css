@@ -507,8 +507,23 @@ i[data-icon] svg {
 }
 
 .sec-h h3 {
-  font-size: clamp(17px, 1.5vw, 20px);
-  font-weight: 500
+  font-size: clamp(20px, 1.8vw, 24px);
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff 0%, var(--muted) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sec-h h3::before {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 20px;
+  background: var(--red);
+  border-radius: 4px;
+  box-shadow: 0 0 12px rgba(226, 69, 63, 0.6);
 }
 
 .sec-h a {

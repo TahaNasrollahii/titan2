@@ -281,10 +281,7 @@ export default function TitanPage() {
         const s = SLIDES[cur];
         $('#heroTitle').textContent = s.title;
         $('#heroDesc').textContent = s.desc;
-        $('#heroReviews').textContent = s.reviews;
-        $('#likeBtn').classList.remove('liked');
         $('#plats').innerHTML = s.plats.map(p => `<span class="plat"><i data-icon="${p}"></i></span>`).join('');
-        $('#faces').innerHTML = s.faces.map(n => `<span class="face">${avatar(n)}</span>`).join('');
         paint(hero);
         watchEl.textContent = fmt(s.watch);
         tickCountdown();
@@ -302,10 +299,6 @@ export default function TitanPage() {
       dashes.forEach((d, k) => d.addEventListener('click', () => { if (k !== cur) goTo(k); }));
       ['pointerenter', 'focusin'].forEach(ev => hero.addEventListener(ev, () => paused = true));
       ['pointerleave', 'focusout'].forEach(ev => hero.addEventListener(ev, () => paused = false));
-      $('#likeBtn').addEventListener('click', e => {
-        const b = e.currentTarget; b.classList.toggle('liked');
-        if (b.classList.contains('liked')) toast({ title: SLIDES[cur].title, text: 'به علاقه‌مندی‌های شما اضافه شد', icon: 'like' });
-      });
 
       function tickCountdown() {
         const left = Math.max(0, Math.floor((SLIDES[cur].end - Date.now()) / 1000));
@@ -685,8 +678,7 @@ export default function TitanPage() {
             <h2 id="heroTitle">Valorant</h2>
             <p id="heroDesc"></p>
             <div class="hero-foot">
-              <div class="faces" id="faces"></div>
-              <button class="pill-white" id="likeBtn"><i data-icon="like"></i><span id="heroReviews">+53 Reviews</span></button>
+              <a href="#games" class="pill-white"><span>مشاهده محصولات</span></a>
             </div>
           </div>
 
