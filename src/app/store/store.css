@@ -154,23 +154,28 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: transparent;
-  color: var(--muted);
-  border: 1px dashed rgba(255, 255, 255, 0.2);
+  background: var(--red);
+  color: #fff;
+  border: none;
   border-radius: 12px;
-  padding: 10px 16px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
+  box-shadow: 0 4px 16px rgba(226, 69, 63, 0.25);
 }
 
 .sf-reset-btn:hover {
-  color: #fff;
-  border-style: solid;
-  border-color: rgba(255, 255, 255, 0.4);
-  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(226, 69, 63, 0.4);
+  filter: brightness(1.1);
+}
+
+.sf-reset-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(226, 69, 63, 0.25);
 }
 
 .sf-col {
@@ -236,17 +241,42 @@
 
 .sf-range-pill {
   position: absolute;
-  z-index: 2;
+  z-index: 4;
   top: 50%;
   transform: translate(-50%, -50%);
   background: var(--panel-2);
   color: #fff;
   font-size: 12px;
   font-weight: 700;
-  padding: 4px 10px;
+  padding: 4px 10px 4px 6px;
   border-radius: 999px;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1), 0 4px 10px rgba(0,0,0, 0.4);
   pointer-events: none;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.sf-pill-input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  width: 76px;
+  text-align: center;
+  outline: none;
+  pointer-events: auto;
+  border-radius: 6px;
+  transition: all 0.2s;
+  padding: 2px 0;
+  margin-left: 6px;
+}
+
+.sf-pill-input:focus, .sf-pill-input:hover {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* Radio Pills */
@@ -470,7 +500,7 @@
 }
 
 .discount-art {
-  object-position: left bottom;
+  object-position: 25% bottom;
 }
 
 .side-art-wrap {
@@ -519,6 +549,11 @@
   inset: 0;
   background: #fff;
   transform-origin: right;
+  transform: scaleX(0);
+}
+
+.sp-dot.active i {
+  transform: scaleX(1);
   transition: transform 5s linear;
 }
 

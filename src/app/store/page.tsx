@@ -29,12 +29,12 @@ const ICONS: Record<string, [string, boolean?]> = {
   sliders: ['<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>']
 };
 
-function Icon({ name, className = '' }: { name: string, className?: string }) {
+function Icon({ name, className = '', style }: { name: string, className?: string, style?: React.CSSProperties }) {
   const ico = ICONS[name];
   if (!ico) return null;
   const [inner, filled] = ico;
   return (
-    <i data-icon={name} className={className} dangerouslySetInnerHTML={{
+    <i data-icon={name} className={className} style={style} dangerouslySetInnerHTML={{
       __html: `<svg viewBox="0 0 24 24" fill="${filled ? 'currentColor' : 'none'}" stroke="${filled ? 'none' : 'currentColor'}" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">${inner}</svg>`
     }} />
   );
@@ -251,7 +251,7 @@ export default function StorePage() {
               </div>
               <div className="store-sort">
                 <button className="store-sort-btn" onClick={() => setSortOpen(!sortOpen)}>
-                  <Icon name="arrow" className="sort-icon-rev" /> مرتب‌سازی: {sortBy} <Icon name="chev" className="sort-chev" />
+                  <Icon name="arrow" className="sort-icon-rev" style={{ transform: sortBy === 'قیمت: کم به زیاد' ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform 0.3s var(--spring)' }} /> مرتب‌سازی: {sortBy} <Icon name="chev" className="sort-chev" />
                 </button>
                 {sortOpen && (
                   <div className="store-sort-drop">
@@ -277,7 +277,25 @@ export default function StorePage() {
                   <div className="sf-range-wrap" dir="ltr">
                     <input type="range" min="0" max="10000000" step="100000" value={priceMax} onChange={e => setPriceMax(Number(e.target.value))} className="sf-range" />
                     <div className="sf-range-track" style={{ width: `${(priceMax/10000000)*100}%` }}></div>
-                    <div className="sf-range-pill" style={{ left: `${(priceMax/10000000)*100}%` }} dir="rtl">{priceMax.toLocaleString('fa-IR')} تومان</div>
+                    <div className="sf-range-pill" style={{ left: `${(priceMax/10000000)*100}%`, transform: `translate(-${(priceMax/10000000)*100}%, -50%)` }} dir="rtl">
+                      <svg width="6" height="12" viewBox="0 0 6 12" fill="currentColor" style={{ opacity: 0.5, marginRight: '-2px', marginLeft: '6px' }}>
+                        <circle cx="2" cy="2" r="1"/><circle cx="2" cy="6" r="1"/><circle cx="2" cy="10" r="1"/>
+                        <circle cx="5" cy="2" r="1"/><circle cx="5" cy="6" r="1"/><circle cx="5" cy="10" r="1"/>
+                      </svg>
+                      <input 
+                        type="text"
+                        value={priceMax === 0 ? '۰' : priceMax.toLocaleString('fa-IR')}
+                        onChange={(e) => {
+                          let val = e.target.value.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString()).replace(/\D/g, '');
+                          let num = Number(val);
+                          if (num > 10000000) num = 10000000;
+                          setPriceMax(num);
+                        }}
+                        className="sf-pill-input"
+                        dir="ltr"
+                      />
+                      <span>تومان</span>
+                    </div>
                   </div>
                 </div>
                 <div className="sf-col">
@@ -386,7 +404,7 @@ export default function StorePage() {
                 <div className="sp-dots">
                   {[0, 1].map(i => (
                     <button key={i} className={`sp-dot ${promoIdx === i ? 'active' : ''}`} onClick={() => setPromoIdx(i)}>
-                      <span><i style={{ transform: promoIdx === i ? 'scaleX(1)' : 'scaleX(0)' }}></i></span>
+                      <span><i></i></span>
                     </button>
                   ))}
                 </div>
