@@ -149,6 +149,30 @@
   opacity: 1;
 }
 
+.sf-reset-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.sf-reset-btn:hover {
+  color: #fff;
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+}
+
 .sf-col {
   display: flex;
   flex-direction: column;
@@ -156,10 +180,24 @@
 }
 
 .sf-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
   letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 4px;
+}
+.sf-label::before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 14px;
+  background: var(--red);
+  border-radius: 4px;
 }
 
 .sf-range-wrap {
@@ -261,32 +299,14 @@
   border-radius: 50%;
 }
 
-/* Stars */
-.sf-stars {
-  display: flex;
-  gap: 6px;
-}
-
-.sf-star {
-  color: rgba(255,255,255,0.15);
-  transition: color 0.2s, transform 0.2s var(--spring);
-}
-
-.sf-star svg {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
-}
-
-.sf-star.active {
-  color: #ffb37a; /* matching theme star color */
-}
-
-.sf-star:hover {
-  transform: scale(1.2);
-}
+/* Removed Stars */
 
 /* Promo Banner */
+.store-promos {
+  display: flex;
+  gap: 24px;
+}
+
 .store-promo {
   position: relative;
   height: 240px;
@@ -298,19 +318,39 @@
   color: #fff;
 }
 
+.main-promo {
+  flex: 2;
+}
+
+.side-promo {
+  flex: 1;
+  padding: 24px 30px;
+}
+
 .sp-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(100deg, #df5f57 0%, #ea8a70 100%);
   z-index: 1;
 }
 
-.sp-bg::after {
+.discount-bg {
+  background: linear-gradient(135deg, #df5f57 0%, #b21f36 100%);
+}
+.discount-bg::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(420px 220px at 76% 40%, rgba(255, 255, 255, .18), transparent 70%),
-    radial-gradient(320px 200px at 0% 100%, rgba(0, 0, 0, .2), transparent 70%);
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.2) 0%, transparent 60%);
+}
+
+.side-bg {
+  background: linear-gradient(135deg, #1f1f2e 0%, #11111a 100%);
+}
+.side-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at bottom right, rgba(100,100,255,0.1) 0%, transparent 70%);
 }
 
 .sp-content {
@@ -369,6 +409,16 @@
   max-width: 85%;
 }
 
+.side-content h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.side-content .sp-foot {
+  margin-top: 12px;
+}
+
 .sp-foot {
   display: flex;
   align-items: center;
@@ -419,6 +469,20 @@
   opacity: 0.95;
 }
 
+.discount-art {
+  object-position: left bottom;
+}
+
+.side-art-wrap {
+  inset: 0 0 0 35%;
+}
+
+.side-art-wrap .sp-art {
+  object-fit: cover;
+  object-position: left center;
+  opacity: 0.8;
+}
+
 .sp-dots {
   position: absolute;
   bottom: 24px;
@@ -462,38 +526,47 @@
 .store-sec-h {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  margin-top: 10px;
+  align-items: center;
+  margin-top: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .store-sec-l {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: 12px;
 }
 
 .store-sec-l h3 {
-  font-size: 22px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #fff 0%, var(--muted) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  letter-spacing: -0.5px;
+}
+
+.store-sec-l h3::before {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 22px;
+  background: var(--red);
+  border-radius: 6px;
+  box-shadow: 0 0 16px rgba(226, 69, 63, 0.4);
 }
 
 .store-items-count {
-  font-size: 12px;
-  color: var(--muted-2);
-}
-
-.store-see-more {
-  font-size: 12px;
-  color: var(--muted);
-  transition: color 0.2s;
-  padding-bottom: 4px;
-}
-
-.store-see-more:hover {
-  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--red);
+  background: rgba(226, 69, 63, 0.1);
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(226, 69, 63, 0.2);
+  margin-top: 2px;
 }
 
 .store-grid {

@@ -61,12 +61,12 @@ function Avatar({ seed }: { seed: number }) {
 const TABS = ['همه', 'بازی‌ها', 'تجهیزات', 'گیفت کارت‌ها', 'لوازم جانبی', 'باندل‌ها'];
 
 const PRODUCTS = [
-  { id: '1', title: 'Elden Crown', subtitle: 'نسخه دلوکس', price: 59.99, originalPrice: 69.00, badge: 'محبوب', rating: 4.9, image: 'bg-1', type: 'بازی‌ها', platform: 'پی‌سی', genre: 'نقش‌آفرینی', popularity: 100 },
-  { id: '2', title: 'Red Frontier', subtitle: 'بسته پریمیوم', price: 49.99, originalPrice: 79.99, badge: 'تخفیف', rating: 4.6, image: 'bg-2', type: 'بازی‌ها', platform: 'پلی‌استیشن', genre: 'ماجراجویی', popularity: 95 },
-  { id: '3', title: 'هدست تایتان پرو', subtitle: '۷.۱ فراگیر · بی‌سیم', price: 149.00, originalPrice: 180.00, badge: 'تخفیف', rating: 4.7, image: 'bg-3', type: 'تجهیزات', platform: 'پی‌سی', genre: '', popularity: 90 },
-  { id: '4', title: 'کیبورد تایتان K60', subtitle: '۶۰٪ · هات‌سواپ · RGB', price: 119.00, originalPrice: undefined, badge: '', rating: 4.8, image: 'bg-4', type: 'تجهیزات', platform: 'پی‌سی', genre: '', popularity: 88 },
-  { id: '5', title: 'Neon Protocol', subtitle: 'نسخه استاندارد', price: 39.99, originalPrice: undefined, badge: 'جدید', rating: 4.5, image: 'bg-5', type: 'بازی‌ها', platform: 'پی‌سی', genre: 'شوتر', popularity: 80 },
-  { id: '6', title: 'گیفت کارت تایتان', subtitle: '۵۰ دلار اعتبار', price: 50.00, originalPrice: undefined, badge: '', rating: 5.0, image: 'gift', type: 'گیفت کارت‌ها', platform: '', genre: '', popularity: 110 },
+  { id: '1', title: 'Elden Crown', subtitle: 'نسخه دلوکس', price: 2950000, originalPrice: 3450000, badge: 'محبوب', rating: 4.9, image: 'bg-1', type: 'بازی‌ها', platform: 'پی‌سی', genre: 'نقش‌آفرینی', popularity: 100 },
+  { id: '2', title: 'Red Frontier', subtitle: 'بسته پریمیوم', price: 2500000, originalPrice: 4000000, badge: 'تخفیف', rating: 4.6, image: 'bg-2', type: 'بازی‌ها', platform: 'پلی‌استیشن', genre: 'ماجراجویی', popularity: 95 },
+  { id: '3', title: 'هدست تایتان پرو', subtitle: '۷.۱ فراگیر · بی‌سیم', price: 7450000, originalPrice: 9000000, badge: 'تخفیف', rating: 4.7, image: 'bg-3', type: 'تجهیزات', platform: 'پی‌سی', genre: '', popularity: 90 },
+  { id: '4', title: 'کیبورد تایتان K60', subtitle: '۶۰٪ · هات‌سواپ · RGB', price: 5950000, originalPrice: undefined, badge: '', rating: 4.8, image: 'bg-4', type: 'تجهیزات', platform: 'پی‌سی', genre: '', popularity: 88 },
+  { id: '5', title: 'Neon Protocol', subtitle: 'نسخه استاندارد', price: 1999000, originalPrice: undefined, badge: 'جدید', rating: 4.5, image: 'bg-5', type: 'بازی‌ها', platform: 'پی‌سی', genre: 'شوتر', popularity: 80 },
+  { id: '6', title: 'گیفت کارت تایتان', subtitle: '۵۰ دلار اعتبار', price: 2500000, originalPrice: undefined, badge: '', rating: 5.0, image: 'gift', type: 'گیفت کارت‌ها', platform: '', genre: '', popularity: 110 },
 ];
 
 export default function StorePage() {
@@ -81,11 +81,9 @@ export default function StorePage() {
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   const [filtersOpen, setFiltersOpen] = useState(true);
-  const [priceMax, setPriceMax] = useState(200);
+  const [priceMax, setPriceMax] = useState(10000000);
   const [platform, setPlatform] = useState('');
   const [genre, setGenre] = useState('');
-  const [rating, setRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0);
 
   const [sortOpen, setSortOpen] = useState(false);
   const [sortBy, setSortBy] = useState('محبوبیت');
@@ -129,7 +127,7 @@ export default function StorePage() {
   useEffect(() => {
     if (promoHover) return;
     const t = setInterval(() => {
-      setPromoIdx(i => (i + 1) % 3);
+      setPromoIdx(i => (i + 1) % 2);
     }, 5000);
     return () => clearInterval(t);
   }, [promoHover]);
@@ -154,15 +152,13 @@ export default function StorePage() {
     p = p.filter(x => x.price <= priceMax);
     if (platform) p = p.filter(x => x.platform === platform);
     if (genre) p = p.filter(x => x.genre === genre);
-    if (rating > 0) p = p.filter(x => x.rating >= rating);
 
     if (sortBy === 'قیمت: کم به زیاد') p.sort((a, b) => a.price - b.price);
     else if (sortBy === 'قیمت: زیاد به کم') p.sort((a, b) => b.price - a.price);
-    else if (sortBy === 'امتیاز') p.sort((a, b) => b.rating - a.rating);
     else if (sortBy === 'محبوبیت') p.sort((a, b) => b.popularity - a.popularity);
     
     return p;
-  }, [activeTab, priceMax, platform, genre, rating, sortBy]);
+  }, [activeTab, priceMax, platform, genre, sortBy]);
 
 
   // Pointer parallax shell variables (simple mock)
@@ -259,7 +255,7 @@ export default function StorePage() {
                 </button>
                 {sortOpen && (
                   <div className="store-sort-drop">
-                    {['محبوبیت', 'قیمت: کم به زیاد', 'قیمت: زیاد به کم', 'جدیدترین', 'امتیاز'].map(s => (
+                    {['محبوبیت', 'قیمت: کم به زیاد', 'قیمت: زیاد به کم', 'جدیدترین'].map(s => (
                       <button key={s} onClick={() => { setSortBy(s); setSortOpen(false); }}>{s}</button>
                     ))}
                   </div>
@@ -278,10 +274,10 @@ export default function StorePage() {
               <div className={`store-filters-panel ${filtersOpen ? 'open' : ''}`}>
                 <div className="sf-col">
                   <span className="sf-label">قیمت تا</span>
-                  <div className="sf-range-wrap">
-                    <input type="range" min="0" max="300" value={priceMax} onChange={e => setPriceMax(Number(e.target.value))} className="sf-range" />
-                    <div className="sf-range-track" style={{ width: `${(priceMax/300)*100}%` }}></div>
-                    <div className="sf-range-pill" style={{ left: `${(priceMax/300)*100}%` }}>${(priceMax).toFixed(0)}</div>
+                  <div className="sf-range-wrap" dir="ltr">
+                    <input type="range" min="0" max="10000000" step="100000" value={priceMax} onChange={e => setPriceMax(Number(e.target.value))} className="sf-range" />
+                    <div className="sf-range-track" style={{ width: `${(priceMax/10000000)*100}%` }}></div>
+                    <div className="sf-range-pill" style={{ left: `${(priceMax/10000000)*100}%` }} dir="rtl">{priceMax.toLocaleString('fa-IR')} تومان</div>
                   </div>
                 </div>
                 <div className="sf-col">
@@ -304,59 +300,98 @@ export default function StorePage() {
                     ))}
                   </div>
                 </div>
-                <div className="sf-col">
-                  <span className="sf-label">امتیاز</span>
-                  <div className="sf-stars">
-                    {[1, 2, 3, 4, 5].map(r => (
-                      <button 
-                        key={r} 
-                        className={`sf-star ${(hoverRating || rating) >= r ? 'active' : ''}`}
-                        onPointerEnter={() => setHoverRating(r)}
-                        onPointerLeave={() => setHoverRating(0)}
-                        onClick={() => setRating(r === rating ? 0 : r)}
-                      >
-                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                      </button>
-                    ))}
-                  </div>
+                <div className="sf-col" style={{ justifyContent: 'flex-end' }}>
+                  <button 
+                    className="sf-reset-btn" 
+                    onClick={() => { setPriceMax(10000000); setPlatform(''); setGenre(''); }}
+                    style={{ opacity: (priceMax !== 10000000 || platform || genre) ? 1 : 0.5, pointerEvents: (priceMax !== 10000000 || platform || genre) ? 'auto' : 'none' }}
+                  >
+                    <Icon name="x" /> پاکسازی فیلترها
+                  </button>
                 </div>
               </div>
             </div>
 
-            {/* Promo Banner */}
-            <article 
-              className="store-promo spot"
-              onPointerEnter={() => setPromoHover(true)}
-              onPointerLeave={() => setPromoHover(false)}
-            >
-              <div className="sp-bg"></div>
-              <div className="sp-content">
-                <div className="sp-badges">
-                  <span className="sp-badge cream"><Icon name="flame" /> محبوب</span>
-                  <span className="sp-badge dark"><Icon name="clock" /> پایان در {formatTime(timeLeft)}</span>
+            {/* Promo Banners */}
+            <div className="store-promos reveal" style={{ '--d': 3 } as any}>
+              <article 
+                className="store-promo main-promo spot"
+              >
+                <div className="sp-bg discount-bg"></div>
+                <div className="sp-content">
+                  <div className="sp-badges">
+                    <span className="sp-badge red"><Icon name="flame" /> پیشنهاد ویژه</span>
+                    <span className="sp-badge dark"><Icon name="clock" /> پایان در {formatTime(timeLeft)}</span>
+                  </div>
+                  <h2>تخفیف‌های پاییزی تایتان</h2>
+                  <p>تا ۶۰٪ تخفیف برای محبوب‌ترین بازی‌ها و تجهیزات گیمینگ.</p>
+                  <div className="sp-foot">
+                    <button className="sp-btn" onClick={addToCart}>
+                      مشاهده تخفیف‌ها
+                    </button>
+                  </div>
                 </div>
-                <h2>باندل پرو تایتان</h2>
-                <p>هدست + کیبورد K60 + موس Featherlight. تجهیزات کامل تورنمنت، در یک بسته.</p>
-                <div className="sp-foot">
-                  <button className="sp-btn" onClick={addToCart}>
-                    <Icon name="cart" /> افزودن · ۲۷۹$
-                  </button>
-                  <span className="sp-strike">۳۳۷$</span>
+                <div className="sp-art-wrap">
+                  <img src="/images/hero/characters/apexlegends.png" alt="" className="sp-art discount-art" style={{ 
+                    transform: `translate(${framePos.px * 10}px, ${framePos.py * 10}px) scale(1.15) translateY(24px)` 
+                  }} />
                 </div>
-              </div>
-              <div className="sp-art-wrap">
-                <img src="/images/hero/characters/valorant.png" alt="" className="sp-art valorant" style={{ 
-                  transform: `translate(${framePos.px * 10}px, ${framePos.py * 10}px) scale(1.15) translateY(24px)` 
-                }} />
-              </div>
-              <div className="sp-dots">
-                {[0, 1, 2].map(i => (
-                  <button key={i} className={`sp-dot ${promoIdx === i ? 'active' : ''}`} onClick={() => setPromoIdx(i)}>
-                    <span><i style={{ transform: promoIdx === i ? 'scaleX(1)' : 'scaleX(0)' }}></i></span>
-                  </button>
-                ))}
-              </div>
-            </article>
+              </article>
+
+              <article 
+                className="store-promo side-promo spot"
+                onPointerEnter={() => setPromoHover(true)}
+                onPointerLeave={() => setPromoHover(false)}
+              >
+                <div className="sp-bg side-bg"></div>
+                
+                {promoIdx === 0 && (
+                  <>
+                    <div className="sp-content side-content">
+                      <div className="sp-badges">
+                        <span className="sp-badge cream">پرفروش‌ها</span>
+                      </div>
+                      <h3>باندل پرو تایتان</h3>
+                      <div className="sp-foot">
+                        <button className="sp-btn" onClick={addToCart}>
+                          ۱۳,۹۵۰,۰۰۰ تومان
+                        </button>
+                      </div>
+                    </div>
+                    <div className="sp-art-wrap side-art-wrap">
+                      <img src="/images/games/premium.png" alt="" className="sp-art" />
+                    </div>
+                  </>
+                )}
+                
+                {promoIdx === 1 && (
+                  <>
+                    <div className="sp-content side-content">
+                      <div className="sp-badges">
+                        <span className="sp-badge cream">محبوب‌ها</span>
+                      </div>
+                      <h3>Neon Protocol</h3>
+                      <div className="sp-foot">
+                        <button className="sp-btn" onClick={addToCart}>
+                          ۱,۹۹۹,۰۰۰ تومان
+                        </button>
+                      </div>
+                    </div>
+                    <div className="sp-art-wrap side-art-wrap">
+                      <img src="/images/games/neon-character.png" alt="" className="sp-art" />
+                    </div>
+                  </>
+                )}
+
+                <div className="sp-dots">
+                  {[0, 1].map(i => (
+                    <button key={i} className={`sp-dot ${promoIdx === i ? 'active' : ''}`} onClick={() => setPromoIdx(i)}>
+                      <span><i style={{ transform: promoIdx === i ? 'scaleX(1)' : 'scaleX(0)' }}></i></span>
+                    </button>
+                  ))}
+                </div>
+              </article>
+            </div>
 
             {/* All Products */}
             <div className="store-sec-h">
@@ -364,7 +399,6 @@ export default function StorePage() {
                 <h3>همه محصولات</h3>
                 <span className="store-items-count">{filteredProducts.length} مورد</span>
               </div>
-              <a href="#" className="store-see-more">مشاهده بیشتر</a>
             </div>
 
             <div className="store-grid">
@@ -394,8 +428,8 @@ export default function StorePage() {
                     <span className="sg-sub">{p.subtitle}</span>
                     <h4>{p.title}</h4>
                     <div className="sg-price-row">
-                      <span className="sg-price">${p.price.toFixed(2)}</span>
-                      {p.originalPrice && <span className="sg-old-price">${p.originalPrice.toFixed(2)}</span>}
+                      <span className="sg-price">{p.price.toLocaleString('fa-IR')} تومان</span>
+                      {p.originalPrice && <span className="sg-old-price">{p.originalPrice.toLocaleString('fa-IR')}</span>}
                     </div>
                   </div>
 
