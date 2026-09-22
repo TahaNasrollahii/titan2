@@ -1976,6 +1976,7 @@ html[dir="rtl"] .hero-live {
   font-size: 12px;
   color: var(--muted);
   font-weight: 400;
+  white-space: nowrap;
   transition: color 0.3s ease;
 }
 .trust-item:hover .trust-text small {

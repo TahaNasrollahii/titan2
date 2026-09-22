@@ -743,7 +743,7 @@ export default function TitanPage() {
               <div class="trust-icon"><i data-icon="like"></i><div class="glow"></div></div>
               <div class="trust-text">
                 <span>ضمانت کیفیت</span>
-                <small>بازگشت وجه در صورت مشکل</small>
+                <small>بازگشت وجه </small>
               </div>
             </div>
           </div>
