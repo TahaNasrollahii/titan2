@@ -1,4 +1,3 @@
-
 // @ts-nocheck
 'use client';
 
@@ -709,23 +708,43 @@ export default function TitanPage() {
           <button class="next" id="nextBtn" aria-label="بازی‌های بعدی"><i data-icon="chev"></i></button>
         </div>
 
-        <div class="sec-h"><h3>آخرین دانلودها</h3><a href="#downloads">مشاهده همه</a></div>
-        <article class="dl spot reveal" id="dl" style="--d:6">
+        <article class="dl spot reveal trust-badges" style="--d:6; margin-top: 24px;">
           <svg class="dl-lines" viewBox="0 0 600 100" preserveAspectRatio="none" aria-hidden="true">
             <path d="M330 -10C360 30 300 60 340 110" fill="none" stroke="#fff" stroke-opacity=".08"/>
             <path d="M350 -10C380 30 320 60 360 110" fill="none" stroke="#fff" stroke-opacity=".06"/>
             <path d="M370 -10C400 30 340 60 380 110" fill="none" stroke="#fff" stroke-opacity=".05"/>
           </svg>
-          <div class="dl-fill">
-            <div class="dl-wave"><svg viewBox="0 0 26 200" preserveAspectRatio="none" aria-hidden="true"><path fill="#dc4f48" d="M0 0H14C26 12 2 38 14 50C26 62 2 88 14 100C26 112 2 138 14 150C26 162 2 188 14 200H0Z"/></svg></div>
-          </div>
-          <div class="dl-content">
-            <div class="dl-icon"><em>FIFA<b>23</b></em></div>
-            <div class="dl-info"><h4>FIFA 23</h4><span class="tag">شبیه‌ساز ورزشی</span></div>
-            <div class="dl-meta"><strong id="dlEta">-</strong><small id="dlSize">-</small></div>
-            <div class="dl-actions">
-              <button class="circle-btn btn-red" id="dlToggle" aria-label="توقف دانلود"><i data-icon="pause"></i></button>
-              <button class="circle-btn btn-white" id="dlCancel" aria-label="لغو دانلود"><i data-icon="x"></i></button>
+          <div class="dl-content trust-content">
+            <div class="trust-item">
+              <div class="trust-icon"><i data-icon="flame"></i><div class="glow"></div></div>
+              <div class="trust-text">
+                <span>تحویل آنی</span>
+                <small>در کمتر از یک دقیقه</small>
+              </div>
+            </div>
+            <div class="trust-divider"></div>
+            <div class="trust-item">
+              <div class="trust-icon"><i data-icon="bag"></i><div class="glow"></div></div>
+              <div class="trust-text">
+                <span>پرداخت امن</span>
+                <small>از طریق درگاه‌های معتبر</small>
+              </div>
+            </div>
+            <div class="trust-divider"></div>
+            <div class="trust-item">
+              <div class="trust-icon"><i data-icon="chat"></i><div class="glow"></div></div>
+              <div class="trust-text">
+                <span>پشتیبانی ۲۴/۷</span>
+                <small>پاسخگویی سریع تیم ما</small>
+              </div>
+            </div>
+            <div class="trust-divider"></div>
+            <div class="trust-item">
+              <div class="trust-icon"><i data-icon="like"></i><div class="glow"></div></div>
+              <div class="trust-text">
+                <span>ضمانت کیفیت</span>
+                <small>بازگشت وجه در صورت مشکل</small>
+              </div>
             </div>
           </div>
         </article>
