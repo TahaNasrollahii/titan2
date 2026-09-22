@@ -232,7 +232,7 @@ export default function StorePage() {
               </button>
               <button className="me" aria-label="پروفایل شما">
                 <span className="face"><Avatar seed={5} /></span>
-                <b id="userName">Player</b>
+                <b id="userName">طاها</b>
               </button>
             </div>
           </header>
