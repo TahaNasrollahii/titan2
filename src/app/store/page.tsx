@@ -6,27 +6,27 @@ import './store.css';
 
 // SVG Icons from titan.js
 const ICONS: Record<string, [string, boolean?]> = {
-  home:  ['<path d="M3.5 10.8 12 3.5l8.5 7.3V20a1 1 0 0 1-1 1H15v-6H9v6H4.5a1 1 0 0 1-1-1z"/>'],
-  game:  ['<path d="M7.5 7h9A4.5 4.5 0 0 1 21 11.5v1a4.5 4.5 0 0 1-4.5 4.5h-1.2l-1.8-2h-3l-1.8 2H7.5A4.5 4.5 0 0 1 3 12.5v-1A4.5 4.5 0 0 1 7.5 7z"/><path d="M8 10v3M6.5 11.5h3"/><circle cx="15.6" cy="10.8" r=".6"/><circle cx="17.6" cy="12.6" r=".6"/>'],
-  gift:  ['<rect x="3.5" y="9" width="17" height="11.5" rx="2"/><rect x="2.5" y="6" width="19" height="3.5" rx="1"/><path d="M12 6v14.5"/><path d="M12 6c-.5-2.5-4-3.3-4.5-1.5C7 6 9.5 6 12 6zM12 6c.5-2.5 4-3.3 4.5-1.5C17 6 14.5 6 12 6z"/>'],
-  trophy:['<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5.5a1.5 1.5 0 0 0 0 3H8M16 6h2.5a1.5 1.5 0 0 1 0 3H16"/><path d="M12 13v4M8.5 20.5h7M10 17h4v3.5h-4z"/>'],
-  chart: ['<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5V12h8.5"/>'],
-  bag:   ['<path d="M5 8.5h14l-1 11.5H6z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/>'],
-  chat:  ['<path d="M4 5.5h16v11H10l-4.5 4v-4H4z"/><path d="M8 10h8M8 13h5"/>'],
-  search:['<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>'],
-  cart:  ['<path d="M3 4h2.6l2 10.5h10.2L20 7.5H6.4"/><circle cx="9.5" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/>'],
-  bell:  ['<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.8 2H4.2z"/><path d="M10 21h4"/>'],
-  users: ['<circle cx="9" cy="8.5" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9.5" r="2.5"/><path d="M17 14.5a4.5 4.5 0 0 1 4.5 4.5"/>'],
+  home:  ['<path d="M10 3L2 10v10a2 2 0 0 0 2 2h4v-7h8v7h4a2 2 0 0 0 2-2V10L14 3" fill="currentColor" opacity="0.15" stroke="none"/><path d="M3 10l9-7 9 7"/><path d="M4 12v8a2 2 0 0 0 2 2h4v-7h4v7h4a2 2 0 0 0 2-2v-8"/>'],
+  game:  ['<path d="M6 18c-3 0-4-2-4-6s1-6 4-6h12c3 0 4 2 4 6s-1 6-4 6H6z" fill="currentColor" opacity="0.15" stroke="none"/><path d="M6 18c-3 0-4-2-4-6s1-6 4-6h12c3 0 4 2 4 6s-1 6-4 6H6z"/><path d="M7 10v4M5 12h4"/><circle cx="15" cy="11" r="1" fill="currentColor" stroke="none"/><circle cx="17" cy="13" r="1" fill="currentColor" stroke="none"/>'],
+  gift:  ['<rect x="4" y="9" width="16" height="11" rx="2" fill="currentColor" opacity="0.15" stroke="none"/><rect x="4" y="9" width="16" height="11" rx="2"/><rect x="2" y="5" width="20" height="4" rx="1"/><path d="M12 5v15"/><path d="M12 5c-1.5-3-5.5-2.5-5.5 0 0 2 3.5 1.5 5.5 0z"/><path d="M12 5c1.5-3 5.5-2.5 5.5 0 0 2-3.5 1.5-5.5 0z"/>'],
+  trophy:['<path d="M7 4h10v6a5 5 0 0 1-10 0V4z" fill="currentColor" opacity="0.15" stroke="none"/><path d="M7 4h10v6a5 5 0 0 1-10 0V4z"/><path d="M7 6H4a2 2 0 0 0 0 4h3"/><path d="M17 6h3a2 2 0 0 1 0 4h-3"/><path d="M12 15v4"/><path d="M9 19h6"/>'],
+  chart: ['<rect x="3" y="14" width="4" height="6" rx="1" fill="currentColor" opacity="0.15" stroke="none"/><rect x="10" y="9" width="4" height="11" rx="1" fill="currentColor" opacity="0.15" stroke="none"/><rect x="17" y="4" width="4" height="16" rx="1" fill="currentColor" opacity="0.15" stroke="none"/><rect x="3" y="14" width="4" height="6" rx="1"/><rect x="10" y="9" width="4" height="11" rx="1"/><rect x="17" y="4" width="4" height="16" rx="1"/><path d="M3 20h18"/>'],
+  bag:   ['<rect x="4" y="8" width="16" height="13" rx="3" fill="currentColor" opacity="0.15" stroke="none"/><rect x="4" y="8" width="16" height="13" rx="3"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/><circle cx="8.5" cy="12.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="15.5" cy="12.5" r="1.5" fill="currentColor" stroke="none"/>'],
+  chat:  ['<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="currentColor" opacity="0.15" stroke="none"/><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><circle cx="8" cy="11" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="11" r="1.5" fill="currentColor" stroke="none"/><circle cx="16" cy="11" r="1.5" fill="currentColor" stroke="none"/>'],
+  search:['<circle cx="11" cy="11" r="6.5" fill="currentColor" opacity="0.15" stroke="none"/><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>'],
+  cart:  ['<path d="M6.4 7.5l-1.5-4h-2M6.4 7.5h13.6l-2 10.5H5L6.4 7.5z" fill="currentColor" opacity="0.15" stroke="none"/><path d="M3 4h1.5l1.5 4M6.4 7.5h13.6l-2 10.5H5L6.4 7.5z"/><circle cx="8.5" cy="19.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="15.5" cy="19.5" r="1.5" fill="currentColor" stroke="none"/>'],
+  bell:  ['<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.8 2H4.2z" fill="currentColor" opacity="0.15" stroke="none"/><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.8 2H4.2z"/><path d="M10 21h4"/>'],
+  users: ['<circle cx="9" cy="8.5" r="3.2" fill="currentColor" opacity="0.15" stroke="none"/><circle cx="9" cy="8.5" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9.5" r="2.5"/><path d="M17 14.5a4.5 4.5 0 0 1 4.5 4.5"/>'],
   play:  ['<path d="M8 5.2v13.6a.6.6 0 0 0 .9.5l11-6.8a.6.6 0 0 0 0-1L8.9 4.7a.6.6 0 0 0-.9.5z"/>', true],
   pause: ['<rect x="6.5" y="5" width="4" height="14" rx="1.2"/><rect x="13.5" y="5" width="4" height="14" rx="1.2"/>', true],
-  x:     ['<path d="M6 6l12 12M18 6 6 18"/>'],
-  like:  ['<path d="M2.5 10.5h4v10h-4z"/><path d="M6.5 10.5 10.5 3c1.9 0 3 1.4 2.6 3.3L12.4 9.5h6.3a2 2 0 0 1 2 2.4l-1.4 6.6a2 2 0 0 1-2 1.5H6.5z"/>', true],
+  x:     ['<circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15" stroke="none"/><path d="M15 9l-6 6M9 9l6 6"/>'],
+  like:  ['<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="currentColor" opacity="0.15" stroke="none"/><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>'],
   chev:  ['<path d="m9.5 5.5 6.5 6.5-6.5 6.5"/>'],
   arrow: ['<path d="M4 12h15.5M13.5 6l6 6-6 6"/>'],
   flame: ['<path d="M12 3c.6 3.4 4.8 5 4.8 9.6a4.8 4.8 0 0 1-9.6 0c0-1.9.8-3.2 2-4.2.1 1.5.9 2.5 2 2.7C11 8.6 10.8 5.6 12 3z"/>'],
-  plus:  ['<path d="M12 5v14M5 12h14"/>'],
-  clock: ['<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>'],
-  sliders: ['<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>']
+  plus:  ['<circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15" stroke="none"/><circle cx="12" cy="12" r="10"/><path d="M12 7v10M7 12h10"/>'],
+  clock: ['<circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15" stroke="none"/><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>'],
+  sliders: ['<rect x="2" y="14" width="4" height="6" rx="1" fill="currentColor" opacity="0.15" stroke="none"/><rect x="10" y="8" width="4" height="6" rx="1" fill="currentColor" opacity="0.15" stroke="none"/><rect x="18" y="12" width="4" height="6" rx="1" fill="currentColor" opacity="0.15" stroke="none"/><path d="M4 21v-7M4 14V3M12 21v-13M12 8V3M20 21v-9M20 12V3"/><rect x="2" y="14" width="4" height="6" rx="1"/><rect x="10" y="8" width="4" height="6" rx="1"/><rect x="18" y="12" width="4" height="6" rx="1"/>']
 };
 
 function Icon({ name, className = '', style }: { name: string, className?: string, style?: React.CSSProperties }) {
