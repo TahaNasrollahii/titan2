@@ -480,6 +480,18 @@
   object-position: 25% bottom;
 }
 
+.sp-discount-overlay {
+  position: absolute;
+  bottom: 70;
+  right: 20px;
+  /* moved left from -60px */
+  height: 45%;
+  object-fit: contain;
+  z-index: 2;
+  pointer-events: none;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+}
+
 .side-art-wrap {
   inset: 0 35% 0 0;
 }
@@ -583,13 +595,13 @@
 
 .store-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
 }
 
 .sg-card {
   position: relative;
-  height: 360px;
+  height: 300px;
   border-radius: 24px;
   overflow: hidden;
   background: #14141e;
@@ -606,7 +618,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.4) 50%, transparent 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.7) 40%, transparent 80%);
   pointer-events: none;
   z-index: 2;
 }

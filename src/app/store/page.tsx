@@ -407,6 +407,7 @@ export default function StorePage() {
                       </div>
                     </div>
                     <div className="sp-art-wrap">
+                      <img src="/images/discount.png" alt="Discount Badge" className="sp-discount-overlay" />
                       <img src={promo.img} alt="" className="sp-art discount-art" style={{ 
                         transform: `translate(calc(var(--px) * 10px), calc(var(--py) * 10px)) scale(${promo.scale}) translateY(${promo.y}px)` 
                       }} />
@@ -509,9 +510,6 @@ export default function StorePage() {
 
                   <div className="sg-actions">
                     <button className="sg-view-btn">مشاهده محصول</button>
-                    <button className="sg-add-btn" onClick={addToCart} aria-label="افزودن به سبد خرید">
-                      <Icon name="plus" />
-                    </button>
                   </div>
                 </article>
               ))}
