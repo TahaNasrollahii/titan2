@@ -104,15 +104,15 @@ const BESTSELLER_PROMOS = [
   }
 ];
 
-const TABS = ['همه', 'فورتنایت', 'ولورانت', 'ایپکس لجندز', 'پریمیوم'];
+const TABS = ['همه', 'فورتنایت', 'ولورانت', 'ایپکس لجندز', 'پرمیوم'];
 
 const PRODUCTS = [
-  { id: '1', title: 'Elden Crown', subtitle: 'نسخه دلوکس', price: 2950000, originalPrice: 3450000, badge: 'محبوب', rating: 4.9, image: '/images/products/p-game-1.jpg', type: 'پریمیوم', platform: 'پی‌سی', genre: 'نقش‌آفرینی', popularity: 100 },
-  { id: '2', title: 'Red Frontier', subtitle: 'بسته پریمیوم', price: 2500000, originalPrice: 4000000, badge: 'تخفیف', rating: 4.6, image: '/images/products/p-game-3.jpg', type: 'پریمیوم', platform: 'پلی‌استیشن', genre: 'ماجراجویی', popularity: 95 },
+  { id: '1', title: 'Elden Crown', subtitle: 'نسخه دلوکس', price: 2950000, originalPrice: 3450000, badge: 'محبوب', rating: 4.9, image: '/images/products/p-game-1.jpg', type: 'پرمیوم', platform: 'پی‌سی', genre: 'نقش‌آفرینی', popularity: 100 },
+  { id: '2', title: 'Red Frontier', subtitle: 'بسته پرمیوم', price: 2500000, originalPrice: 4000000, badge: 'تخفیف', rating: 4.6, image: '/images/products/p-game-3.jpg', type: 'پرمیوم', platform: 'پلی‌استیشن', genre: 'ماجراجویی', popularity: 95 },
   { id: '3', title: 'هدست تایتان پرو', subtitle: '۷.۱ فراگیر · بی‌سیم', price: 7450000, originalPrice: 9000000, badge: 'تخفیف', rating: 4.7, image: '/images/products/p-headset.jpg', type: 'ایپکس لجندز', platform: 'پی‌سی', genre: '', popularity: 90 },
   { id: '4', title: 'کیبورد تایتان K60', subtitle: '۶۰٪ · هات‌سواپ · RGB', price: 5950000, originalPrice: undefined, badge: '', rating: 4.8, image: '/images/products/p-keyboard.jpg', type: 'ولورانت', platform: 'پی‌سی', genre: '', popularity: 88 },
   { id: '5', title: 'موس تایتان M40', subtitle: '۱۶۰۰۰ DPI · بی‌سیم', price: 3450000, originalPrice: undefined, badge: 'جدید', rating: 4.5, image: '/images/products/p-mouse.jpg', type: 'فورتنایت', platform: 'پی‌سی', genre: '', popularity: 80 },
-  { id: '6', title: 'گیفت کارت تایتان', subtitle: '۵۰ دلار اعتبار', price: 2500000, originalPrice: undefined, badge: '', rating: 5.0, image: '/images/products/p-controller.jpg', type: 'پریمیوم', platform: '', genre: '', popularity: 110 },
+  { id: '6', title: 'گیفت کارت تایتان', subtitle: '۵۰ دلار اعتبار', price: 2500000, originalPrice: undefined, badge: '', rating: 5.0, image: '/images/products/p-controller.jpg', type: 'پرمیوم', platform: '', genre: '', popularity: 110 },
 ];
 
 export default function StorePage() {
