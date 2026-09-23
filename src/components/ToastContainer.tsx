@@ -40,7 +40,7 @@ export function ToastContainer() {
   const { toasts, removeToast } = useAppContext();
 
   return (
-    <div id="toasts">
+    <div className="toasts" id="toasts" aria-live="polite">
       {toasts.map(toast => (
         <Toast key={toast.id} toast={toast} onRemove={removeToast} />
       ))}
