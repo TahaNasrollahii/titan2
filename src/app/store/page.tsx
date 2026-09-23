@@ -385,6 +385,7 @@ export default function StorePage() {
                 onPointerLeave={() => setMainPromoHover(false)}
               >
                 <div className="sp-bg discount-bg"></div>
+                <img src="/images/discount.png" alt="Discount Background" className="sp-discount-overlay" />
                 
                 {DISCOUNT_PROMOS.map((promo, idx) => mainPromoIdx === idx && (
                   <React.Fragment key={idx}>
@@ -407,7 +408,6 @@ export default function StorePage() {
                       </div>
                     </div>
                     <div className="sp-art-wrap">
-                      <img src="/images/discount.png" alt="Discount Badge" className="sp-discount-overlay" />
                       <img src={promo.img} alt="" className="sp-art discount-art" style={{ 
                         transform: `translate(calc(var(--px) * 10px), calc(var(--py) * 10px)) scale(${promo.scale}) translateY(${promo.y}px)` 
                       }} />
@@ -446,7 +446,7 @@ export default function StorePage() {
                         <button className="sp-btn" onClick={addToCart}>
                           مشاهده محصول
                         </button>
-                        <div style={{ marginRight: '16px' }}>
+                        <div style={{ marginRight: '16px', whiteSpace: 'nowrap' }}>
                           <span style={{ fontSize: '16px', fontWeight: 'bold' }}>{promo.price} تومان</span>
                         </div>
                       </div>

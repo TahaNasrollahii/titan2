@@ -410,6 +410,10 @@
   max-width: 85%;
 }
 
+.side-content {
+  max-width: 70%;
+}
+
 .side-content h3 {
   font-size: 22px;
   font-weight: 700;
@@ -437,6 +441,7 @@
   border-radius: 999px;
   font-weight: 600;
   font-size: 13px;
+  white-space: nowrap;
   transition: transform 0.3s var(--spring);
 }
 
@@ -482,14 +487,14 @@
 
 .sp-discount-overlay {
   position: absolute;
-  bottom: 70;
-  right: 20px;
-  /* moved left from -60px */
-  height: 45%;
+  top: 50%;
+  right: 35%;
+  transform: translate(50%, -50%);
+  height: 100%;
+  opacity: 0.25;
   object-fit: contain;
   z-index: 2;
   pointer-events: none;
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
 }
 
 .side-art-wrap {
