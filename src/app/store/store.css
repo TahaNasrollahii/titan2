@@ -460,6 +460,11 @@
   inset: 0 45% 0 0;
   z-index: 2;
   pointer-events: none;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.store-promo:hover .sp-art-wrap {
+  transform: translateY(-6px) scale(1.04);
 }
 
 .sp-art {
@@ -480,8 +485,8 @@
 }
 
 .side-art-wrap .sp-art {
-  object-fit: cover;
-  object-position: left center;
+  object-fit: contain;
+  object-position: left bottom;
   opacity: 0.8;
 }
 

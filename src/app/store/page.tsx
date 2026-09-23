@@ -66,8 +66,8 @@ const DISCOUNT_PROMOS = [
     oldPrice: '۳,۵۰۰,۰۰۰',
     discount: '۴۰٪',
     img: '/images/games/valorant-character.png',
-    scale: 1.25,
-    y: -5,
+    scale: 1.15,
+    y: 0,
   },
   {
     title: 'Elden Crown',
@@ -76,8 +76,8 @@ const DISCOUNT_PROMOS = [
     oldPrice: '۳,۴۵۰,۰۰۰',
     discount: '۱۵٪',
     img: '/images/banner-hero.png',
-    scale: 1.3,
-    y: -5,
+    scale: 1.1,
+    y: 0,
   }
 ];
 
@@ -88,8 +88,8 @@ const BESTSELLER_PROMOS = [
     img: '/images/games/apexlegends-character.png',
     bgImg: 'url(/images/games/apexlegends-background.png)',
     bgGrad: 'linear-gradient(135deg, rgba(30, 15, 35, 0.85) 0%, rgba(15, 5, 20, 0.98) 100%)',
-    scale: 1.35,
-    y: -5,
+    scale: 1.05,
+    y: 0,
     x: -15
   },
   {
@@ -98,21 +98,21 @@ const BESTSELLER_PROMOS = [
     img: '/images/games/fortnite-character.png',
     bgImg: 'url(/images/games/fortnite-background.png)',
     bgGrad: 'linear-gradient(135deg, rgba(20, 30, 80, 0.85) 0%, rgba(5, 10, 30, 0.98) 100%)',
-    scale: 1.25,
-    y: -5,
+    scale: 1.1,
+    y: 0,
     x: 0
   }
 ];
 
-const TABS = ['همه', 'بازی‌ها', 'تجهیزات', 'گیفت کارت‌ها', 'لوازم جانبی', 'باندل‌ها'];
+const TABS = ['همه', 'فورتنایت', 'ولورانت', 'ایپکس لجندز', 'پریمیوم'];
 
 const PRODUCTS = [
-  { id: '1', title: 'Elden Crown', subtitle: 'نسخه دلوکس', price: 2950000, originalPrice: 3450000, badge: 'محبوب', rating: 4.9, image: '/images/products/p-game-1.jpg', type: 'بازی‌ها', platform: 'پی‌سی', genre: 'نقش‌آفرینی', popularity: 100 },
-  { id: '2', title: 'Red Frontier', subtitle: 'بسته پریمیوم', price: 2500000, originalPrice: 4000000, badge: 'تخفیف', rating: 4.6, image: '/images/products/p-game-3.jpg', type: 'بازی‌ها', platform: 'پلی‌استیشن', genre: 'ماجراجویی', popularity: 95 },
-  { id: '3', title: 'هدست تایتان پرو', subtitle: '۷.۱ فراگیر · بی‌سیم', price: 7450000, originalPrice: 9000000, badge: 'تخفیف', rating: 4.7, image: '/images/products/p-headset.jpg', type: 'تجهیزات', platform: 'پی‌سی', genre: '', popularity: 90 },
-  { id: '4', title: 'کیبورد تایتان K60', subtitle: '۶۰٪ · هات‌سواپ · RGB', price: 5950000, originalPrice: undefined, badge: '', rating: 4.8, image: '/images/products/p-keyboard.jpg', type: 'تجهیزات', platform: 'پی‌سی', genre: '', popularity: 88 },
-  { id: '5', title: 'موس تایتان M40', subtitle: '۱۶۰۰۰ DPI · بی‌سیم', price: 3450000, originalPrice: undefined, badge: 'جدید', rating: 4.5, image: '/images/products/p-mouse.jpg', type: 'تجهیزات', platform: 'پی‌سی', genre: '', popularity: 80 },
-  { id: '6', title: 'گیفت کارت تایتان', subtitle: '۵۰ دلار اعتبار', price: 2500000, originalPrice: undefined, badge: '', rating: 5.0, image: '/images/products/p-controller.jpg', type: 'گیفت کارت‌ها', platform: '', genre: '', popularity: 110 },
+  { id: '1', title: 'Elden Crown', subtitle: 'نسخه دلوکس', price: 2950000, originalPrice: 3450000, badge: 'محبوب', rating: 4.9, image: '/images/products/p-game-1.jpg', type: 'پریمیوم', platform: 'پی‌سی', genre: 'نقش‌آفرینی', popularity: 100 },
+  { id: '2', title: 'Red Frontier', subtitle: 'بسته پریمیوم', price: 2500000, originalPrice: 4000000, badge: 'تخفیف', rating: 4.6, image: '/images/products/p-game-3.jpg', type: 'پریمیوم', platform: 'پلی‌استیشن', genre: 'ماجراجویی', popularity: 95 },
+  { id: '3', title: 'هدست تایتان پرو', subtitle: '۷.۱ فراگیر · بی‌سیم', price: 7450000, originalPrice: 9000000, badge: 'تخفیف', rating: 4.7, image: '/images/products/p-headset.jpg', type: 'ایپکس لجندز', platform: 'پی‌سی', genre: '', popularity: 90 },
+  { id: '4', title: 'کیبورد تایتان K60', subtitle: '۶۰٪ · هات‌سواپ · RGB', price: 5950000, originalPrice: undefined, badge: '', rating: 4.8, image: '/images/products/p-keyboard.jpg', type: 'ولورانت', platform: 'پی‌سی', genre: '', popularity: 88 },
+  { id: '5', title: 'موس تایتان M40', subtitle: '۱۶۰۰۰ DPI · بی‌سیم', price: 3450000, originalPrice: undefined, badge: 'جدید', rating: 4.5, image: '/images/products/p-mouse.jpg', type: 'فورتنایت', platform: 'پی‌سی', genre: '', popularity: 80 },
+  { id: '6', title: 'گیفت کارت تایتان', subtitle: '۵۰ دلار اعتبار', price: 2500000, originalPrice: undefined, badge: '', rating: 5.0, image: '/images/products/p-controller.jpg', type: 'پریمیوم', platform: '', genre: '', popularity: 110 },
 ];
 
 export default function StorePage() {
@@ -190,6 +190,47 @@ export default function StorePage() {
   useEffect(() => {
     const t = setInterval(() => setTimeLeft(l => Math.max(0, l - 1)), 1000);
     return () => clearInterval(t);
+  }, []);
+
+  // Mouse tracking for parallax and spot hover effects
+  useEffect(() => {
+    const handlePointerMove = (e: Event) => {
+      const pe = e as PointerEvent;
+      const promo = pe.currentTarget as HTMLElement;
+      const rect = promo.getBoundingClientRect();
+      const x = pe.clientX - rect.left;
+      const y = pe.clientY - rect.top;
+      
+      // Center-relative percentages (-1 to 1)
+      const px = (x / rect.width) * 2 - 1;
+      const py = (y / rect.height) * 2 - 1;
+      
+      promo.style.setProperty('--px', px.toString());
+      promo.style.setProperty('--py', py.toString());
+      promo.style.setProperty('--mx', x + 'px');
+      promo.style.setProperty('--my', y + 'px');
+    };
+
+    const handlePointerLeave = (e: Event) => {
+      const promo = e.currentTarget as HTMLElement;
+      promo.style.setProperty('--px', '0');
+      promo.style.setProperty('--py', '0');
+      promo.style.setProperty('--mx', '50%');
+      promo.style.setProperty('--my', '50%');
+    };
+
+    const promos = document.querySelectorAll('.store-promo');
+    promos.forEach(promo => {
+      promo.addEventListener('pointermove', handlePointerMove, { passive: true });
+      promo.addEventListener('pointerleave', handlePointerLeave, { passive: true });
+    });
+
+    return () => {
+      promos.forEach(promo => {
+        promo.removeEventListener('pointermove', handlePointerMove);
+        promo.removeEventListener('pointerleave', handlePointerLeave);
+      });
+    };
   }, []);
 
   const formatTime = (s: number) => {
