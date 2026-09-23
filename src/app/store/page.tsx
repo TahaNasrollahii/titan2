@@ -84,6 +84,7 @@ const DISCOUNT_PROMOS = [
 const BESTSELLER_PROMOS = [
   {
     title: 'باندل ویژه Apex',
+    subtitle: 'شامل اسکین اپیک و ۱۰۰۰ کوین',
     price: '۲,۹۵۰,۰۰۰',
     img: '/images/games/apexlegends-character.png',
     bgImg: 'url(/images/games/apexlegends-background.png)',
@@ -94,6 +95,7 @@ const BESTSELLER_PROMOS = [
   },
   {
     title: 'باندل ویژه Fortnite',
+    subtitle: 'اسکین لجندری + ۲۰۰۰ وی‌باکس',
     price: '۴,۵۰۰,۰۰۰',
     img: '/images/games/fortnite-character.png',
     bgImg: 'url(/images/games/fortnite-background.png)',
@@ -442,11 +444,12 @@ export default function StorePage() {
                         <span className="sp-badge cream">پرفروش‌ها</span>
                       </div>
                       <h3>{promo.title}</h3>
+                      <p className="side-subtitle">{promo.subtitle}</p>
                       <div className="sp-foot">
                         <button className="sp-btn" onClick={addToCart}>
                           مشاهده محصول
                         </button>
-                        <div style={{ marginRight: '16px', whiteSpace: 'nowrap' }}>
+                        <div style={{ marginRight: '4px', whiteSpace: 'nowrap' }}>
                           <span style={{ fontSize: '16px', fontWeight: 'bold' }}>{promo.price} تومان</span>
                         </div>
                       </div>
