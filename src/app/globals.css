@@ -186,8 +186,22 @@ i[data-icon] svg {
   height: 48px;
   border-radius: 16px;
   pointer-events: none;
-  background: radial-gradient(circle, rgba(226, 69, 63, .34), rgba(226, 69, 63, 0) 72%);
-  box-shadow: 0 0 34px rgba(226, 69, 63, .22);
+  
+  /* WWDC25 Pure Physical Glass */
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  
+  /* Subtle outer border */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  
+  /* Specular edges and volumetric shadows */
+  box-shadow: 
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.9),
+    inset -1px -1px 1.5px rgba(0, 0, 0, 0.3),
+    inset 2px 4px 12px rgba(255, 255, 255, 0.1),
+    0 12px 30px rgba(0, 0, 0, 0.3);
+    
   transition: transform .55s cubic-bezier(.3, 1.35, .4, 1);
 }
 
