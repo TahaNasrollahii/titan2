@@ -202,6 +202,25 @@
   border: 1px solid transparent;
 }
 
+.promo-slide-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease, transform 0.6s var(--spring);
+  transform: translateY(10px) scale(0.98);
+  z-index: 2;
+}
+
+.promo-slide-layer.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
 .main-promo:hover {
   transform: translateY(-8px);
   box-shadow: 0 20px 60px rgba(255, 69, 0, 0.2);
@@ -730,6 +749,9 @@
 }
 
 .sg-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   padding: 4px 10px;
   border-radius: 999px;
   font-size: 10px;
@@ -745,6 +767,12 @@
 .sg-badge.red {
   background: var(--red);
   color: #fff;
+}
+
+.sg-badge.red i {
+  color: #ffeb3b;
+  animation: flicker 0.6s infinite alternate;
+  font-size: 12px;
 }
 
 .sg-badge.dark {

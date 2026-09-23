@@ -109,7 +109,7 @@ const BESTSELLER_PROMOS = [
 const TABS = ['همه', 'فورتنایت', 'ولورانت', 'ایپکس لجندز', 'پرمیوم'];
 
 const PRODUCTS = [
-  { id: '1', title: 'Elden Crown', subtitle: 'نسخه دلوکس', price: 2950000, originalPrice: 3450000, badge: 'محبوب', rating: 4.9, image: '/images/products/p-game-1.jpg', type: 'پرمیوم', platform: 'پی‌سی', genre: 'نقش‌آفرینی', popularity: 100 },
+  { id: '1', title: 'Elden Crown', subtitle: 'نسخه دلوکس', price: 2950000, originalPrice: 3450000, badge: 'پرفروش', rating: 4.9, image: '/images/products/p-game-1.jpg', type: 'پرمیوم', platform: 'پی‌سی', genre: 'نقش‌آفرینی', popularity: 100 },
   { id: '2', title: 'Red Frontier', subtitle: 'بسته پرمیوم', price: 2500000, originalPrice: 4000000, badge: 'تخفیف', rating: 4.6, image: '/images/products/p-game-3.jpg', type: 'پرمیوم', platform: 'پلی‌استیشن', genre: 'ماجراجویی', popularity: 95 },
   { id: '3', title: 'هدست تایتان پرو', subtitle: '۷.۱ فراگیر · بی‌سیم', price: 7450000, originalPrice: 9000000, badge: 'تخفیف', rating: 4.7, image: '/images/products/p-headset.jpg', type: 'ایپکس لجندز', platform: 'پی‌سی', genre: '', popularity: 90 },
   { id: '4', title: 'کیبورد تایتان K60', subtitle: '۶۰٪ · هات‌سواپ · RGB', price: 5950000, originalPrice: undefined, badge: '', rating: 4.8, image: '/images/products/p-keyboard.jpg', type: 'ولورانت', platform: 'پی‌سی', genre: '', popularity: 88 },
@@ -389,8 +389,8 @@ export default function StorePage() {
                 <div className="sp-bg discount-bg"></div>
                 <img src="/images/discount.png" alt="Discount Background" className="sp-discount-overlay" />
                 
-                {DISCOUNT_PROMOS.map((promo, idx) => mainPromoIdx === idx && (
-                  <React.Fragment key={idx}>
+                {DISCOUNT_PROMOS.map((promo, idx) => (
+                  <div key={idx} className={`promo-slide-layer ${mainPromoIdx === idx ? 'active' : ''}`}>
                     <div className="sp-content">
                       <div className="sp-badges">
                         <span className="sp-badge live-red"><Icon name="flame" /> <span className="live-badge-text">پیشنهاد ویژه</span></span>
@@ -414,7 +414,7 @@ export default function StorePage() {
                         transform: `translate(calc(var(--px) * 10px), calc(var(--py) * 10px)) scale(${promo.scale}) translateY(${promo.y}px)` 
                       }} />
                     </div>
-                  </React.Fragment>
+                  </div>
                 ))}
 
                 <div className="sp-dots">
@@ -431,8 +431,8 @@ export default function StorePage() {
                 onPointerEnter={() => setPromoHover(true)}
                 onPointerLeave={() => setPromoHover(false)}
               >
-                {BESTSELLER_PROMOS.map((promo, idx) => promoIdx === idx && (
-                  <React.Fragment key={idx}>
+                {BESTSELLER_PROMOS.map((promo, idx) => (
+                  <div key={idx} className={`promo-slide-layer ${promoIdx === idx ? 'active' : ''}`}>
                     <div className="sp-bg side-bg" style={{ 
                       backgroundImage: `${promo.bgGrad}, ${promo.bgImg}`,
                       backgroundSize: 'cover',
@@ -441,7 +441,7 @@ export default function StorePage() {
                     
                     <div className="sp-content side-content">
                       <div className="sp-badges">
-                        <span className="sp-badge cream">پرفروش‌ها</span>
+                        <span className="sp-badge cream"><Icon name="trophy" /> پرفروش‌ها</span>
                       </div>
                       <h3>{promo.title}</h3>
                       <p className="side-subtitle">{promo.subtitle}</p>
@@ -459,7 +459,7 @@ export default function StorePage() {
                         transform: `translate(calc(var(--px) * 10px + ${promo.x}px), calc(var(--py) * 10px + ${promo.y}px)) scale(${promo.scale})`
                       }} />
                     </div>
-                  </React.Fragment>
+                  </div>
                 ))}
 
                 <div className="sp-dots">
@@ -494,7 +494,10 @@ export default function StorePage() {
                   
                   <div className="sg-badges-top">
                     <div className="sg-b-left">
-                      {p.badge && <span className={`sg-badge ${p.badge === 'محبوب' ? 'cream' : p.badge === 'تخفیف' ? 'red' : 'dark'}`}>{p.badge}</span>}
+                      {p.badge && <span className={`sg-badge ${p.badge === 'پرفروش' ? 'cream' : p.badge === 'تخفیف' ? 'red' : 'dark'}`}>
+                        {p.badge === 'تخفیف' && <Icon name="flame" />}
+                        {p.badge}
+                      </span>}
                       <span className="sg-badge dark star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> {p.rating}</span>
                     </div>
                     <button className={`sg-heart ${wishlist[p.id] ? 'active' : ''}`} onClick={() => toggleWishlist(p.id)}>
