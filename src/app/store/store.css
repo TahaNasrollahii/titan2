@@ -796,8 +796,8 @@
 }
 
 .sg-heart {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
@@ -807,6 +807,7 @@
   place-items: center;
   font-size: 16px;
   transition: transform 0.4s var(--spring), background 0.3s, color 0.3s;
+  flex-shrink: 0;
 }
 
 .sg-heart:hover {
@@ -880,6 +881,7 @@
   z-index: 4;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 10px;
   opacity: 0;
   transform: translateY(15px);
