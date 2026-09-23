@@ -1,0 +1,117 @@
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
+import { Icon, Avatar } from './Icons';
+import { useAppContext } from '@/context/AppContext';
+import { games } from '@/data/games';
+import { tournaments } from '@/data/tournaments';
+
+const CATALOG = [
+  ...games.map(g => ({ t: g.title, k: g.genre || 'Game' })),
+  ...tournaments.map(s => ({ t: s.title + ' Cup', k: 'Tournament' })),
+  { t: 'FIFA 23', k: 'Game' }
+];
+
+export function Topbar() {
+  const { cartCount, cartPop, hasUnreadNotifications, clearNotifications, addToast } = useAppContext();
+  
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  
+  // Handle keyboard shortcut for search ('/')
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === '/' && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const handleSearchFocus = () => setSearchOpen(true);
+  const handleSearchBlur = () => setTimeout(() => setSearchOpen(false), 160);
+
+  const renderResults = () => {
+    const query = searchQuery.trim().toLowerCase();
+    const list = (query ? CATALOG.filter(x => x.t.toLowerCase().includes(query)) : CATALOG).slice(0, 5);
+
+    if (!query) {
+      return (
+        <>
+          <h5>جستجوهای پرطرفدار</h5>
+          {list.map((x, i) => (
+            <button key={i} type="button" onClick={() => handleResultClick(x.t)}>
+              <span>{x.t}</span><small>{x.k}</small>
+            </button>
+          ))}
+        </>
+      );
+    }
+
+    if (list.length === 0) {
+      return <div className="empty">بدون نتیجه برای “{query}”</div>;
+    }
+
+    return list.map((x, i) => (
+      <button key={i} type="button" onClick={() => handleResultClick(x.t)}>
+        <span>{x.t}</span><small>{x.k}</small>
+      </button>
+    ));
+  };
+
+  const handleResultClick = (name: string) => {
+    addToast({ title: name, text: 'در حال باز کردن صفحه...', icon: 'search' });
+    setSearchQuery('');
+    searchInputRef.current?.blur();
+    setSearchOpen(false);
+  };
+
+  return (
+    <header className="topbar reveal" style={{ '--d': 1 } as React.CSSProperties}>
+      <div className={`search ${searchOpen ? 'open' : ''}`} id="search" role="search">
+        <Icon name="search" />
+        <input 
+          type="search" 
+          placeholder="جستجو" 
+          autoComplete="off" 
+          aria-label="جستجوی بازی‌ها، تجهیزات و تورنمنت‌ها"
+          ref={searchInputRef}
+          value={searchQuery}
+          suppressHydrationWarning
+          onChange={e => setSearchQuery(e.target.value)}
+          onFocus={handleSearchFocus}
+          onBlur={handleSearchBlur}
+          onKeyDown={e => {
+            if (e.key === 'Escape') searchInputRef.current?.blur();
+          }}
+        />
+        <kbd aria-hidden="true">/</kbd>
+        <div className="results" id="results" onMouseDown={e => e.preventDefault()}>
+          {renderResults()}
+        </div>
+      </div>
+      
+      <div className="top-actions">
+        <button className="round" aria-label="اعلان‌ها" onClick={clearNotifications}>
+          <Icon name="bell"/>
+          <span className="dot" hidden={!hasUnreadNotifications}></span>
+        </button>
+        
+        {/* We use a static cart button here, but the active cart function can be wired to cart logic.
+            Currently cartCount is global. */}
+        <button className="round" aria-label="سبد خرید" id="cartBtn">
+          <Icon name="cart"/>
+          <span className={`badge ${cartPop ? 'pop' : ''}`} hidden={cartCount === 0}>{cartCount}</span>
+        </button>
+        
+        <button className="me" aria-label="پروفایل شما">
+          <span className="face"><Avatar seed={5} /></span>
+          <b id="userName">طاها</b>
+        </button>
+      </div>
+    </header>
+  );
+}

@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AppProvider } from "@/context/AppContext";
+import { Sidebar } from "@/components/Sidebar";
+import { Topbar } from "@/components/Topbar";
+import { ToastContainer } from "@/components/ToastContainer";
 
 export const metadata: Metadata = {
   title: "TITAN — پلتفرم گیمینگ و اسپورت",
@@ -14,7 +18,16 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" suppressHydrationWarning>
       <body suppressHydrationWarning>
-        {children}
+        <AppProvider>
+          <div className="frame" id="frame">
+            <Sidebar />
+            <main className="main">
+              <Topbar />
+              {children}
+            </main>
+            <ToastContainer />
+          </div>
+        </AppProvider>
       </body>
     </html>
   );

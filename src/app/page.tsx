@@ -68,54 +68,20 @@ export default function TitanPage() {
          Icons  ([svg-inner, filled?])
          ===================================================== */
       const I = {
-        home: ['<path d="M3.5 10.8 12 3.5l8.5 7.3V20a1 1 0 0 1-1 1H15v-6H9v6H4.5a1 1 0 0 1-1-1z"/>'],
-        game: ['<path d="M7.5 7h9A4.5 4.5 0 0 1 21 11.5v1a4.5 4.5 0 0 1-4.5 4.5h-1.2l-1.8-2h-3l-1.8 2H7.5A4.5 4.5 0 0 1 3 12.5v-1A4.5 4.5 0 0 1 7.5 7z"/><path d="M8 10v3M6.5 11.5h3"/><circle cx="15.6" cy="10.8" r=".6"/><circle cx="17.6" cy="12.6" r=".6"/>'],
-        gift: ['<rect x="3.5" y="9" width="17" height="11.5" rx="2"/><rect x="2.5" y="6" width="19" height="3.5" rx="1"/><path d="M12 6v14.5"/><path d="M12 6c-.5-2.5-4-3.3-4.5-1.5C7 6 9.5 6 12 6zM12 6c.5-2.5 4-3.3 4.5-1.5C17 6 14.5 6 12 6z"/>'],
-        trophy: ['<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5.5a1.5 1.5 0 0 0 0 3H8M16 6h2.5a1.5 1.5 0 0 1 0 3H16"/><path d="M12 13v4M8.5 20.5h7M10 17h4v3.5h-4z"/>'],
-        chart: ['<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5V12h8.5"/>'],
+        flame: ['<path d="M12 3c.6 3.4 4.8 5 4.8 9.6a4.8 4.8 0 0 1-9.6 0c0-1.9.8-3.2 2-4.2.1 1.5.9 2.5 2 2.7C11 8.6 10.8 5.6 12 3z"/>'],
+        chev: ['<path d="m9.5 5.5 6.5 6.5-6.5 6.5"/>'],
         bag: ['<path d="M5 8.5h14l-1 11.5H6z"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/>'],
         chat: ['<path d="M4 5.5h16v11H10l-4.5 4v-4H4z"/><path d="M8 10h8M8 13h5"/>'],
-        search: ['<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>'],
-        cart: ['<path d="M3 4h2.6l2 10.5h10.2L20 7.5H6.4"/><circle cx="9.5" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/>'],
-        bell: ['<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.8 2H4.2z"/><path d="M10 21h4"/>'],
-        users: ['<circle cx="9" cy="8.5" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9.5" r="2.5"/><path d="M17 14.5a4.5 4.5 0 0 1 4.5 4.5"/>'],
-        play: ['<path d="M8 5.2v13.6a.6.6 0 0 0 .9.5l11-6.8a.6.6 0 0 0 0-1L8.9 4.7a.6.6 0 0 0-.9.5z"/>', true],
-        pause: ['<rect x="6.5" y="5" width="4" height="14" rx="1.2"/><rect x="13.5" y="5" width="4" height="14" rx="1.2"/>', true],
-        x: ['<path d="M6 6l12 12M18 6 6 18"/>'],
         like: ['<path d="M2.5 10.5h4v10h-4z"/><path d="M6.5 10.5 10.5 3c1.9 0 3 1.4 2.6 3.3L12.4 9.5h6.3a2 2 0 0 1 2 2.4l-1.4 6.6a2 2 0 0 1-2 1.5H6.5z"/>', true],
-        chev: ['<path d="m9.5 5.5 6.5 6.5-6.5 6.5"/>'],
-        arrow: ['<path d="M4 12h15.5M13.5 6l6 6-6 6"/>'],
-        flame: ['<path d="M12 3c.6 3.4 4.8 5 4.8 9.6a4.8 4.8 0 0 1-9.6 0c0-1.9.8-3.2 2-4.2.1 1.5.9 2.5 2 2.7C11 8.6 10.8 5.6 12 3z"/>'],
-        steam: ['<circle cx="15.2" cy="9" r="3.4"/><circle cx="8" cy="15.6" r="2.3"/><path d="m9.8 14 3.2-3M3.3 13.4l3.3 1.3"/>'],
-        epic: ['<path d="M6 3.5h12v12.6L12 20.5l-6-4.4z"/><path d="M10 8h4M10 8v5.5h4M10 10.7h3"/>'],
-        plus: ['<path d="M12 5v14M5 12h14"/>'],
-        cursor: ['<path d="M5 3l14 7-6 2-2 6z"/>', true]
+        trophy: ['<path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5.5a1.5 1.5 0 0 0 0 3H8M16 6h2.5a1.5 1.5 0 0 1 0 3H16"/><path d="M12 13v4M8.5 20.5h7M10 17h4v3.5h-4z"/>'],
+        arrow: ['<path d="M4 12h15.5M13.5 6l6 6-6 6"/>']
       };
       const ico = name => {
-        const [inner, filled] = I[name];
+        const [inner, filled] = I[name] || ['', false];
         return `<svg viewBox="0 0 24 24" fill="${filled ? 'currentColor' : 'none'}" stroke="${filled ? 'none' : 'currentColor'}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${inner}</svg>`;
       };
       const paint = (root = document) => $$('[data-icon]', root).forEach(el => { if (!el.childElementCount) el.innerHTML = ico(el.dataset.icon); });
 
-      /* =====================================================
-         Procedural avatars (swap for real user photos later)
-         ===================================================== */
-      let _uid = 0;
-      function avatar(seed) {
-        const id = 'av' + (_uid++);
-        const bgs = [['#ffcf8a', '#ff8a5c'], ['#9be8b0', '#37b57a'], ['#a5c6ff', '#6272f2'], ['#ffe17a', '#ffa02e'], ['#f7b0dd', '#c862dc'], ['#a6dcff', '#4aa0e6']];
-        const skins = ['#f4cfa8', '#e6b088', '#c98d62', '#f8dcc4', '#a8714a', '#dca47a'];
-        const hairs = ['#2b1b17', '#5b3a26', '#d9a441', '#151515', '#8a2e2e', '#3a2a5c'];
-        const shirts = ['#2f2a4a', '#c9403f', '#1f6f6b', '#f0f0f0', '#3a5bd0', '#222'];
-        const s = Math.abs(seed | 0);
-        const bg = bgs[s % 6], sk = skins[(s * 7 + 1) % 6], hr = hairs[(s * 5 + 2) % 6], sh = shirts[(s * 3 + 4) % 6], style = (s * 11 + 3) % 4;
-        let hair;
-        if (style === 0) hair = `<path d="M10.5 19c-.6-7.5 4-10.5 9.5-10.5S30 11.5 29.5 19c-1.8-3.6-5.2-5-9.5-5s-7.7 1.4-9.5 5z" fill="${hr}"/>`;
-        else if (style === 1) hair = `<circle cx="13" cy="13" r="4.5" fill="${hr}"/><circle cx="20" cy="10.5" r="5" fill="${hr}"/><circle cx="27" cy="13" r="4.5" fill="${hr}"/>`;
-        else if (style === 2) hair = `<path d="M9.5 24c-1.5-9 2-16 10.5-16s12 7 10.5 16c-1.2-2-2-5-2-8-3.5 1-11 1-14.5 0 0 3-.8 6-2 8z" fill="${hr}"/>`;
-        else hair = `<path d="M11 17.5c1-5 4.5-7 9-7s8 2 9 7c-3-2.5-6-3-9-3s-6 .5-9 3z" fill="${hr}"/>`;
-        return `<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${bg[0]}"/><stop offset="1" stop-color="${bg[1]}"/></linearGradient></defs><rect width="40" height="40" fill="url(#${id})"/><ellipse cx="20" cy="42" rx="15" ry="11" fill="${sh}"/><rect x="17" y="26" width="6" height="6" rx="3" fill="${sk}"/><circle cx="20" cy="20" r="8.6" fill="${sk}"/>${hair}<circle cx="16.8" cy="20.3" r="1" fill="#2a1414"/><circle cx="23.2" cy="20.3" r="1" fill="#2a1414"/><path d="M17.2 24c1.8 1.6 3.8 1.6 5.6 0" fill="none" stroke="#7a3a2a" stroke-width="1.1" stroke-linecap="round"/></svg>`;
-      }
 
       /* =====================================================
          Hero key art (SVG). Replace with your own <img> per slide
@@ -179,103 +145,11 @@ export default function TitanPage() {
       const GAMES_LIVE = ['Valorant', 'Rocket League', 'Counter-Strike 2', 'Dota 2'];
 
       /* =====================================================
-         Toasts
+         Toasts & Layout (Handled by React Context & Layout)
          ===================================================== */
-      const toastsEl = $('#toasts');
-      function toast({ title, text = '', icon = 'bell' }) {
-        const el = document.createElement('div');
-        el.className = 'toast';
-        el.innerHTML = `<span class="t-ic"><i data-icon="${icon}"></i></span><div><b>${esc(title)}</b>${text ? `<span class="tx">${esc(text)}</span>` : ''}</div><button class="t-close" aria-label="بستن"><i data-icon="x"></i></button>`;
-        const closeBtn = el.querySelector('.t-close');
-        function dismiss() {
-          el.classList.add('out');
-          setTimeout(() => el.remove(), 450);
-        }
-        let timer = setTimeout(dismiss, 4300);
-        closeBtn.addEventListener('click', () => {
-          clearTimeout(timer);
-          dismiss();
-        });
-        paint(el);
-        toastsEl.appendChild(el);
-        while (toastsEl.children.length > 3) toastsEl.firstChild.remove();
-      }
+      const toast = (window as any).titanToast || (() => { });
+      const liveToast = toast;
 
-
-
-      /* =====================================================
-         Left nav: sliding indicator
-         ===================================================== */
-      const navItems = $$('.nav-item');
-      const navInd = $('#navInd');
-      function moveInd(el, instant) {
-        if (instant) navInd.style.transition = 'none';
-        navInd.style.transform = `translate(${el.offsetLeft}px,${el.offsetTop}px)`;
-        if (instant) { void navInd.offsetWidth; navInd.style.transition = ''; }
-      }
-      navItems.forEach(a => a.addEventListener('click', e => {
-        if (a.getAttribute('href').startsWith('#')) {
-          e.preventDefault();
-        }
-        navItems.forEach(x => x.classList.remove('active'));
-        a.classList.add('active');
-        moveInd(a);
-      }));
-      addEventListener('resize', () => moveInd($('.nav-item.active'), true));
-      $('#addSquad').addEventListener('click', () => toast({ title: 'تیم جدید', text: 'دوستان خود را به لابی دعوت کنید', icon: 'users' }));
-
-      /* =====================================================
-         Search
-         ===================================================== */
-      const CATALOG = [
-        ...GAMES.map(g => ({ t: g.t, k: g.kind || 'Game' })),
-        ...SLIDES.map(s => ({ t: s.title + ' Cup', k: 'Tournament' })),
-        { t: 'FIFA 23', k: 'Game' }
-      ];
-      const searchEl = $('#search'), qEl = $('#q'), resEl = $('#results');
-      function renderResults(q) {
-        const query = q.trim().toLowerCase();
-        const list = (query ? CATALOG.filter(x => x.t.toLowerCase().includes(query)) : CATALOG).slice(0, 5);
-        resEl.innerHTML = (query ? '' : '<h5>جستجوهای پرطرفدار</h5>') + (list.length
-          ? list.map(x => `<button type="button" data-t="${esc(x.t)}"><span>${esc(x.t)}</span><small>${x.k}</small></button>`).join('')
-          : `<div class="empty">بدون نتیجه برای “${esc(q.trim())}”</div>`);
-      }
-      qEl.addEventListener('focus', () => { renderResults(qEl.value); searchEl.classList.add('open'); });
-      qEl.addEventListener('input', () => { renderResults(qEl.value); searchEl.classList.add('open'); });
-      qEl.addEventListener('blur', () => setTimeout(() => searchEl.classList.remove('open'), 160));
-      qEl.addEventListener('keydown', e => {
-        if (e.key === 'Escape') qEl.blur();
-        if (e.key === 'Enter') { const b = $('button', resEl); if (b) b.click(); }
-      });
-      resEl.addEventListener('mousedown', e => e.preventDefault());
-      resEl.addEventListener('click', e => {
-        const b = e.target.closest('button[data-t]');
-        if (!b) return;
-        toast({ title: b.dataset.t, text: 'در حال باز کردن صفحه...', icon: 'search' });
-        qEl.value = ''; qEl.blur();
-      });
-      addEventListener('keydown', e => {
-        if (e.key === '/' && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) { e.preventDefault(); qEl.focus(); }
-      });
-
-      /* =====================================================
-         Cart & bell
-         ===================================================== */
-      let cart = 0;
-      const cartBtn = $('#cartBtn'), cartBadge = $('#cartCount'), bellDot = $('#bellDot');
-      function addToCart(name) {
-        cart++;
-        cartBadge.hidden = false;
-        cartBadge.textContent = cart;
-        cartBadge.classList.remove('pop'); void cartBadge.offsetWidth; cartBadge.classList.add('pop');
-        if (!reduce) cartBtn.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.25) rotate(-8deg)' }, { transform: 'scale(1)' }], { duration: 450, easing: 'cubic-bezier(.3,1.6,.5,1)' });
-        toast({ title: 'به سبد خرید اضافه شد', text: name, icon: 'cart' });
-      }
-      $('#bellBtn').addEventListener('click', () => {
-        bellDot.hidden = true;
-        toast({ title: "You're all caught up", text: 'اعلان جدیدی ندارید', icon: 'bell' });
-      });
-      const liveToast = t => { bellDot.hidden = false; toast(t); };
 
       /* =====================================================
          Hero
@@ -292,7 +166,6 @@ export default function TitanPage() {
         const s = SLIDES[cur];
         $('#heroTitle').textContent = s.title;
         $('#heroDesc').textContent = s.desc;
-        paint(hero);
         watchEl.textContent = fmt(s.watch);
         tickCountdown();
       }
@@ -560,7 +433,6 @@ export default function TitanPage() {
          Right rail (friends + presence)
          ===================================================== */
       const tip = f => `${f.n} · ${f.s === 'game' ? 'در بازی — ' + f.g : f.s === 'online' ? 'آنلاین' : 'آفلاین'}`;
-      $('#me').innerHTML = `<span class="face">${avatar(5)}</span><b id="userName">${esc(CONFIG.userName)}</b>`;
 
       (function announcements() {
         const list = [
@@ -614,8 +486,6 @@ export default function TitanPage() {
          ===================================================== */
       paint();
       goTo(0, true);
-      moveInd($('.nav-item.active'), true);
-      addEventListener('load', () => moveInd($('.nav-item.active'), true));
       requestAnimationFrame(loop);
     })();
 
@@ -628,47 +498,7 @@ export default function TitanPage() {
       suppressHydrationWarning
       dangerouslySetInnerHTML={{
         __html: `
-<div class="frame" id="frame">
-
-  <!-- ===== Left navigation ===== -->
-  <aside class="nav panel reveal" style="--d:0" aria-label="منوی اصلی">
-    <a class="logo" href="#home" aria-label="خانه تایتان">
-      <svg viewBox="0 0 34 34" width="34" height="34" aria-hidden="true"><path d="M3 4h28v8H21v18h-8V12H3z" fill="#fff"/><path d="M3 4h11L3 15z" fill="#e2453f"/></svg>
-    </a>
-    <nav class="nav-list" id="navList">
-      <span class="nav-ind" id="navInd"></span>
-      <!-- Replace the hash links with your real routes -->
-      <a class="nav-item active" href="/" data-label="خانه"><i data-icon="home"></i></a>
-      <a class="nav-item" href="/store" data-label="فروشگاه"><i data-icon="bag"></i></a>
-      <a class="nav-item" href="#games" data-label="بازی‌ها"><i data-icon="game"></i></a>
-      <a class="nav-item" href="#gift-cards" data-label="گیفت کارت"><i data-icon="gift"></i></a>
-      <a class="nav-item" href="#tournaments" data-label="تورنمنت‌ها"><i data-icon="trophy"></i></a>
-      <a class="nav-item" href="#stats" data-label="آمار"><i data-icon="chart"></i></a>
-      <a class="nav-item" href="#messages" data-label="پیام‌ها"><i data-icon="chat"></i></a>
-    </nav>
-    <button class="add-btn" id="addSquad" data-label="ساخت تیم" aria-label="ساخت تیم"><span class="plus"><i data-icon="plus"></i></span></button>
-  </aside>
-
-  <!-- ===== Main ===== -->
-  <main class="main" id="home">
-
-    <header class="topbar reveal" style="--d:1">
-
-      <div class="search" id="search" role="search">
-        <i data-icon="search"></i>
-        <input id="q" type="search" placeholder="جستجو" autocomplete="off" aria-label="جستجوی بازی‌ها، تجهیزات و تورنمنت‌ها">
-        <kbd aria-hidden="true">/</kbd>
-        <div class="results" id="results"></div>
-      </div>
-
-      <div class="top-actions">
-        <button class="round" id="cartBtn" aria-label="سبد خرید"><i data-icon="cart"></i><span class="badge" id="cartCount" hidden>0</span></button>
-        <button class="round" id="bellBtn" aria-label="اعلان‌ها"><i data-icon="bell"></i><span class="dot" id="bellDot"></span></button>
-        <button class="me" id="me" aria-label="پروفایل شما"></button>
-      </div>
-    </header>
-
-    <div class="cols">
+<div class="cols">
 
       <!-- ---- Column A ---- -->
       <section class="col col-a">
@@ -703,10 +533,10 @@ export default function TitanPage() {
           <div class="dashes" id="dashes"></div>
         </article>
 
-        <div class="sec-h"><h3>دسته‌بندی‌ها</h3></div>
+        <div class="sec-h reveal" style="--d:3"><h3>دسته‌بندی‌ها</h3></div>
         <div class="carousel">
           <div class="scroller" id="scroller" tabindex="0" aria-label="دسته‌بندی‌ها"></div>
-          <button class="next" id="nextBtn" aria-label="بازی‌های بعدی"><i data-icon="chev"></i></button>
+          <button class="next reveal" style="--d:3" id="nextBtn" aria-label="بازی‌های بعدی"><i data-icon="chev"></i></button>
         </div>
 
         <article class="dl spot reveal trust-badges" style="--d:6; margin-top: 24px;">
@@ -776,7 +606,7 @@ export default function TitanPage() {
           </svg>
         </article>
 
-        <div class="stat-wrap col">
+        <div class="stat-wrap col reveal" style="--d:4">
           <div class="sec-h"><h3>امتیاز شما</h3><a class="arrow" href="#stats" aria-label="باز کردن آمار"><i data-icon="arrow"></i></a></div>
           <article class="stat spot reveal" style="--d:5">
             <div class="blob" id="blob">
@@ -789,12 +619,6 @@ export default function TitanPage() {
       </section>
 
     </div>
-  </main>
-
-
-</div>
-
-<div class="toasts" id="toasts" aria-live="polite"></div>
 
 ` }}
     />

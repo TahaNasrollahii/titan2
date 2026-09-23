@@ -3,59 +3,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import './store.css';
-
-// SVG Icons from titan.js
-const ICONS: Record<string, [string, boolean?]> = {
-  home:  ['<path d="M10 3L2 10v10a2 2 0 0 0 2 2h4v-7h8v7h4a2 2 0 0 0 2-2V10L14 3" fill="currentColor" opacity="0.15" stroke="none"/><path d="M3 10l9-7 9 7"/><path d="M4 12v8a2 2 0 0 0 2 2h4v-7h4v7h4a2 2 0 0 0 2-2v-8"/>'],
-  game:  ['<path d="M6 18c-3 0-4-2-4-6s1-6 4-6h12c3 0 4 2 4 6s-1 6-4 6H6z" fill="currentColor" opacity="0.15" stroke="none"/><path d="M6 18c-3 0-4-2-4-6s1-6 4-6h12c3 0 4 2 4 6s-1 6-4 6H6z"/><path d="M7 10v4M5 12h4"/><circle cx="15" cy="11" r="1" fill="currentColor" stroke="none"/><circle cx="17" cy="13" r="1" fill="currentColor" stroke="none"/>'],
-  gift:  ['<rect x="4" y="9" width="16" height="11" rx="2" fill="currentColor" opacity="0.15" stroke="none"/><rect x="4" y="9" width="16" height="11" rx="2"/><rect x="2" y="5" width="20" height="4" rx="1"/><path d="M12 5v15"/><path d="M12 5c-1.5-3-5.5-2.5-5.5 0 0 2 3.5 1.5 5.5 0z"/><path d="M12 5c1.5-3 5.5-2.5 5.5 0 0 2-3.5 1.5-5.5 0z"/>'],
-  trophy:['<path d="M7 4h10v6a5 5 0 0 1-10 0V4z" fill="currentColor" opacity="0.15" stroke="none"/><path d="M7 4h10v6a5 5 0 0 1-10 0V4z"/><path d="M7 6H4a2 2 0 0 0 0 4h3"/><path d="M17 6h3a2 2 0 0 1 0 4h-3"/><path d="M12 15v4"/><path d="M9 19h6"/>'],
-  chart: ['<rect x="3" y="14" width="4" height="6" rx="1" fill="currentColor" opacity="0.15" stroke="none"/><rect x="10" y="9" width="4" height="11" rx="1" fill="currentColor" opacity="0.15" stroke="none"/><rect x="17" y="4" width="4" height="16" rx="1" fill="currentColor" opacity="0.15" stroke="none"/><rect x="3" y="14" width="4" height="6" rx="1"/><rect x="10" y="9" width="4" height="11" rx="1"/><rect x="17" y="4" width="4" height="16" rx="1"/><path d="M3 20h18"/>'],
-  bag:   ['<rect x="4" y="8" width="16" height="13" rx="3" fill="currentColor" opacity="0.15" stroke="none"/><rect x="4" y="8" width="16" height="13" rx="3"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/><circle cx="8.5" cy="12.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="15.5" cy="12.5" r="1.5" fill="currentColor" stroke="none"/>'],
-  chat:  ['<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" fill="currentColor" opacity="0.15" stroke="none"/><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><circle cx="8" cy="11" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="11" r="1.5" fill="currentColor" stroke="none"/><circle cx="16" cy="11" r="1.5" fill="currentColor" stroke="none"/>'],
-  search:['<circle cx="11" cy="11" r="6.5" fill="currentColor" opacity="0.15" stroke="none"/><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>'],
-  cart:  ['<path d="M6.4 7.5l-1.5-4h-2M6.4 7.5h13.6l-2 10.5H5L6.4 7.5z" fill="currentColor" opacity="0.15" stroke="none"/><path d="M3 4h1.5l1.5 4M6.4 7.5h13.6l-2 10.5H5L6.4 7.5z"/><circle cx="8.5" cy="19.5" r="1.5" fill="currentColor" stroke="none"/><circle cx="15.5" cy="19.5" r="1.5" fill="currentColor" stroke="none"/>'],
-  bell:  ['<path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.8 2H4.2z" fill="currentColor" opacity="0.15" stroke="none"/><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.8 2H4.2z"/><path d="M10 21h4"/>'],
-  users: ['<circle cx="9" cy="8.5" r="3.2" fill="currentColor" opacity="0.15" stroke="none"/><circle cx="9" cy="8.5" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9.5" r="2.5"/><path d="M17 14.5a4.5 4.5 0 0 1 4.5 4.5"/>'],
-  play:  ['<path d="M8 5.2v13.6a.6.6 0 0 0 .9.5l11-6.8a.6.6 0 0 0 0-1L8.9 4.7a.6.6 0 0 0-.9.5z"/>', true],
-  pause: ['<rect x="6.5" y="5" width="4" height="14" rx="1.2"/><rect x="13.5" y="5" width="4" height="14" rx="1.2"/>', true],
-  x:     ['<circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15" stroke="none"/><path d="M15 9l-6 6M9 9l6 6"/>'],
-  like:  ['<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="currentColor" opacity="0.15" stroke="none"/><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>'],
-  chev:  ['<path d="m9.5 5.5 6.5 6.5-6.5 6.5"/>'],
-  arrow: ['<path d="M4 12h15.5M13.5 6l6 6-6 6"/>'],
-  flame: ['<path d="M12 3c.6 3.4 4.8 5 4.8 9.6a4.8 4.8 0 0 1-9.6 0c0-1.9.8-3.2 2-4.2.1 1.5.9 2.5 2 2.7C11 8.6 10.8 5.6 12 3z"/>'],
-  plus:  ['<circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15" stroke="none"/><circle cx="12" cy="12" r="10"/><path d="M12 7v10M7 12h10"/>'],
-  clock: ['<circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.15" stroke="none"/><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>'],
-  sliders: ['<rect x="2" y="14" width="4" height="6" rx="1" fill="currentColor" opacity="0.15" stroke="none"/><rect x="10" y="8" width="4" height="6" rx="1" fill="currentColor" opacity="0.15" stroke="none"/><rect x="18" y="12" width="4" height="6" rx="1" fill="currentColor" opacity="0.15" stroke="none"/><path d="M4 21v-7M4 14V3M12 21v-13M12 8V3M20 21v-9M20 12V3"/><rect x="2" y="14" width="4" height="6" rx="1"/><rect x="10" y="8" width="4" height="6" rx="1"/><rect x="18" y="12" width="4" height="6" rx="1"/>']
-};
-
-function Icon({ name, className = '', style }: { name: string, className?: string, style?: React.CSSProperties }) {
-  const ico = ICONS[name];
-  if (!ico) return null;
-  const [inner, filled] = ico;
-  return (
-    <i data-icon={name} className={className} style={style} dangerouslySetInnerHTML={{
-      __html: `<svg viewBox="0 0 24 24" fill="${filled ? 'currentColor' : 'none'}" stroke="${filled ? 'none' : 'currentColor'}" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">${inner}</svg>`
-    }} />
-  );
-}
-
-function Avatar({ seed }: { seed: number }) {
-  const bgs = [['#ffcf8a','#ff8a5c'],['#9be8b0','#37b57a'],['#a5c6ff','#6272f2'],['#ffe17a','#ffa02e'],['#f7b0dd','#c862dc'],['#a6dcff','#4aa0e6']];
-  const skins = ['#f4cfa8','#e6b088','#c98d62','#f8dcc4','#a8714a','#dca47a'];
-  const hairs = ['#2b1b17','#5b3a26','#d9a441','#151515','#8a2e2e','#3a2a5c'];
-  const shirts = ['#2f2a4a','#c9403f','#1f6f6b','#f0f0f0','#3a5bd0','#222'];
-  const s = Math.abs(seed | 0);
-  const bg = bgs[s % 6], sk = skins[(s * 7 + 1) % 6], hr = hairs[(s * 5 + 2) % 6], sh = shirts[(s * 3 + 4) % 6], style = (s * 11 + 3) % 4;
-  let hair = '';
-  if (style === 0) hair = `<path d="M10.5 19c-.6-7.5 4-10.5 9.5-10.5S30 11.5 29.5 19c-1.8-3.6-5.2-5-9.5-5s-7.7 1.4-9.5 5z" fill="${hr}"/>`;
-  else if (style === 1) hair = `<circle cx="13" cy="13" r="4.5" fill="${hr}"/><circle cx="20" cy="10.5" r="5" fill="${hr}"/><circle cx="27" cy="13" r="4.5" fill="${hr}"/>`;
-  else if (style === 2) hair = `<path d="M9.5 24c-1.5-9 2-16 10.5-16s12 7 10.5 16c-1.2-2-2-5-2-8-3.5 1-11 1-14.5 0 0 3-.8 6-2 8z" fill="${hr}"/>`;
-  else hair = `<path d="M11 17.5c1-5 4.5-7 9-7s8 2 9 7c-3-2.5-6-3-9-3s-6 .5-9 3z" fill="${hr}"/>`;
-  const id = 'av' + s;
-  const svg = `<defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${bg[0]}"/><stop offset="1" stop-color="${bg[1]}"/></linearGradient></defs><rect width="40" height="40" fill="url(#${id})"/><ellipse cx="20" cy="42" rx="15" ry="11" fill="${sh}"/><rect x="17" y="26" width="6" height="6" rx="3" fill="${sk}"/><circle cx="20" cy="20" r="8.6" fill="${sk}"/>${hair}<circle cx="16.8" cy="20.3" r="1" fill="#2a1414"/><circle cx="23.2" cy="20.3" r="1" fill="#2a1414"/><path d="M17.2 24c1.8 1.6 3.8 1.6 5.6 0" fill="none" stroke="#7a3a2a" stroke-width="1.1" stroke-linecap="round"/>`;
-  return <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" dangerouslySetInnerHTML={{ __html: svg }} />;
-}
+import { Icon, Avatar } from '@/components/Icons';
+import { useAppContext } from '@/context/AppContext';
 
 // Data
 const DISCOUNT_PROMOS = [
@@ -118,11 +67,7 @@ const PRODUCTS = [
 ];
 
 export default function StorePage() {
-  const [cartCount, setCartCount] = useState(0);
-  const [cartPop, setCartPop] = useState(false);
-  const [activeNav, setActiveNav] = useState('/store');
-  const [navIndStyle, setNavIndStyle] = useState({});
-  const navRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const { addToCart } = useAppContext();
 
   const [activeTab, setActiveTab] = useState('همه');
   const [tabIndStyle, setTabIndStyle] = useState({});
@@ -136,15 +81,6 @@ export default function StorePage() {
 
   const [wishlist, setWishlist] = useState<Record<string, boolean>>({});
 
-  // Nav indicator effect
-  useEffect(() => {
-    const el = navRefs.current[activeNav];
-    if (el) {
-      setNavIndStyle({
-        transform: `translate(${el.offsetLeft}px, ${el.offsetTop}px)`,
-      });
-    }
-  }, [activeNav]);
 
   // Tab indicator effect
   useEffect(() => {
@@ -157,11 +93,6 @@ export default function StorePage() {
     }
   }, [activeTab]);
 
-  const addToCart = () => {
-    setCartCount(c => c + 1);
-    setCartPop(false);
-    setTimeout(() => setCartPop(true), 10);
-  };
 
   const toggleWishlist = (id: string) => {
     setWishlist(w => ({ ...w, [id]: !w[id] }));
@@ -260,61 +191,8 @@ export default function StorePage() {
 
   return (
     <>
-      <div 
-        className="frame" 
-        id="frame"
-      >
-        
-        {/* ===== Left navigation (Shell) ===== */}
-        <aside className="nav panel reveal" style={{ '--d': 0 } as any} aria-label="منوی اصلی">
-          <Link href="/" className="logo" aria-label="خانه تایتان">
-            <svg viewBox="0 0 34 34" width="34" height="34" aria-hidden="true">
-              <path d="M3 4h28v8H21v18h-8V12H3z" fill="#fff"/><path d="M3 4h11L3 15z" fill="#e2453f"/>
-            </svg>
-          </Link>
-          <nav className="nav-list" id="navList">
-            <span className="nav-ind" style={navIndStyle}></span>
-            <Link href="/" className="nav-item" data-label="خانه" ref={el => { navRefs.current['/'] = el; }} onClick={() => setActiveNav('/')}><Icon name="home"/></Link>
-            <Link href="/store" className="nav-item active" data-label="فروشگاه" ref={el => { navRefs.current['/store'] = el; }} onClick={() => setActiveNav('/store')}><Icon name="bag"/></Link>
-            <a className="nav-item" href="#" data-label="بازی‌ها"><Icon name="game"/></a>
-            <a className="nav-item" href="#" data-label="گیفت کارت"><Icon name="gift"/></a>
-            <a className="nav-item" href="#" data-label="تورنمنت‌ها"><Icon name="trophy"/></a>
-            <a className="nav-item" href="#" data-label="آمار"><Icon name="chart"/></a>
-            <a className="nav-item" href="#" data-label="پیام‌ها"><Icon name="chat"/></a>
-          </nav>
-          <button className="add-btn" aria-label="ساخت تیم" data-label="ساخت تیم">
-            <span className="plus"><Icon name="plus"/></span>
-          </button>
-        </aside>
-
-        {/* ===== Main (Store Content) ===== */}
-        <main className="main" id="store">
-          
-          {/* Topbar Shell */}
-          <header className="topbar reveal" style={{ '--d': 1 } as any}>
-            <div className="search" id="search" role="search">
-              <Icon name="search" />
-              <input type="search" placeholder="جستجو" autoComplete="off" aria-label="جستجوی بازی‌ها، تجهیزات و تورنمنت‌ها" />
-              <kbd aria-hidden="true">/</kbd>
-            </div>
-            <div className="top-actions">
-              <button className="round" aria-label="اعلان‌ها">
-                <Icon name="bell"/>
-                <span className="dot" hidden></span>
-              </button>
-              <button className="round" aria-label="سبد خرید" onClick={addToCart}>
-                <Icon name="cart"/>
-                <span className={`badge ${cartPop ? 'pop' : ''}`} hidden={cartCount === 0}>{cartCount}</span>
-              </button>
-              <button className="me" aria-label="پروفایل شما">
-                <span className="face"><Avatar seed={5} /></span>
-                <b id="userName">طاها</b>
-              </button>
-            </div>
-          </header>
-
-          <div className="store-content reveal" style={{ '--d': 2 } as any}>
-            {/* Category + Sort Row */}
+      <div className="store-content reveal" style={{ '--d': 2 } as any}>
+        {/* Category + Sort Row */}
             <div className="store-cat-row">
               <div className="store-tabs">
                 <span className="store-tab-ind" style={tabIndStyle}></span>
@@ -400,7 +278,7 @@ export default function StorePage() {
                       <h2>{promo.title}</h2>
                       <p>{promo.subtitle}</p>
                       <div className="sp-foot">
-                        <button className="sp-btn" onClick={addToCart}>
+                        <button className="sp-btn" onClick={() => addToCart(promo.title)}>
                           مشاهده محصول
                         </button>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginRight: '16px' }}>
@@ -446,7 +324,7 @@ export default function StorePage() {
                       <h3>{promo.title}</h3>
                       <p className="side-subtitle">{promo.subtitle}</p>
                       <div className="sp-foot">
-                        <button className="sp-btn" onClick={addToCart}>
+                        <button className="sp-btn" onClick={() => addToCart(promo.title)}>
                           مشاهده محصول
                         </button>
                         <div style={{ marginRight: '4px', whiteSpace: 'nowrap' }}>
@@ -530,8 +408,6 @@ export default function StorePage() {
               <div className="store-empty">هیچ محصولی با فیلترهای شما مطابقت ندارد.</div>
             )}
 
-          </div>
-        </main>
       </div>
     </>
   );
