@@ -83,14 +83,14 @@ const DISCOUNT_PROMOS = [
 
 const BESTSELLER_PROMOS = [
   {
-    title: 'باندل پرو تایتان',
-    price: '۱۳,۹۵۰,۰۰۰',
-    img: '/images/hero/products/headset.png',
+    title: 'باندل ویژه Apex',
+    price: '۲,۹۵۰,۰۰۰',
+    img: '/images/games/apexlegends-character.png',
     bgImg: 'url(/images/games/apexlegends-background.png)',
     bgGrad: 'linear-gradient(135deg, rgba(30, 15, 35, 0.85) 0%, rgba(15, 5, 20, 0.98) 100%)',
-    scale: 1.3,
+    scale: 1.25,
     y: 10,
-    x: -25
+    x: -15
   },
   {
     title: 'باندل ویژه Fortnite',
@@ -428,7 +428,6 @@ export default function StorePage() {
             <div className="store-sec-h">
               <div className="store-sec-l">
                 <h3>همه محصولات</h3>
-                <span className="store-items-count">{filteredProducts.length} مورد</span>
               </div>
             </div>
 
