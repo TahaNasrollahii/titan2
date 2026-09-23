@@ -221,8 +221,8 @@ export default function StorePage() {
                       src={tabImages[tab]}
                       alt={tab}
                       style={{
-                        width: tab === 'پرمیوم' ? '28px' : '26px',
-                        height: tab === 'پرمیوم' ? '28px' : '26px',
+                        width: tab === 'پرمیوم' ? '34px' : '32px',
+                        height: tab === 'پرمیوم' ? '34px' : '32px',
                         objectFit: 'contain'
                       }}
                     />
