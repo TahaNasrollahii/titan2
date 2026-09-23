@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import './store.css';
 
@@ -58,6 +58,52 @@ function Avatar({ seed }: { seed: number }) {
 }
 
 // Data
+const DISCOUNT_PROMOS = [
+  {
+    title: 'باندل ویژه Valorant',
+    subtitle: 'پکیج کامل اسکین‌های پرایم',
+    price: '۲,۱۰۰,۰۰۰',
+    oldPrice: '۳,۵۰۰,۰۰۰',
+    discount: '۴۰٪',
+    img: '/images/games/valorant-character.png',
+    scale: 1.15,
+    y: 10,
+  },
+  {
+    title: 'Elden Crown',
+    subtitle: 'نسخه دلوکس',
+    price: '۲,۹۵۰,۰۰۰',
+    oldPrice: '۳,۴۵۰,۰۰۰',
+    discount: '۱۵٪',
+    img: '/images/games/apexlegends-character.png',
+    scale: 1.15,
+    y: 24,
+  }
+];
+
+const BESTSELLER_PROMOS = [
+  {
+    title: 'باندل پرو تایتان',
+    price: '۱۳,۹۵۰,۰۰۰',
+    img: '/images/hero/products/headset.png',
+    bgImg: 'url(/images/games/apexlegends-background.png)',
+    bgGrad: 'linear-gradient(135deg, rgba(30, 15, 35, 0.85) 0%, rgba(15, 5, 20, 0.98) 100%)',
+    scale: 1.3,
+    y: 10,
+    x: -25
+  },
+  {
+    title: 'باندل ویژه Fortnite',
+    price: '۴,۵۰۰,۰۰۰',
+    img: '/images/games/fortnite-character.png',
+    bgImg: 'url(/images/games/fortnite-background.png)',
+    bgGrad: 'linear-gradient(135deg, rgba(20, 30, 80, 0.85) 0%, rgba(5, 10, 30, 0.98) 100%)',
+    scale: 1.15,
+    y: 20,
+    x: 0
+  }
+];
+
 const TABS = ['همه', 'بازی‌ها', 'تجهیزات', 'گیفت کارت‌ها', 'لوازم جانبی', 'باندل‌ها'];
 
 const PRODUCTS = [
@@ -80,10 +126,8 @@ export default function StorePage() {
   const [tabIndStyle, setTabIndStyle] = useState({});
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
-  const [filtersOpen, setFiltersOpen] = useState(true);
   const [priceMax, setPriceMax] = useState(10000000);
-  const [platform, setPlatform] = useState('');
-  const [genre, setGenre] = useState('');
+  const [priceOpen, setPriceOpen] = useState(false);
 
   const [sortOpen, setSortOpen] = useState(false);
   const [sortBy, setSortBy] = useState('محبوبیت');
@@ -122,6 +166,16 @@ export default function StorePage() {
   };
 
   // Promo Carousel
+  const [mainPromoIdx, setMainPromoIdx] = useState(0);
+  const [mainPromoHover, setMainPromoHover] = useState(false);
+  useEffect(() => {
+    if (mainPromoHover) return;
+    const t = setInterval(() => {
+      setMainPromoIdx(i => (i + 1) % 2);
+    }, 6000);
+    return () => clearInterval(t);
+  }, [mainPromoHover]);
+
   const [promoIdx, setPromoIdx] = useState(0);
   const [promoHover, setPromoHover] = useState(false);
   useEffect(() => {
@@ -150,39 +204,22 @@ export default function StorePage() {
     let p = [...PRODUCTS];
     if (activeTab !== 'همه') p = p.filter(x => x.type === activeTab);
     p = p.filter(x => x.price <= priceMax);
-    if (platform) p = p.filter(x => x.platform === platform);
-    if (genre) p = p.filter(x => x.genre === genre);
 
     if (sortBy === 'قیمت: کم به زیاد') p.sort((a, b) => a.price - b.price);
     else if (sortBy === 'قیمت: زیاد به کم') p.sort((a, b) => b.price - a.price);
     else if (sortBy === 'محبوبیت') p.sort((a, b) => b.popularity - a.popularity);
     
     return p;
-  }, [activeTab, priceMax, platform, genre, sortBy]);
+  }, [activeTab, priceMax, sortBy]);
 
 
-  // Pointer parallax shell variables (simple mock)
-  const [framePos, setFramePos] = useState({ px: 0, py: 0 });
-  useEffect(() => {
-    const handleMove = (e: PointerEvent) => {
-      setFramePos({
-        px: (e.clientX / window.innerWidth - 0.5) * 2,
-        py: (e.clientY / window.innerHeight - 0.5) * 2
-      });
-    };
-    window.addEventListener('pointermove', handleMove);
-    return () => window.removeEventListener('pointermove', handleMove);
-  }, []);
+  // Pointer parallax shell variables are managed globally by titan.js
 
   return (
     <>
       <div 
         className="frame" 
-        id="frame" 
-        style={{ 
-          '--px': framePos.px.toFixed(3), 
-          '--py': framePos.py.toFixed(3) 
-        } as React.CSSProperties}
+        id="frame"
       >
         
         {/* ===== Left navigation (Shell) ===== */}
@@ -218,13 +255,13 @@ export default function StorePage() {
               <kbd aria-hidden="true">/</kbd>
             </div>
             <div className="top-actions">
-              <button className="round" aria-label="سبد خرید" onClick={addToCart}>
-                <Icon name="cart"/>
-                <span className={`badge ${cartPop ? 'pop' : ''}`} hidden={cartCount === 0}>{cartCount}</span>
-              </button>
               <button className="round" aria-label="اعلان‌ها">
                 <Icon name="bell"/>
                 <span className="dot" hidden></span>
+              </button>
+              <button className="round" aria-label="سبد خرید" onClick={addToCart}>
+                <Icon name="cart"/>
+                <span className={`badge ${cartPop ? 'pop' : ''}`} hidden={cartCount === 0}>{cartCount}</span>
               </button>
               <button className="me" aria-label="پروفایل شما">
                 <span className="face"><Avatar seed={5} /></span>
@@ -249,110 +286,99 @@ export default function StorePage() {
                   </button>
                 ))}
               </div>
-              <div className="store-sort">
-                <button className="store-sort-btn" onClick={() => setSortOpen(!sortOpen)}>
-                  <Icon name="arrow" className="sort-icon-rev" style={{ transform: sortBy === 'قیمت: کم به زیاد' ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform 0.3s var(--spring)' }} /> مرتب‌سازی: {sortBy} <Icon name="chev" className="sort-chev" />
-                </button>
-                {sortOpen && (
-                  <div className="store-sort-drop">
-                    {['محبوبیت', 'قیمت: کم به زیاد', 'قیمت: زیاد به کم', 'جدیدترین'].map(s => (
-                      <button key={s} onClick={() => { setSortBy(s); setSortOpen(false); }}>{s}</button>
-                    ))}
-                  </div>
-                )}
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <div className="store-sort">
+                  <button className="store-sort-btn" onClick={() => { setPriceOpen(!priceOpen); setSortOpen(false); }}>
+                    <Icon name="sliders" /> قیمت تا: {priceMax === 0 ? '۰' : priceMax.toLocaleString('fa-IR')} تومان <Icon name="chev" className="sort-chev" style={{ transform: priceOpen ? 'rotate(-90deg)' : 'none', transition: 'transform 0.3s var(--spring)' }} />
+                  </button>
+                  {priceOpen && (
+                    <div className="store-sort-drop" style={{ minWidth: '260px', padding: '24px 16px', zIndex: 101 }}>
+                      <div className="sf-range-wrap" dir="ltr">
+                        <input type="range" min="0" max="10000000" step="100000" value={priceMax} onChange={e => setPriceMax(Number(e.target.value))} className="sf-range" />
+                        <div className="sf-range-track" style={{ width: `${(priceMax/10000000)*100}%` }}></div>
+                        <div className="sf-range-pill" style={{ left: `${(priceMax/10000000)*100}%`, transform: `translate(-${(priceMax/10000000)*100}%, -50%)` }} dir="rtl">
+                          <svg width="6" height="12" viewBox="0 0 6 12" fill="currentColor" style={{ opacity: 0.5, marginRight: '-2px', marginLeft: '6px' }}>
+                            <circle cx="2" cy="2" r="1"/><circle cx="2" cy="6" r="1"/><circle cx="2" cy="10" r="1"/>
+                            <circle cx="5" cy="2" r="1"/><circle cx="5" cy="6" r="1"/><circle cx="5" cy="10" r="1"/>
+                          </svg>
+                          <input 
+                            type="text"
+                            value={priceMax === 0 ? '۰' : priceMax.toLocaleString('fa-IR')}
+                            onChange={(e) => {
+                              let val = e.target.value.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString()).replace(/\D/g, '');
+                              let num = Number(val);
+                              if (num > 10000000) num = 10000000;
+                              setPriceMax(num);
+                            }}
+                            className="sf-pill-input"
+                            dir="ltr"
+                          />
+                          <span>تومان</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="store-sort">
+                  <button className="store-sort-btn" onClick={() => { setSortOpen(!sortOpen); setPriceOpen(false); }}>
+                    <Icon name="arrow" className="sort-icon-rev" style={{ transform: sortBy === 'قیمت: کم به زیاد' ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform 0.3s var(--spring)' }} /> مرتب‌سازی: {sortBy} <Icon name="chev" className="sort-chev" style={{ transform: sortOpen ? 'rotate(-90deg)' : 'none', transition: 'transform 0.3s var(--spring)' }} />
+                  </button>
+                  {sortOpen && (
+                    <div className="store-sort-drop">
+                      {['محبوبیت', 'قیمت: کم به زیاد', 'قیمت: زیاد به کم', 'جدیدترین'].map(s => (
+                        <button key={s} onClick={() => { setSortBy(s); setSortOpen(false); }}>{s}</button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
-            {/* Filters Panel */}
-            <div className="store-filters-wrap">
-              <button className="store-filters-toggle" onClick={() => setFiltersOpen(!filtersOpen)}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Icon name="sliders" /> فیلترها
-                </div>
-                <Icon name="chev" className={`store-filter-chev ${filtersOpen ? 'open' : ''}`} />
-              </button>
-              <div className={`store-filters-panel ${filtersOpen ? 'open' : ''}`}>
-                <div className="sf-col">
-                  <span className="sf-label">قیمت تا</span>
-                  <div className="sf-range-wrap" dir="ltr">
-                    <input type="range" min="0" max="10000000" step="100000" value={priceMax} onChange={e => setPriceMax(Number(e.target.value))} className="sf-range" />
-                    <div className="sf-range-track" style={{ width: `${(priceMax/10000000)*100}%` }}></div>
-                    <div className="sf-range-pill" style={{ left: `${(priceMax/10000000)*100}%`, transform: `translate(-${(priceMax/10000000)*100}%, -50%)` }} dir="rtl">
-                      <svg width="6" height="12" viewBox="0 0 6 12" fill="currentColor" style={{ opacity: 0.5, marginRight: '-2px', marginLeft: '6px' }}>
-                        <circle cx="2" cy="2" r="1"/><circle cx="2" cy="6" r="1"/><circle cx="2" cy="10" r="1"/>
-                        <circle cx="5" cy="2" r="1"/><circle cx="5" cy="6" r="1"/><circle cx="5" cy="10" r="1"/>
-                      </svg>
-                      <input 
-                        type="text"
-                        value={priceMax === 0 ? '۰' : priceMax.toLocaleString('fa-IR')}
-                        onChange={(e) => {
-                          let val = e.target.value.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString()).replace(/\D/g, '');
-                          let num = Number(val);
-                          if (num > 10000000) num = 10000000;
-                          setPriceMax(num);
-                        }}
-                        className="sf-pill-input"
-                        dir="ltr"
-                      />
-                      <span>تومان</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="sf-col">
-                  <span className="sf-label">پلتفرم</span>
-                  <div className="sf-pills">
-                    {['پی‌سی', 'پلی‌استیشن', 'ایکس‌باکس', 'سوییچ'].map(p => (
-                      <button key={p} className={`sf-pill ${platform === p ? 'active' : ''}`} onClick={() => setPlatform(platform === p ? '' : p)}>
-                        <span className="sf-radio"></span> {p}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="sf-col">
-                  <span className="sf-label">ژانر</span>
-                  <div className="sf-pills">
-                    {['اکشن', 'نقش‌آفرینی', 'شوتر', 'ماجراجویی', 'ورزشی'].map(g => (
-                      <button key={g} className={`sf-pill ${genre === g ? 'active' : ''}`} onClick={() => setGenre(genre === g ? '' : g)}>
-                        <span className="sf-radio"></span> {g}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="sf-col" style={{ justifyContent: 'flex-end' }}>
-                  <button 
-                    className="sf-reset-btn" 
-                    onClick={() => { setPriceMax(10000000); setPlatform(''); setGenre(''); }}
-                    style={{ opacity: (priceMax !== 10000000 || platform || genre) ? 1 : 0.5, pointerEvents: (priceMax !== 10000000 || platform || genre) ? 'auto' : 'none' }}
-                  >
-                    <Icon name="x" /> پاکسازی فیلترها
-                  </button>
-                </div>
-              </div>
-            </div>
 
             {/* Promo Banners */}
             <div className="store-promos reveal" style={{ '--d': 3 } as any}>
               <article 
                 className="store-promo main-promo spot"
+                onPointerEnter={() => setMainPromoHover(true)}
+                onPointerLeave={() => setMainPromoHover(false)}
               >
                 <div className="sp-bg discount-bg"></div>
-                <div className="sp-content">
-                  <div className="sp-badges">
-                    <span className="sp-badge red"><Icon name="flame" /> پیشنهاد ویژه</span>
-                    <span className="sp-badge dark"><Icon name="clock" /> پایان در {formatTime(timeLeft)}</span>
-                  </div>
-                  <h2>تخفیف‌های پاییزی تایتان</h2>
-                  <p>تا ۶۰٪ تخفیف برای محبوب‌ترین بازی‌ها و تجهیزات گیمینگ.</p>
-                  <div className="sp-foot">
-                    <button className="sp-btn" onClick={addToCart}>
-                      مشاهده تخفیف‌ها
+                
+                {DISCOUNT_PROMOS.map((promo, idx) => mainPromoIdx === idx && (
+                  <React.Fragment key={idx}>
+                    <div className="sp-content">
+                      <div className="sp-badges">
+                        <span className="sp-badge live-red"><Icon name="flame" /> <span className="live-badge-text">پیشنهاد ویژه</span></span>
+                        <span className="sp-badge dark"><Icon name="clock" /> پایان در {formatTime(timeLeft)}</span>
+                        <span className="sp-badge" style={{ background: '#ffeb3b', color: '#000' }}>{promo.discount} تخفیف</span>
+                      </div>
+                      <h2>{promo.title}</h2>
+                      <p>{promo.subtitle}</p>
+                      <div className="sp-foot">
+                        <button className="sp-btn" onClick={addToCart}>
+                          مشاهده محصول
+                        </button>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginRight: '16px' }}>
+                          <span className="sp-strike">{promo.oldPrice} تومان</span>
+                          <span style={{ fontSize: '18px', fontWeight: 'bold' }}>{promo.price} تومان</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="sp-art-wrap">
+                      <img src={promo.img} alt="" className="sp-art discount-art" style={{ 
+                        transform: `translate(calc(var(--px) * 10px), calc(var(--py) * 10px)) scale(${promo.scale}) translateY(${promo.y}px)` 
+                      }} />
+                    </div>
+                  </React.Fragment>
+                ))}
+
+                <div className="sp-dots">
+                  {DISCOUNT_PROMOS.map((_, i) => (
+                    <button key={i} className={`sp-dot ${mainPromoIdx === i ? 'active' : ''}`} onClick={() => setMainPromoIdx(i)}>
+                      <span><i></i></span>
                     </button>
-                  </div>
-                </div>
-                <div className="sp-art-wrap">
-                  <img src="/images/hero/characters/apexlegends.png" alt="" className="sp-art discount-art" style={{ 
-                    transform: `translate(${framePos.px * 10}px, ${framePos.py * 10}px) scale(1.15) translateY(24px)` 
-                  }} />
+                  ))}
                 </div>
               </article>
 
@@ -361,48 +387,35 @@ export default function StorePage() {
                 onPointerEnter={() => setPromoHover(true)}
                 onPointerLeave={() => setPromoHover(false)}
               >
-                <div className="sp-bg side-bg"></div>
-                
-                {promoIdx === 0 && (
-                  <>
+                {BESTSELLER_PROMOS.map((promo, idx) => promoIdx === idx && (
+                  <React.Fragment key={idx}>
+                    <div className="sp-bg side-bg" style={{ 
+                      backgroundImage: `${promo.bgGrad}, ${promo.bgImg}`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center'
+                    }}></div>
+                    
                     <div className="sp-content side-content">
                       <div className="sp-badges">
                         <span className="sp-badge cream">پرفروش‌ها</span>
                       </div>
-                      <h3>باندل پرو تایتان</h3>
+                      <h3>{promo.title}</h3>
                       <div className="sp-foot">
                         <button className="sp-btn" onClick={addToCart}>
-                          ۱۳,۹۵۰,۰۰۰ تومان
+                          {promo.price} تومان
                         </button>
                       </div>
                     </div>
                     <div className="sp-art-wrap side-art-wrap">
-                      <img src="/images/games/premium.png" alt="" className="sp-art" />
+                      <img src={promo.img} alt="" className="sp-art" style={{
+                        transform: `translate(calc(var(--px) * 10px + ${promo.x}px), calc(var(--py) * 10px + ${promo.y}px)) scale(${promo.scale})`
+                      }} />
                     </div>
-                  </>
-                )}
-                
-                {promoIdx === 1 && (
-                  <>
-                    <div className="sp-content side-content">
-                      <div className="sp-badges">
-                        <span className="sp-badge cream">محبوب‌ها</span>
-                      </div>
-                      <h3>Neon Protocol</h3>
-                      <div className="sp-foot">
-                        <button className="sp-btn" onClick={addToCart}>
-                          ۱,۹۹۹,۰۰۰ تومان
-                        </button>
-                      </div>
-                    </div>
-                    <div className="sp-art-wrap side-art-wrap">
-                      <img src="/images/games/neon-character.png" alt="" className="sp-art" />
-                    </div>
-                  </>
-                )}
+                  </React.Fragment>
+                ))}
 
                 <div className="sp-dots">
-                  {[0, 1].map(i => (
+                  {BESTSELLER_PROMOS.map((_, i) => (
                     <button key={i} className={`sp-dot ${promoIdx === i ? 'active' : ''}`} onClick={() => setPromoIdx(i)}>
                       <span><i></i></span>
                     </button>
@@ -451,9 +464,12 @@ export default function StorePage() {
                     </div>
                   </div>
 
-                  <button className="sg-add-btn" onClick={addToCart} aria-label="افزودن به سبد خرید">
-                    <Icon name="plus" />
-                  </button>
+                  <div className="sg-actions">
+                    <button className="sg-view-btn">مشاهده محصول</button>
+                    <button className="sg-add-btn" onClick={addToCart} aria-label="افزودن به سبد خرید">
+                      <Icon name="plus" />
+                    </button>
+                  </div>
                 </article>
               ))}
             </div>
