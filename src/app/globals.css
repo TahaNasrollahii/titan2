@@ -200,19 +200,21 @@ i[data-icon] svg {
 
 .nav-ind-glow {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 24px;
-  height: 24px;
-  background: var(--red);
-  border-radius: 50%;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: 
+    radial-gradient(circle at 50% 15%, rgba(226, 69, 63, 0.9) 0%, transparent 35%),
+    radial-gradient(circle at 50% 85%, rgba(226, 69, 63, 0.3) 0%, transparent 35%),
+    radial-gradient(circle at 85% 50%, rgba(255, 100, 100, 0.2) 0%, transparent 35%);
   filter: blur(8px);
-  animation: glow-spin 4s linear infinite;
+  animation: glow-spin 6s linear infinite;
 }
 
 @keyframes glow-spin {
-  0% { transform: translate(-50%, -50%) rotate(0deg) translateX(12px) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(12px) rotate(-360deg); }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .nav-ind-glass {
