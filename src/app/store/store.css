@@ -194,7 +194,6 @@
   position: relative;
   height: 240px;
   border-radius: 34px;
-  overflow: hidden;
   display: flex;
   align-items: center;
   padding: 30px 40px;
@@ -228,6 +227,8 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+  border-radius: 34px;
+  overflow: hidden;
 }
 
 .discount-bg {
@@ -467,6 +468,7 @@
   object-fit: contain;
   object-position: right bottom;
   opacity: 0.95;
+  transform-origin: bottom center;
 }
 
 .discount-art {
