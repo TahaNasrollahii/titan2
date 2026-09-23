@@ -40,9 +40,24 @@ export default function TitanPage() {
     };
 
     // --- Titan Prototype Logic ---
+    const cleanupFuncs: (() => void)[] = [];
 
     (() => {
       'use strict';
+      const originalSetTimeout = window.setTimeout;
+      const originalSetInterval = window.setInterval;
+      const originalRaf = window.requestAnimationFrame;
+      const timeouts: NodeJS.Timeout[] = [];
+      const intervals: NodeJS.Timeout[] = [];
+      const rafs: number[] = [];
+      const setTimeout = (fn: any, ms?: number) => { const id = originalSetTimeout(fn, ms); timeouts.push(id as any); return id as unknown as ReturnType<typeof window.setTimeout>; };
+      const setInterval = (fn: any, ms?: number) => { const id = originalSetInterval(fn, ms); intervals.push(id as any); return id as unknown as ReturnType<typeof window.setInterval>; };
+      const requestAnimationFrame = (fn: any) => { const id = originalRaf(fn); rafs.push(id); return id; };
+      cleanupFuncs.push(() => {
+        timeouts.forEach(clearTimeout);
+        intervals.forEach(clearInterval);
+        rafs.forEach(cancelAnimationFrame);
+      });
 
       /* =====================================================
          Config — change these
@@ -490,6 +505,10 @@ export default function TitanPage() {
     })();
 
     // --- End Logic ---
+
+    return () => {
+      cleanupFuncs.forEach(fn => fn());
+    };
 
   }, []);
 

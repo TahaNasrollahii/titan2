@@ -45,7 +45,12 @@ export function Sidebar() {
         </svg>
       </Link>
       <nav className="nav-list" id="navList">
-        <span className="nav-ind" style={navIndStyle}></span>
+        <span className="nav-ind" style={navIndStyle}>
+          <span className="nav-ind-glow-wrap">
+            <span className="nav-ind-glow"></span>
+          </span>
+          <span className="nav-ind-glass"></span>
+        </span>
         
         <Link 
           href="/" 

@@ -239,7 +239,6 @@
 
 .side-promo {
   flex: 2;
-  padding: 24px 30px;
 }
 
 .sp-bg {
@@ -434,20 +433,21 @@
 }
 
 .side-content h3 {
-  font-size: 22px;
+  font-size: 32px;
   font-weight: 700;
+  letter-spacing: -0.5px;
   margin-top: 4px;
 }
 
 .side-subtitle {
   font-size: 13px;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.85);
-  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 85%;
 }
 
 .side-content .sp-foot {
-  margin-top: 42px;
+  margin-top: 8px;
 }
 
 .sp-foot {

@@ -58,12 +58,12 @@ const BESTSELLER_PROMOS = [
 const TABS = ['همه', 'فورتنایت', 'ولورانت', 'ایپکس لجندز', 'پرمیوم'];
 
 const PRODUCTS = [
-  { id: '1', title: 'Elden Crown', subtitle: 'نسخه دلوکس', price: 2950000, originalPrice: 3450000, badge: 'پرفروش', rating: 4.9, image: '/images/products/p-game-1.jpg', type: 'پرمیوم', platform: 'پی‌سی', genre: 'نقش‌آفرینی', popularity: 100 },
-  { id: '2', title: 'Red Frontier', subtitle: 'بسته پرمیوم', price: 2500000, originalPrice: 4000000, badge: 'تخفیف', rating: 4.6, image: '/images/products/p-game-3.jpg', type: 'پرمیوم', platform: 'پلی‌استیشن', genre: 'ماجراجویی', popularity: 95 },
-  { id: '3', title: 'هدست تایتان پرو', subtitle: '۷.۱ فراگیر · بی‌سیم', price: 7450000, originalPrice: 9000000, badge: 'تخفیف', rating: 4.7, image: '/images/products/p-headset.jpg', type: 'ایپکس لجندز', platform: 'پی‌سی', genre: '', popularity: 90 },
-  { id: '4', title: 'کیبورد تایتان K60', subtitle: '۶۰٪ · هات‌سواپ · RGB', price: 5950000, originalPrice: undefined, badge: '', rating: 4.8, image: '/images/products/p-keyboard.jpg', type: 'ولورانت', platform: 'پی‌سی', genre: '', popularity: 88 },
-  { id: '5', title: 'موس تایتان M40', subtitle: '۱۶۰۰۰ DPI · بی‌سیم', price: 3450000, originalPrice: undefined, badge: 'جدید', rating: 4.5, image: '/images/products/p-mouse.jpg', type: 'فورتنایت', platform: 'پی‌سی', genre: '', popularity: 80 },
-  { id: '6', title: 'گیفت کارت تایتان', subtitle: '۵۰ دلار اعتبار', price: 2500000, originalPrice: undefined, badge: '', rating: 5.0, image: '/images/products/p-controller.jpg', type: 'پرمیوم', platform: '', genre: '', popularity: 110 },
+  { id: '1', title: 'Elden Crown', subtitle: 'نسخه دلوکس', price: 2950000, originalPrice: 3450000, badges: ['پرفروش'], rating: 4.9, image: '/images/products/p-game-1.jpg', type: 'پرمیوم', platform: 'پی‌سی', genre: 'نقش‌آفرینی', popularity: 100 },
+  { id: '2', title: 'Red Frontier', subtitle: 'بسته پرمیوم', price: 2500000, originalPrice: 4000000, badges: ['تخفیف'], rating: 4.6, image: '/images/products/p-game-3.jpg', type: 'پرمیوم', platform: 'پلی‌استیشن', genre: 'ماجراجویی', popularity: 95 },
+  { id: '3', title: 'هدست تایتان پرو', subtitle: '۷.۱ فراگیر · بی‌سیم', price: 7450000, originalPrice: 9000000, badges: ['تخفیف', 'پرفروش'], rating: 4.7, image: '/images/products/p-headset.jpg', type: 'ایپکس لجندز', platform: 'پی‌سی', genre: '', popularity: 90 },
+  { id: '4', title: 'کیبورد تایتان K60', subtitle: '۶۰٪ · هات‌سواپ · RGB', price: 5950000, originalPrice: undefined, badges: [], rating: 4.8, image: '/images/products/p-keyboard.jpg', type: 'ولورانت', platform: 'پی‌سی', genre: '', popularity: 88 },
+  { id: '5', title: 'موس تایتان M40', subtitle: '۱۶۰۰۰ DPI · بی‌سیم', price: 3450000, originalPrice: undefined, badges: ['جدید'], rating: 4.5, image: '/images/products/p-mouse.jpg', type: 'فورتنایت', platform: 'پی‌سی', genre: '', popularity: 80 },
+  { id: '6', title: 'گیفت کارت تایتان', subtitle: '۵۰ دلار اعتبار', price: 2500000, originalPrice: undefined, badges: [], rating: 5.0, image: '/images/products/p-controller.jpg', type: 'پرمیوم', platform: '', genre: '', popularity: 110 },
 ];
 
 export default function StorePage() {
@@ -196,16 +196,37 @@ export default function StorePage() {
             <div className="store-cat-row">
               <div className="store-tabs">
                 <span className="store-tab-ind" style={tabIndStyle}></span>
-                {TABS.map(tab => (
-                  <button 
-                    key={tab} 
-                    ref={el => { tabRefs.current[tab] = el; }}
-                    className={`store-tab ${activeTab === tab ? 'active' : ''}`}
-                    onClick={() => setActiveTab(tab)}
-                  >
-                    {tab}
-                  </button>
-                ))}
+                {TABS.map(tab => {
+                  const tabImages: Record<string, string> = {
+                    'فورتنایت': '/images/categories/fortnite.png',
+                    'ولورانت': '/images/categories/valorant.png',
+                    'ایپکس لجندز': '/images/categories/apex.png',
+                    'پرمیوم': '/images/categories/premium.png',
+                  };
+                  return (
+                    <button 
+                      key={tab} 
+                      ref={el => { tabRefs.current[tab] = el; }}
+                      className={`store-tab ${activeTab === tab ? 'active' : ''}`}
+                      onClick={() => setActiveTab(tab)}
+                      style={{ display: 'flex', alignItems: 'center', gap: '2px' }}
+                    >
+                      {tabImages[tab] && (
+                        <img 
+                          src={tabImages[tab]} 
+                          alt={tab} 
+                          style={{ 
+                            width: tab === 'پرمیوم' ? '50px' : '26px', 
+                            height: tab === 'پرمیوم' ? '50px' : '26px', 
+                            margin: tab === 'پرمیوم' ? '-12px -4px -12px 0' : '0',
+                            objectFit: 'contain' 
+                          }} 
+                        />
+                      )}
+                      {tab}
+                    </button>
+                  );
+                })}
               </div>
               <div style={{ display: 'flex', gap: '8px' }}>
                 <div className="store-sort">
@@ -372,10 +393,13 @@ export default function StorePage() {
                   
                   <div className="sg-badges-top">
                     <div className="sg-b-left">
-                      {p.badge && <span className={`sg-badge ${p.badge === 'پرفروش' ? 'cream' : p.badge === 'تخفیف' ? 'red' : 'dark'}`}>
-                        {p.badge === 'تخفیف' && <Icon name="flame" />}
-                        {p.badge}
-                      </span>}
+                      {p.badges && p.badges.map(b => (
+                        <span key={b} className={`sg-badge ${b === 'پرفروش' ? 'cream' : b === 'تخفیف' ? 'red' : 'dark'}`}>
+                          {b === 'تخفیف' && <Icon name="flame" />}
+                          {b === 'پرفروش' && <Icon name="trophy" />}
+                          {b}
+                        </span>
+                      ))}
                       <span className="sg-badge dark star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> {p.rating}</span>
                     </div>
                     <button className={`sg-heart ${wishlist[p.id] ? 'active' : ''}`} onClick={() => toggleWishlist(p.id)}>

@@ -186,6 +186,39 @@ i[data-icon] svg {
   height: 48px;
   border-radius: 16px;
   pointer-events: none;
+  transition: transform .55s cubic-bezier(.3, 1.35, .4, 1);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.nav-ind-glow-wrap {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.nav-ind-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  background: var(--red);
+  border-radius: 50%;
+  filter: blur(8px);
+  animation: glow-spin 4s linear infinite;
+}
+
+@keyframes glow-spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg) translateX(12px) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(12px) rotate(-360deg); }
+}
+
+.nav-ind-glass {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
   
   /* WWDC25 Pure Physical Glass */
   background: rgba(255, 255, 255, 0.02);
@@ -199,10 +232,9 @@ i[data-icon] svg {
   box-shadow: 
     inset 1px 1px 1.5px rgba(255, 255, 255, 0.9),
     inset -1px -1px 1.5px rgba(0, 0, 0, 0.3),
-    inset 2px 4px 12px rgba(255, 255, 255, 0.1),
-    0 12px 30px rgba(0, 0, 0, 0.3);
-    
-  transition: transform .55s cubic-bezier(.3, 1.35, .4, 1);
+    inset 2px 4px 12px rgba(255, 255, 255, 0.1);
+  
+  z-index: 2;
 }
 
 .nav-item,
