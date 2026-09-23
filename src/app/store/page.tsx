@@ -133,11 +133,11 @@ export default function StorePage() {
       const rect = promo.getBoundingClientRect();
       const x = pe.clientX - rect.left;
       const y = pe.clientY - rect.top;
-      
+
       // Center-relative percentages (-1 to 1)
       const px = (x / rect.width) * 2 - 1;
       const py = (y / rect.height) * 2 - 1;
-      
+
       promo.style.setProperty('--px', px.toString());
       promo.style.setProperty('--py', py.toString());
       promo.style.setProperty('--mx', x + 'px');
@@ -182,7 +182,7 @@ export default function StorePage() {
     if (sortBy === 'قیمت: کم به زیاد') p.sort((a, b) => a.price - b.price);
     else if (sortBy === 'قیمت: زیاد به کم') p.sort((a, b) => b.price - a.price);
     else if (sortBy === 'محبوبیت') p.sort((a, b) => b.popularity - a.popularity);
-    
+
     return p;
   }, [activeTab, priceMax, sortBy]);
 
@@ -193,244 +193,248 @@ export default function StorePage() {
     <>
       <div className="store-content reveal" style={{ '--d': 2 } as any}>
         {/* Category + Sort Row */}
-            <div className="store-cat-row">
-              <div className="store-tabs">
-                <span className="store-tab-ind" style={tabIndStyle}></span>
-                {TABS.map(tab => {
-                  const tabImages: Record<string, string> = {
-                    'فورتنایت': '/images/categories/fortnite.png',
-                    'ولورانت': '/images/categories/valorant.png',
-                    'ایپکس لجندز': '/images/categories/apex.png',
-                    'پرمیوم': '/images/categories/premium.png',
-                  };
-                  return (
-                    <button 
-                      key={tab} 
-                      ref={el => { tabRefs.current[tab] = el; }}
-                      className={`store-tab ${activeTab === tab ? 'active' : ''}`}
-                      onClick={() => setActiveTab(tab)}
-                      style={{ display: 'flex', alignItems: 'center', gap: '2px' }}
-                    >
-                      {tabImages[tab] && (
-                        <img 
-                          src={tabImages[tab]} 
-                          alt={tab} 
-                          style={{ 
-                            width: tab === 'پرمیوم' ? '50px' : '26px', 
-                            height: tab === 'پرمیوم' ? '50px' : '26px', 
-                            margin: tab === 'پرمیوم' ? '-12px -4px -12px 0' : '0',
-                            objectFit: 'contain' 
-                          }} 
-                        />
-                      )}
-                      {tab}
-                    </button>
-                  );
-                })}
-              </div>
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <div className="store-sort">
-                  <button className="store-sort-btn" onClick={() => { setPriceOpen(!priceOpen); setSortOpen(false); }}>
-                    <Icon name="sliders" /> قیمت تا: {priceMax === 0 ? '۰' : priceMax.toLocaleString('fa-IR')} تومان <Icon name="chev" className="sort-chev" style={{ transform: priceOpen ? 'rotate(-90deg)' : 'none', transition: 'transform 0.3s var(--spring)' }} />
-                  </button>
-                  {priceOpen && (
-                    <div className="store-sort-drop" style={{ minWidth: '260px', padding: '24px 16px', zIndex: 101 }}>
-                      <div className="sf-range-wrap" dir="ltr">
-                        <input type="range" min="0" max="10000000" step="100000" value={priceMax} onChange={e => setPriceMax(Number(e.target.value))} className="sf-range" />
-                        <div className="sf-range-track" style={{ width: `${(priceMax/10000000)*100}%` }}></div>
-                        <div className="sf-range-pill" style={{ left: `${(priceMax/10000000)*100}%`, transform: `translate(-${(priceMax/10000000)*100}%, -50%)` }} dir="rtl">
-                          <svg width="6" height="12" viewBox="0 0 6 12" fill="currentColor" style={{ opacity: 0.5, marginRight: '-2px', marginLeft: '6px' }}>
-                            <circle cx="2" cy="2" r="1"/><circle cx="2" cy="6" r="1"/><circle cx="2" cy="10" r="1"/>
-                            <circle cx="5" cy="2" r="1"/><circle cx="5" cy="6" r="1"/><circle cx="5" cy="10" r="1"/>
-                          </svg>
-                          <input 
-                            type="text"
-                            value={priceMax === 0 ? '۰' : priceMax.toLocaleString('fa-IR')}
-                            onChange={(e) => {
-                              let val = e.target.value.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString()).replace(/\D/g, '');
-                              let num = Number(val);
-                              if (num > 10000000) num = 10000000;
-                              setPriceMax(num);
-                            }}
-                            className="sf-pill-input"
-                            dir="ltr"
-                          />
-                          <span>تومان</span>
-                        </div>
-                      </div>
-                    </div>
+        <div className="store-cat-row">
+          <div className="store-tabs">
+            <span className="store-tab-ind" style={tabIndStyle}></span>
+            {TABS.map(tab => {
+              const tabImages: Record<string, string> = {
+                'فورتنایت': '/images/categories/fortnite.png',
+                'ولورانت': '/images/categories/valorant.png',
+                'ایپکس لجندز': '/images/categories/apex.png',
+                'پرمیوم': '/images/categories/premium.png',
+              };
+              return (
+                <button
+                  key={tab}
+                  ref={el => { tabRefs.current[tab] = el; }}
+                  className={`store-tab ${activeTab === tab ? 'active' : ''}`}
+                  onClick={() => setActiveTab(tab)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '2px',
+                    marginRight: tab === 'پرمیوم' ? '-15px' : '0'
+                  }}
+                >
+                  {tabImages[tab] && (
+                    <img
+                      src={tabImages[tab]}
+                      alt={tab}
+                      style={{
+                        width: tab === 'پرمیوم' ? '28px' : '26px',
+                        height: tab === 'پرمیوم' ? '28px' : '26px',
+                        objectFit: 'contain'
+                      }}
+                    />
                   )}
-                </div>
-
-                <div className="store-sort">
-                  <button className="store-sort-btn" onClick={() => { setSortOpen(!sortOpen); setPriceOpen(false); }}>
-                    <Icon name="arrow" className="sort-icon-rev" style={{ transform: sortBy === 'قیمت: کم به زیاد' ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform 0.3s var(--spring)' }} /> مرتب‌سازی: {sortBy} <Icon name="chev" className="sort-chev" style={{ transform: sortOpen ? 'rotate(-90deg)' : 'none', transition: 'transform 0.3s var(--spring)' }} />
-                  </button>
-                  {sortOpen && (
-                    <div className="store-sort-drop">
-                      {['محبوبیت', 'قیمت: کم به زیاد', 'قیمت: زیاد به کم', 'جدیدترین'].map(s => (
-                        <button key={s} onClick={() => { setSortBy(s); setSortOpen(false); }}>{s}</button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-
-            {/* Promo Banners */}
-            <div className="store-promos reveal" style={{ '--d': 3 } as any}>
-              <article 
-                className="store-promo main-promo spot"
-                onPointerEnter={() => setMainPromoHover(true)}
-                onPointerLeave={() => setMainPromoHover(false)}
-              >
-                <div className="sp-bg discount-bg"></div>
-                <img src="/images/discount.png" alt="Discount Background" className="sp-discount-overlay" />
-                
-                {DISCOUNT_PROMOS.map((promo, idx) => (
-                  <div key={idx} className={`promo-slide-layer ${mainPromoIdx === idx ? 'active' : ''}`}>
-                    <div className="sp-content">
-                      <div className="sp-badges">
-                        <span className="sp-badge live-red"><Icon name="flame" /> <span className="live-badge-text">پیشنهاد ویژه</span></span>
-                        <span className="sp-badge dark"><Icon name="clock" /> پایان در {formatTime(timeLeft)}</span>
-                        <span className="sp-badge" style={{ background: '#ffeb3b', color: '#000' }}>{promo.discount} تخفیف</span>
-                      </div>
-                      <h2>{promo.title}</h2>
-                      <p>{promo.subtitle}</p>
-                      <div className="sp-foot">
-                        <button className="sp-btn" onClick={() => addToCart(promo.title)}>
-                          مشاهده محصول
-                        </button>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginRight: '16px' }}>
-                          <span className="sp-strike">{promo.oldPrice} تومان</span>
-                          <span style={{ fontSize: '18px', fontWeight: 'bold' }}>{promo.price} تومان</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="sp-art-wrap">
-                      <img src={promo.img} alt="" className="sp-art discount-art" style={{ 
-                        transform: `translate(calc(var(--px) * 10px), calc(var(--py) * 10px)) scale(${promo.scale}) translateY(${promo.y}px)` 
-                      }} />
+                  {tab}
+                </button>
+              );
+            })}
+          </div>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <div className="store-sort">
+              <button className="store-sort-btn" onClick={() => { setPriceOpen(!priceOpen); setSortOpen(false); }}>
+                <Icon name="sliders" /> قیمت تا: {priceMax === 0 ? '۰' : priceMax.toLocaleString('fa-IR')} تومان <Icon name="chev" className="sort-chev" style={{ transform: priceOpen ? 'rotate(-90deg)' : 'none', transition: 'transform 0.3s var(--spring)' }} />
+              </button>
+              {priceOpen && (
+                <div className="store-sort-drop" style={{ minWidth: '260px', padding: '24px 16px', zIndex: 101 }}>
+                  <div className="sf-range-wrap" dir="ltr">
+                    <input type="range" min="0" max="10000000" step="100000" value={priceMax} onChange={e => setPriceMax(Number(e.target.value))} className="sf-range" />
+                    <div className="sf-range-track" style={{ width: `${(priceMax / 10000000) * 100}%` }}></div>
+                    <div className="sf-range-pill" style={{ left: `${(priceMax / 10000000) * 100}%`, transform: `translate(-${(priceMax / 10000000) * 100}%, -50%)` }} dir="rtl">
+                      <svg width="6" height="12" viewBox="0 0 6 12" fill="currentColor" style={{ opacity: 0.5, marginRight: '-2px', marginLeft: '6px' }}>
+                        <circle cx="2" cy="2" r="1" /><circle cx="2" cy="6" r="1" /><circle cx="2" cy="10" r="1" />
+                        <circle cx="5" cy="2" r="1" /><circle cx="5" cy="6" r="1" /><circle cx="5" cy="10" r="1" />
+                      </svg>
+                      <input
+                        type="text"
+                        value={priceMax === 0 ? '۰' : priceMax.toLocaleString('fa-IR')}
+                        onChange={(e) => {
+                          let val = e.target.value.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d).toString()).replace(/\D/g, '');
+                          let num = Number(val);
+                          if (num > 10000000) num = 10000000;
+                          setPriceMax(num);
+                        }}
+                        className="sf-pill-input"
+                        dir="ltr"
+                      />
+                      <span>تومان</span>
                     </div>
                   </div>
-                ))}
+                </div>
+              )}
+            </div>
 
-                <div className="sp-dots">
-                  {DISCOUNT_PROMOS.map((_, i) => (
-                    <button key={i} className={`sp-dot ${mainPromoIdx === i ? 'active' : ''}`} onClick={() => setMainPromoIdx(i)}>
-                      <span><i></i></span>
-                    </button>
+            <div className="store-sort">
+              <button className="store-sort-btn" onClick={() => { setSortOpen(!sortOpen); setPriceOpen(false); }}>
+                <Icon name="arrow" className="sort-icon-rev" style={{ transform: sortBy === 'قیمت: کم به زیاد' ? 'rotate(-90deg)' : 'rotate(90deg)', transition: 'transform 0.3s var(--spring)' }} /> مرتب‌سازی: {sortBy} <Icon name="chev" className="sort-chev" style={{ transform: sortOpen ? 'rotate(-90deg)' : 'none', transition: 'transform 0.3s var(--spring)' }} />
+              </button>
+              {sortOpen && (
+                <div className="store-sort-drop">
+                  {['محبوبیت', 'قیمت: کم به زیاد', 'قیمت: زیاد به کم', 'جدیدترین'].map(s => (
+                    <button key={s} onClick={() => { setSortBy(s); setSortOpen(false); }}>{s}</button>
                   ))}
                 </div>
-              </article>
+              )}
+            </div>
+          </div>
+        </div>
 
-              <article 
-                className="store-promo side-promo spot"
-                onPointerEnter={() => setPromoHover(true)}
-                onPointerLeave={() => setPromoHover(false)}
-              >
-                {BESTSELLER_PROMOS.map((promo, idx) => (
-                  <div key={idx} className={`promo-slide-layer ${promoIdx === idx ? 'active' : ''}`}>
-                    <div className="sp-bg side-bg" style={{ 
-                      backgroundImage: `${promo.bgGrad}, ${promo.bgImg}`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center'
-                    }}></div>
-                    
-                    <div className="sp-content side-content">
-                      <div className="sp-badges">
-                        <span className="sp-badge cream"><Icon name="trophy" /> پرفروش‌ها</span>
-                      </div>
-                      <h3>{promo.title}</h3>
-                      <p className="side-subtitle">{promo.subtitle}</p>
-                      <div className="sp-foot">
-                        <button className="sp-btn" onClick={() => addToCart(promo.title)}>
-                          مشاهده محصول
-                        </button>
-                        <div style={{ marginRight: '4px', whiteSpace: 'nowrap' }}>
-                          <span style={{ fontSize: '16px', fontWeight: 'bold' }}>{promo.price} تومان</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="sp-art-wrap side-art-wrap">
-                      <img src={promo.img} alt="" className="sp-art" style={{
-                        transform: `translate(calc(var(--px) * 10px + ${promo.x}px), calc(var(--py) * 10px + ${promo.y}px)) scale(${promo.scale})`
-                      }} />
+
+        {/* Promo Banners */}
+        <div className="store-promos reveal" style={{ '--d': 3 } as any}>
+          <article
+            className="store-promo main-promo spot"
+            onPointerEnter={() => setMainPromoHover(true)}
+            onPointerLeave={() => setMainPromoHover(false)}
+          >
+            <div className="sp-bg discount-bg"></div>
+            <img src="/images/discount.png" alt="Discount Background" className="sp-discount-overlay" />
+
+            {DISCOUNT_PROMOS.map((promo, idx) => (
+              <div key={idx} className={`promo-slide-layer ${mainPromoIdx === idx ? 'active' : ''}`}>
+                <div className="sp-content">
+                  <div className="sp-badges">
+                    <span className="sp-badge live-red"><Icon name="flame" /> <span className="live-badge-text">پیشنهاد ویژه</span></span>
+                    <span className="sp-badge dark"><Icon name="clock" /> پایان در {formatTime(timeLeft)}</span>
+                    <span className="sp-badge" style={{ background: '#ffeb3b', color: '#000' }}>{promo.discount} تخفیف</span>
+                  </div>
+                  <h2>{promo.title}</h2>
+                  <p>{promo.subtitle}</p>
+                  <div className="sp-foot">
+                    <button className="sp-btn" onClick={() => addToCart(promo.title)}>
+                      مشاهده محصول
+                    </button>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', marginRight: '16px' }}>
+                      <span className="sp-strike">{promo.oldPrice} تومان</span>
+                      <span style={{ fontSize: '18px', fontWeight: 'bold' }}>{promo.price} تومان</span>
                     </div>
                   </div>
-                ))}
-
-                <div className="sp-dots">
-                  {BESTSELLER_PROMOS.map((_, i) => (
-                    <button key={i} className={`sp-dot ${promoIdx === i ? 'active' : ''}`} onClick={() => setPromoIdx(i)}>
-                      <span><i></i></span>
-                    </button>
-                  ))}
                 </div>
-              </article>
-            </div>
-
-            {/* All Products */}
-            <div className="store-sec-h">
-              <div className="store-sec-l">
-                <h3>همه محصولات</h3>
+                <div className="sp-art-wrap">
+                  <img src={promo.img} alt="" className="sp-art discount-art" style={{
+                    transform: `translate(calc(var(--px) * 10px), calc(var(--py) * 10px)) scale(${promo.scale}) translateY(${promo.y}px)`
+                  }} />
+                </div>
               </div>
-            </div>
+            ))}
 
-            <div className="store-grid">
-              {filteredProducts.map((p, i) => (
-                <article key={p.id} className="sg-card spot reveal" style={{ '--d': i + 3 } as any}>
-                  {p.image === 'gift' ? (
-                    <div className="sg-art gift">
-                      <div className="sg-gift-icon"><Icon name="gift" /></div>
-                    </div>
-                  ) : (
-                    <div className="sg-art">
-                      <img src={p.image} alt={p.title} />
-                    </div>
-                  )}
-                  
-                  <div className="sg-badges-top">
-                    <div className="sg-b-left">
-                      {p.badges && p.badges.map(b => (
-                        <span key={b} className={`sg-badge ${b === 'پرفروش' ? 'cream' : b === 'تخفیف' ? 'red' : 'dark'}`}>
-                          {b === 'تخفیف' && <Icon name="flame" />}
-                          {b === 'پرفروش' && <Icon name="trophy" />}
-                          {b}
-                        </span>
-                      ))}
-                      <span className="sg-badge dark star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> {p.rating}</span>
-                    </div>
-                    <button className={`sg-heart ${wishlist[p.id] ? 'active' : ''}`} onClick={() => toggleWishlist(p.id)}>
-                      <Icon name="like" />
-                    </button>
-                  </div>
-
-                  <div className="sg-body">
-                    <span className="sg-sub">{p.subtitle}</span>
-                    <h4>{p.title}</h4>
-                    <div className="sg-price-row">
-                      <span className="sg-price">{p.price.toLocaleString('fa-IR')} تومان</span>
-                      {p.originalPrice && <span className="sg-old-price">{p.originalPrice.toLocaleString('fa-IR')}</span>}
-                    </div>
-                  </div>
-
-                  <div className="sg-actions">
-                    <button className="sg-view-btn">مشاهده محصول</button>
-                  </div>
-                </article>
+            <div className="sp-dots">
+              {DISCOUNT_PROMOS.map((_, i) => (
+                <button key={i} className={`sp-dot ${mainPromoIdx === i ? 'active' : ''}`} onClick={() => setMainPromoIdx(i)}>
+                  <span><i></i></span>
+                </button>
               ))}
             </div>
+          </article>
 
-            {filteredProducts.length > 0 && (
-              <div className="store-load-wrap reveal" style={{ '--d': filteredProducts.length + 3 } as any}>
-                <button className="store-load-btn">بارگذاری بیشتر <Icon name="chev" /></button>
+          <article
+            className="store-promo side-promo spot"
+            onPointerEnter={() => setPromoHover(true)}
+            onPointerLeave={() => setPromoHover(false)}
+          >
+            {BESTSELLER_PROMOS.map((promo, idx) => (
+              <div key={idx} className={`promo-slide-layer ${promoIdx === idx ? 'active' : ''}`}>
+                <div className="sp-bg side-bg" style={{
+                  backgroundImage: `${promo.bgGrad}, ${promo.bgImg}`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center'
+                }}></div>
+
+                <div className="sp-content side-content">
+                  <div className="sp-badges">
+                    <span className="sp-badge cream"><Icon name="trophy" /> پرفروش‌ها</span>
+                  </div>
+                  <h3>{promo.title}</h3>
+                  <p className="side-subtitle">{promo.subtitle}</p>
+                  <div className="sp-foot">
+                    <button className="sp-btn" onClick={() => addToCart(promo.title)}>
+                      مشاهده محصول
+                    </button>
+                    <div style={{ marginRight: '4px', whiteSpace: 'nowrap' }}>
+                      <span style={{ fontSize: '16px', fontWeight: 'bold' }}>{promo.price} تومان</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="sp-art-wrap side-art-wrap">
+                  <img src={promo.img} alt="" className="sp-art" style={{
+                    transform: `translate(calc(var(--px) * 10px + ${promo.x}px), calc(var(--py) * 10px + ${promo.y}px)) scale(${promo.scale})`
+                  }} />
+                </div>
               </div>
-            )}
-            {filteredProducts.length === 0 && (
-              <div className="store-empty">هیچ محصولی با فیلترهای شما مطابقت ندارد.</div>
-            )}
+            ))}
+
+            <div className="sp-dots">
+              {BESTSELLER_PROMOS.map((_, i) => (
+                <button key={i} className={`sp-dot ${promoIdx === i ? 'active' : ''}`} onClick={() => setPromoIdx(i)}>
+                  <span><i></i></span>
+                </button>
+              ))}
+            </div>
+          </article>
+        </div>
+
+        {/* All Products */}
+        <div className="store-sec-h">
+          <div className="store-sec-l">
+            <h3>همه محصولات</h3>
+          </div>
+        </div>
+
+        <div className="store-grid">
+          {filteredProducts.map((p, i) => (
+            <article key={p.id} className="sg-card spot reveal" style={{ '--d': i + 3 } as any}>
+              {p.image === 'gift' ? (
+                <div className="sg-art gift">
+                  <div className="sg-gift-icon"><Icon name="gift" /></div>
+                </div>
+              ) : (
+                <div className="sg-art">
+                  <img src={p.image} alt={p.title} />
+                </div>
+              )}
+
+              <div className="sg-badges-top">
+                <div className="sg-b-left">
+                  {p.badges && p.badges.map(b => (
+                    <span key={b} className={`sg-badge ${b === 'پرفروش' ? 'cream' : b === 'تخفیف' ? 'red' : 'dark'}`}>
+                      {b === 'تخفیف' && <Icon name="flame" />}
+                      {b === 'پرفروش' && <Icon name="trophy" />}
+                      {b}
+                    </span>
+                  ))}
+                  <span className="sg-badge dark star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg> {p.rating}</span>
+                </div>
+                <button className={`sg-heart ${wishlist[p.id] ? 'active' : ''}`} onClick={() => toggleWishlist(p.id)}>
+                  <Icon name="like" />
+                </button>
+              </div>
+
+              <div className="sg-body">
+                <span className="sg-sub">{p.subtitle}</span>
+                <h4>{p.title}</h4>
+                <div className="sg-price-row">
+                  <span className="sg-price">{p.price.toLocaleString('fa-IR')} تومان</span>
+                  {p.originalPrice && <span className="sg-old-price">{p.originalPrice.toLocaleString('fa-IR')}</span>}
+                </div>
+              </div>
+
+              <div className="sg-actions">
+                <button className="sg-view-btn">مشاهده محصول</button>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {filteredProducts.length > 0 && (
+          <div className="store-load-wrap reveal" style={{ '--d': filteredProducts.length + 3 } as any}>
+            <button className="store-load-btn">بارگذاری بیشتر <Icon name="chev" /></button>
+          </div>
+        )}
+        {filteredProducts.length === 0 && (
+          <div className="store-empty">هیچ محصولی با فیلترهای شما مطابقت ندارد.</div>
+        )}
 
       </div>
     </>
