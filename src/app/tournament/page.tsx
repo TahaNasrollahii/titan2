@@ -63,7 +63,7 @@ export default function TournamentPage() {
             <span className="th-badge red"><Icon name="flame" /> <span className="pulse-text">تورنومنت‌های تایتان</span></span>
             <span className="th-badge dark">فصل ۳ مسابقات</span>
           </div>
-          <h1>میدان نبردِ <em>قهرمانان</em></h1>
+          <h1>میدان نبردِ قهرمانان</h1>
           <p>در رقابت‌های نفس‌گیر تایتان شرکت کنید و سهمی از جوایز نقدی این فصل ببرید.</p>
           <div className="th-foot">
             <button className="th-btn-primary">
