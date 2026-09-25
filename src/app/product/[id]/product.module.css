@@ -41,7 +41,7 @@
   padding: 24px;
   display: flex;
   gap: 40px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 /* Right Side - Details */
@@ -216,7 +216,8 @@
   gap: 16px;
 }
 
-.viewingNow, .stockLeft {
+.viewingNow,
+.stockLeft {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -399,7 +400,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0) 60%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0) 60%);
   pointer-events: none;
 }
 
@@ -409,15 +410,17 @@
   object-fit: contain;
   position: relative;
   z-index: 1;
-  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.4));
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.4));
   mix-blend-mode: normal;
+  transform: translateX(-30px);
 }
 
 .videoBtn {
   position: absolute;
   bottom: 24px;
   right: 24px;
-  background-color: #7f1d1d; /* Dark red */
+  background-color: #7f1d1d;
+  /* Dark red */
   color: white;
   border: none;
   padding: 10px 16px;
@@ -491,7 +494,7 @@
   background-color: #3d151e;
   border-radius: 32px;
   padding: 40px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 .aboutSection h2 {
@@ -526,15 +529,15 @@
   .mainSection {
     flex-direction: column;
   }
-  
+
   .detailsColumn {
     order: 2;
   }
-  
+
   .imageColumn {
     order: 1;
   }
-  
+
   .featuresList {
     flex-wrap: wrap;
     gap: 24px;
@@ -623,7 +626,7 @@
   left: 0;
   right: 0;
   padding: 40px 20px 20px 20px;
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
   display: flex;
   flex-direction: column;
   gap: 6px;
