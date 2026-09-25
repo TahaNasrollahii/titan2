@@ -143,10 +143,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
 
             <img src="/images/products/vbucks.png" alt="2800 V-Bucks" className={styles.mainImage} />
 
-            <button className={styles.videoBtn}>
-              <Play size={16} fill="currentColor" />
-              ویدیو معرفی
-            </button>
+
           </div>
 
 
