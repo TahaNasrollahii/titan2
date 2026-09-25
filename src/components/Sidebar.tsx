@@ -13,21 +13,21 @@ export function Sidebar() {
   const [navIndStyle, setNavIndStyle] = useState({});
   const navRefs = useRef<Record<string, HTMLElement | null>>({});
 
-  useEffect(() => {
-    // Find the active link based on pathname
-    let activeKey = pathname;
-    if (!navRefs.current[activeKey]) {
-      // Default to home if route not in sidebar
-      activeKey = '/';
-    }
+  let activeKey = pathname;
+  if (pathname.startsWith('/product/')) {
+    activeKey = '/store';
+  } else if (pathname !== '/' && pathname !== '/store') {
+    activeKey = '/';
+  }
 
+  useEffect(() => {
     const el = navRefs.current[activeKey];
     if (el) {
       setNavIndStyle({
         transform: `translate(${el.offsetLeft}px, ${el.offsetTop}px)`,
       });
     }
-  }, [pathname]);
+  }, [pathname, activeKey]);
 
   const handleAddSquad = () => {
     addToast({
@@ -54,7 +54,7 @@ export function Sidebar() {
         
         <Link 
           href="/" 
-          className={`nav-item ${pathname === '/' ? 'active' : ''}`} 
+          className={`nav-item ${activeKey === '/' ? 'active' : ''}`} 
           data-label="خانه" 
           ref={el => { navRefs.current['/'] = el; }}
         >
@@ -63,7 +63,7 @@ export function Sidebar() {
         
         <Link 
           href="/store" 
-          className={`nav-item ${pathname === '/store' ? 'active' : ''}`} 
+          className={`nav-item ${activeKey === '/store' ? 'active' : ''}`} 
           data-label="فروشگاه" 
           ref={el => { navRefs.current['/store'] = el; }}
         >
