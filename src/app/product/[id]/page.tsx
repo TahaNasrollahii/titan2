@@ -33,9 +33,10 @@ export default function ProductPage({ params }: { params: { id: string } }) {
               <span>پرفروش</span>
             </div>
             <div className={styles.actionsTop}>
-              <button className={styles.iconBtn} aria-label="Xbox Compatible"><img src="/images/xbox.png" alt="Xbox" className={styles.boldIcon} /></button>
-              <button className={styles.iconBtn} aria-label="PlayStation Compatible"><img src="/images/playstation.png" alt="PlayStation" className={styles.boldIcon} /></button>
-              <button className={styles.iconBtn} aria-label="PC Compatible"><img src="/images/pc.png" alt="PC" className={styles.boldIcon} /></button>
+              <button className={styles.iconBtn} aria-label="Nintendo Compatible"><img src="/nintendo.png" alt="Nintendo" className={styles.boldIcon} style={{ width: '36px', height: '36px' }} /></button>
+              <button className={styles.iconBtn} aria-label="Xbox Compatible"><img src="/xbox.png" alt="Xbox" className={styles.boldIcon} /></button>
+              <button className={styles.iconBtn} aria-label="PlayStation Compatible"><img src="/ps.png" alt="PlayStation" className={styles.boldIcon} /></button>
+              <button className={styles.iconBtn} aria-label="PC Compatible"><img src="/pc.png" alt="PC" className={styles.boldIcon} /></button>
             </div>
           </div>
 
