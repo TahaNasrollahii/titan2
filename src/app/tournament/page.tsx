@@ -67,17 +67,20 @@ export default function TournamentPage() {
           <p>در رقابت‌های نفس‌گیر تایتان شرکت کنید و سهمی از جوایز نقدی این فصل ببرید.</p>
           <div className="th-foot">
             <button className="th-btn-primary">
-              ثبت‌نام در مسابقات
-              <Icon name="arrow" style={{ transform: 'rotate(180deg)' }} />
+              <Icon name="game" />
+              ثبت‌نام - ۵۰,۰۰۰ 
             </button>
-            <div className="th-players">
-              <div className="avatars"><span></span><span></span><span></span></div>
-              <small>+۲۴۰ بازیکن فعال</small>
-            </div>
+            <span style={{ textDecoration: 'line-through', color: 'rgba(255, 255, 255, 0.5)', fontSize: '13px', fontWeight: 600 }}>۱۵۰,۰۰۰ تومان</span>
           </div>
         </div>
         <div className="th-art-wrap">
           <img src="/images/banner-hero.png" alt="" className="th-art" />
+        </div>
+        
+        <div className="th-dots">
+          <div className="th-dot active"></div>
+          <div className="th-dot"></div>
+          <div className="th-dot"></div>
         </div>
       </article>
 
