@@ -4,14 +4,17 @@ import React, { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import styles from './product.module.css';
-import { Play, Heart, ShieldCheck, RefreshCcw, Truck, Share2, Plus, Minus, Flame, Eye, LayoutGrid, MonitorPlay, MessageSquare, Monitor, ArrowLeft } from 'lucide-react';
+import { Play, Heart, ShieldCheck, RefreshCcw, Truck, Share2, Plus, Minus, Flame, Trophy, Eye, LayoutGrid, MonitorPlay, MessageSquare, Monitor, ArrowLeft } from 'lucide-react';
 
 export default function ProductPage({ params }: { params: { id: string } }) {
+  const [isLiked, setIsLiked] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+
   return (
     <div className={styles.container} dir="rtl">
       {/* Breadcrumb */}
       <nav className={styles.breadcrumb}>
-        <span>خانه</span>
+        <span>فروشگاه</span>
         <span className={styles.separator}>&gt;</span>
         <span>فورتنایت</span>
         <span className={styles.separator}>&gt;</span>
@@ -26,13 +29,13 @@ export default function ProductPage({ params }: { params: { id: string } }) {
 
           <div className={styles.headerRow}>
             <div className={styles.badgePopular}>
-              <Flame size={16} className={styles.flameIcon} />
-              <span>محبوب</span>
+              <Trophy size={16} className={styles.flameIcon} />
+              <span>پرفروش</span>
             </div>
             <div className={styles.actionsTop}>
-              <button className={styles.iconBtn} aria-label="Xbox Compatible"><img src="/images/xbox.png" alt="Xbox" style={{ width: '18px', height: '18px', objectFit: 'contain' }} /></button>
-              <button className={styles.iconBtn} aria-label="PlayStation Compatible"><img src="/images/playstation.png" alt="PlayStation" style={{ width: '18px', height: '18px', objectFit: 'contain' }} /></button>
-              <button className={styles.iconBtn} aria-label="PC Compatible"><img src="/images/pc.png" alt="PC" style={{ width: '18px', height: '18px', objectFit: 'contain' }} /></button>
+              <button className={styles.iconBtn} aria-label="Xbox Compatible"><img src="/images/xbox.png" alt="Xbox" className={styles.boldIcon} /></button>
+              <button className={styles.iconBtn} aria-label="PlayStation Compatible"><img src="/images/playstation.png" alt="PlayStation" className={styles.boldIcon} /></button>
+              <button className={styles.iconBtn} aria-label="PC Compatible"><img src="/images/pc.png" alt="PC" className={styles.boldIcon} /></button>
             </div>
           </div>
 
@@ -61,7 +64,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 <span className={styles.currentPrice}>۱,۴۵۰,۰۰۰ <span>تومان</span></span>
                 <span className={styles.oldPrice}>۱,۶۵۰,۰۰۰</span>
               </div>
-              <div className={styles.discountBadge}>۱۸٪ تخفیف</div>
+              <div className={styles.discountBadge}><Flame size={16} /> ۱۸٪ تخفیف</div>
             </div>
 
             <div className={styles.stockInfo}>
@@ -77,39 +80,54 @@ export default function ProductPage({ params }: { params: { id: string } }) {
 
           {/* Action Buttons */}
           <div className={styles.actionButtons}>
-            <button className={styles.wishlistBtn}><Heart size={20} /></button>
-            <button className={styles.buyNowBtn}>خرید فوری</button>
+            <button 
+              className={`${styles.wishlistBtn} ${isLiked ? styles.liked : ''}`}
+              onClick={() => setIsLiked(!isLiked)}
+            >
+              <Heart 
+                size={20} 
+                fill={isLiked ? "#ef4444" : "none"} 
+                color={isLiked ? "#ef4444" : "currentColor"} 
+                style={{ transition: 'all 0.3s ease', transform: isLiked ? 'scale(1.1)' : 'scale(1)' }}
+              />
+            </button>
             <button className={styles.addToCartBtn}>
               <Plus size={20} />
               افزودن به سبد
             </button>
             <div className={styles.quantityControl}>
-              <button><Plus size={16} /></button>
-              <span>۱</span>
-              <button><Minus size={16} /></button>
+              <button onClick={() => setQuantity(prev => prev + 1)}><Plus size={16} /></button>
+              <span>{quantity.toLocaleString('fa-IR')}</span>
+              <button onClick={() => setQuantity(prev => (prev > 1 ? prev - 1 : 1))}><Minus size={16} /></button>
             </div>
           </div>
 
           {/* Features */}
           <div className={styles.featuresList}>
             <div className={styles.featureItem}>
-              <ShieldCheck size={24} className={styles.featureIcon} />
+              <div className={styles.featureIcon}>
+                <ShieldCheck size={24} />
+              </div>
               <div className={styles.featureText}>
-                <div className={styles.featureTitle}>تضمین قانونی بودن</div>
+                <div className={styles.featureTitle}>تضمین</div>
                 <div className={styles.featureDesc}>بدون بن شدن</div>
               </div>
             </div>
             <div className={styles.featureItem}>
-              <RefreshCcw size={24} className={styles.featureIcon} />
+              <div className={styles.featureIcon}>
+                <MessageSquare size={24} />
+              </div>
               <div className={styles.featureText}>
-                <div className={styles.featureTitle}>پشتیبانی ۲۴ ساعته</div>
-                <div className={styles.featureDesc}>رسید خرید معتبر</div>
+                <div className={styles.featureTitle}>پشتیبانی</div>
+                <div className={styles.featureDesc}>چت آنلاین</div>
               </div>
             </div>
             <div className={styles.featureItem}>
-              <Truck size={24} className={styles.featureIcon} />
+              <div className={styles.featureIcon}>
+                <Flame size={24} />
+              </div>
               <div className={styles.featureText}>
-                <div className={styles.featureTitle}>شارژ فوری</div>
+                <div className={styles.featureTitle}>فعال‌سازی سریع</div>
                 <div className={styles.featureDesc}>زیر ۱۵ دقیقه</div>
               </div>
             </div>
