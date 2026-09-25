@@ -349,9 +349,9 @@ export default function StorePage() {
                   <h3>{promo.title}</h3>
                   <p className="side-subtitle">{promo.subtitle}</p>
                   <div className="sp-foot">
-                    <button className="sp-btn" onClick={() => addToCart(promo.title)}>
+                    <Link href="/product/1" className="sp-btn" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       مشاهده محصول
-                    </button>
+                    </Link>
                     <div style={{ marginRight: '4px', whiteSpace: 'nowrap' }}>
                       <span style={{ fontSize: '16px', fontWeight: 'bold' }}>{promo.price} تومان</span>
                     </div>
@@ -418,7 +418,7 @@ export default function StorePage() {
               </div>
 
               <div className="sg-actions">
-                <button className="sg-view-btn">مشاهده محصول</button>
+                <Link href={`/product/${p.id}`} className="sg-view-btn" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>مشاهده محصول</Link>
                 <button className={`sg-heart ${wishlist[p.id] ? 'active' : ''}`} onClick={() => toggleWishlist(p.id)}>
                   <Icon name="heart" />
                 </button>
