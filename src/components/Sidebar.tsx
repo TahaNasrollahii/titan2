@@ -16,7 +16,7 @@ export function Sidebar() {
   let activeKey = pathname;
   if (pathname.startsWith('/product/')) {
     activeKey = '/store';
-  } else if (pathname !== '/' && pathname !== '/store') {
+  } else if (pathname !== '/' && pathname !== '/store' && pathname !== '/tournament') {
     activeKey = '/';
   }
 
@@ -70,9 +70,14 @@ export function Sidebar() {
           <Icon name="bag"/>
         </Link>
         
-        <a className="nav-item" href="#" data-label="بازی‌ها" onClick={e => e.preventDefault()}>
+        <Link 
+          href="/tournament" 
+          className={`nav-item ${activeKey === '/tournament' ? 'active' : ''}`} 
+          data-label="تورنومنت" 
+          ref={el => { navRefs.current['/tournament'] = el; }}
+        >
           <Icon name="game"/>
-        </a>
+        </Link>
         <a className="nav-item" href="#" data-label="گیفت کارت" onClick={e => e.preventDefault()}>
           <Icon name="gift"/>
         </a>
