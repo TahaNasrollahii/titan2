@@ -73,16 +73,13 @@ export function Sidebar() {
         <Link 
           href="/tournament" 
           className={`nav-item ${activeKey === '/tournament' ? 'active' : ''}`} 
-          data-label="تورنومنت" 
+          data-label="تورنومنتها" 
           ref={el => { navRefs.current['/tournament'] = el; }}
         >
-          <Icon name="game"/>
+          <Icon name="trophy"/>
         </Link>
         <a className="nav-item" href="#" data-label="گیفت کارت" onClick={e => e.preventDefault()}>
           <Icon name="gift"/>
-        </a>
-        <a className="nav-item" href="#" data-label="تورنمنت‌ها" onClick={e => e.preventDefault()}>
-          <Icon name="trophy"/>
         </a>
         <a className="nav-item" href="#" data-label="آمار" onClick={e => e.preventDefault()}>
           <Icon name="chart"/>

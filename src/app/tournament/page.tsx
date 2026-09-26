@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import './tournament.css';
 import { Icon } from '@/components/Icons';
 
+import { ScoreWidget } from '@/components/ScoreWidget';
+
 export default function TournamentPage() {
   const [activeTab, setActiveTab] = useState('teams');
 
@@ -55,34 +57,44 @@ export default function TournamentPage() {
         <div className="l-blob blob-2"></div>
         <div className="l-blob blob-3"></div>
       </div>
-      {/* 1. Hero Promo */}
-      <article className="tour-hero spot spot-track reveal" style={{ '--d': 2 } as any}>
-        <div className="th-bg"></div>
-        <div className="th-content">
-          <div className="th-badges">
-            <span className="th-badge red"><Icon name="flame" /> <span className="pulse-text">تورنومنت‌های تایتان</span></span>
-            <span className="th-badge dark">فصل ۳ مسابقات</span>
-          </div>
-          <h1>میدان نبردِ قهرمانان</h1>
-          <p>در رقابت‌های نفس‌گیر تایتان شرکت کنید و سهمی از جوایز نقدی این فصل ببرید.</p>
-          <div className="th-foot">
-            <button className="th-btn-primary">
-              <Icon name="game" />
-              ثبت‌نام - ۵۰,۰۰۰ 
-            </button>
-            <span style={{ textDecoration: 'line-through', color: 'rgba(255, 255, 255, 0.5)', fontSize: '13px', fontWeight: 600 }}>۱۵۰,۰۰۰ تومان</span>
-          </div>
-        </div>
-        <div className="th-art-wrap">
-          <img src="/images/banner-hero.png" alt="" className="th-art" />
-        </div>
-        
-        <div className="th-dots">
-          <div className="th-dot active"></div>
-          <div className="th-dot"></div>
-          <div className="th-dot"></div>
-        </div>
-      </article>
+
+      <div className="cols" style={{ display: 'flex', gap: '24px', alignItems: 'stretch' }}>
+        {/* 1. Hero Promo (70%) */}
+        <section className="col col-a" style={{ flex: '7', display: 'flex' }}>
+          <article className="tour-hero spot spot-track reveal" style={{ '--d': 2, flex: 1, width: '100%' } as any}>
+            <div className="th-bg"></div>
+            <div className="th-content">
+              <div className="th-badges">
+                <span className="th-badge red"><Icon name="flame" /> <span className="pulse-text">تورنومنت‌های تایتان</span></span>
+                <span className="th-badge dark">فصل ۳ مسابقات</span>
+              </div>
+              <h1>میدان نبردِ قهرمانان</h1>
+              <p>در رقابت‌های نفس‌گیر تایتان شرکت کنید و سهمی از جوایز نقدی این فصل ببرید.</p>
+              <div className="th-foot">
+                <button className="th-btn-primary">
+                  <Icon name="game" />
+                  ثبت‌نام - ۵۰,۰۰۰ 
+                </button>
+                <span style={{ textDecoration: 'line-through', color: 'rgba(255, 255, 255, 0.5)', fontSize: '13px', fontWeight: 600 }}>۱۵۰,۰۰۰ تومان</span>
+              </div>
+            </div>
+            <div className="th-art-wrap">
+              <img src="/images/banner-hero.png" alt="" className="th-art" />
+            </div>
+            
+            <div className="th-dots">
+              <div className="th-dot active"></div>
+              <div className="th-dot"></div>
+              <div className="th-dot"></div>
+            </div>
+          </article>
+        </section>
+
+        {/* Your Score Widget (30%) */}
+        <section className="col col-b" style={{ flex: '3', display: 'flex' }}>
+          <ScoreWidget />
+        </section>
+      </div>
 
       {/* 2. Global Stats */}
       <div className="tour-stats-row reveal" style={{ '--d': 3 } as any}>

@@ -310,7 +310,7 @@ export default function TitanPage() {
          Statistic
          ===================================================== */
       const coreLabel = $('#coreLabel'), coreVal = $('#coreVal'), ghRow = $('#ghRow');
-      let total = HRS.reduce((a, h) => a + h.v, 0), coreShown = 0, coreRaf = 0, hovering = -1;
+      let total = HRS.reduce((a, h) => a + h.v, 0), coreShown = total, coreRaf = 0, hovering = -1;
       function setCore(label, val, dur = 700) {
         coreLabel.textContent = label;
         cancelAnimationFrame(coreRaf);
@@ -422,7 +422,7 @@ export default function TitanPage() {
       ghRow.innerHTML = HRS.map((h, i) => `
   <button class="gh" data-i="${i}" style="--c:${h.c}" aria-label="${esc(h.name)}">
     <span class="ic" style="background:${h.c};color:${h.fg}">${GLYPH[h.k]}</span>
-    <span class="gv" id="gv${i}">0</span>
+    <span class="gv" id="gv${i}">${fmt(h.v)}h</span>
   </button>`).join('');
       $$('.gh', ghRow).forEach(b => {
         const i = +b.dataset.i;
@@ -431,10 +431,6 @@ export default function TitanPage() {
         b.addEventListener('pointerenter', on); b.addEventListener('pointerleave', off);
         b.addEventListener('focus', on); b.addEventListener('blur', off);
       });
-      setTimeout(() => {
-        setCore('مجموع امتیاز', total, 1900);
-        HRS.forEach((h, i) => countTo($('#gv' + i), h.v, 1900));
-      }, 650);
       setInterval(() => {              // one more ساعت played, every few seconds
         const i = Math.floor(Math.random() * HRS.length);
         HRS[i].v++; total++;
@@ -630,7 +626,7 @@ export default function TitanPage() {
           <article class="stat spot reveal" style="--d:5">
             <div class="blob" id="blob">
               <canvas id="blobCanvas" aria-hidden="true"></canvas>
-              <div class="core"><small id="coreLabel">مجموع امتیاز</small><strong id="coreVal">0</strong></div>
+              <div class="core"><small id="coreLabel">مجموع امتیاز</small><strong id="coreVal">4,752</strong></div>
             </div>
             <div class="gh-row" id="ghRow"></div>
           </article>
