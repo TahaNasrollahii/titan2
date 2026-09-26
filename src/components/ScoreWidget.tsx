@@ -169,15 +169,15 @@ export function ScoreWidget() {
 
   return (
     <div className="stat-wrap col reveal" style={{ '--d': 4, flex: 1, display: 'flex', width: '100%' } as any}>
-      <article className="stat spot reveal" style={{ '--d': 5, flex: 1, padding: '24px 20px', gap: '20px', justifyContent: 'center' } as any}>
-        <div className="blob" id="swBlob" style={{ width: 'min(220px, 75%)', margin: '0 auto' }}>
+      <article className="stat spot reveal" style={{ '--d': 5, flex: 1, padding: '12px 16px', gap: '8px', justifyContent: 'center' } as any}>
+        <div className="blob" id="swBlob" style={{ width: 'min(140px, 55%)', margin: '0 auto' }}>
           <canvas id="swBlobCanvas" aria-hidden="true"></canvas>
-          <div className="core">
+          <div className="core" style={{ transform: 'scale(0.7)' }}>
             <small id="swCoreLabel">مجموع امتیاز</small>
             <strong id="swCoreVal">4,752</strong>
           </div>
         </div>
-        <div className="gh-row" id="swGhRow">
+        <div className="gh-row" id="swGhRow" style={{ transform: 'scale(0.85)', transformOrigin: 'top center', marginTop: '-4px' }}>
           <button className="gh sw-gh" data-i="0" style={{ '--c': '#d9443f' } as any} aria-label="رتبه شما">
             <span className="ic" style={{ background: '#d9443f', color: '#fff' }}>
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l6.5 8L5 20h4l7-8-7-8z"/><path d="M14 4h5l-5 5.5z" opacity=".8"/></svg>
