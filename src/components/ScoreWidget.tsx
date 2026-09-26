@@ -70,37 +70,23 @@ export function ScoreWidget() {
       cv.width = cv.height = Math.round(cvSize * dpr);
     }
     function simulateBands(t: number, dt: number) {
-      bpm += (bpmTarget - bpm) * (1 - Math.exp(-dt * 2.5));
-      beat += dt * bpm / 60;
-      const b = beat % 4;
-      const hit = (times: number[], decay: number) => { let m = 4; for (const x of times) m = Math.min(m, (b - x + 4) % 4); return Math.exp(-m * decay); };
-      const kick = hit([0, 2, 2.75], 5.5);
-      const snare = hit([1, 3], 5);
-      const hat = Math.exp(-((b * 2) % 1) * 7) * (Math.floor(b * 2) % 2 ? 1 : .55);
-      const wob = (k: number) => .5 + .5 * Math.sin(t * (1.1 + k * .37) + k * 1.9);
-      const target = [
-        kick * .95 + .10 * wob(0),
-        kick * .60 + snare * .30 + .15 * wob(1),
-        snare * .85 + .15 * wob(2),
-        snare * .40 + hat * .50 + .20 * wob(3),
-        hat * .80 + .20 * wob(4),
-        hat * .50 + kick * .15 + .30 * wob(5)
-      ];
+      const wob = (k: number) => 0.5 + 0.5 * Math.sin(t * (1.1 + k * 0.37) + k * 1.9);
       for (let k = 0; k < 6; k++) {
-        const rate = 1 - Math.exp(-dt * (target[k] > bands[k] ? 28 : 7));
-        bands[k] += (target[k] - bands[k]) * rate;
+        const target = 0.3 + 0.4 * wob(k);
+        bands[k] += (target - bands[k]) * dt * 3;
       }
-      kickSm += (kick - kickSm) * (1 - Math.exp(-dt * (kick > kickSm ? 30 : 8)));
+      const breath = Math.sin(t * 1.5);
+      kickSm += (breath * 0.6 - kickSm) * dt * 4;
     }
     function drawBlob(dt: number) {
       if (!cctx) return;
       const s = cvSize, R = s * .5, ctx = cctx;
-      const scale = 1 + .055 * kickSm;
+      const scale = 1 + .04 * kickSm;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, s, s);
       ctx.translate(R, R);
       for (const L of LAYERS) {
-        L.rot += dt * L.spd * (1 + 3 * kickSm);
+        L.rot += dt * L.spd;
         const R0 = s * .41 * L.rs * scale, sigma = .36 * (Math.PI * 2 / L.n), N = 150;
         ctx.beginPath();
         for (let i = 0; i <= N; i++) {
@@ -159,6 +145,7 @@ export function ScoreWidget() {
     }, 9000);
 
     return () => {
+      initialized.current = false;
       cancelAnimationFrame(coreRaf);
       cancelAnimationFrame(animId);
       clearInterval(interv);

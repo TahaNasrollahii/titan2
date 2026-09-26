@@ -134,14 +134,14 @@ export default function TitanPage() {
       };
 
       const HRS = [
-        { k: 'rank', name: 'رتبه شما', v: 12, c: '#d9443f', fg: '#fff', bpm: 92 },
+        { k: 'games', name: 'تعداد بازی‌ها', v: 345, c: '#7458d6', fg: '#fff', bpm: 110 },
         { k: 'wins', name: 'تعداد بردها', v: 240, c: '#fff1b8', fg: '#2b1013', bpm: 128 },
-        { k: 'kills', name: 'تعداد کیل‌ها', v: 4500, c: '#7458d6', fg: '#fff', bpm: 110 }
+        { k: 'losses', name: 'تعداد باخت‌ها', v: 105, c: '#d9443f', fg: '#fff', bpm: 92 }
       ];
       const GLYPH = {
-        rank: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l6.5 8L5 20h4l7-8-7-8z"/><path d="M14 4h5l-5 5.5z" opacity=".8"/></svg>',
-        wins: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8l3.5 2.5-1.3 4h-4.4l-1.3-4z" fill="currentColor"/></svg>',
-        kills: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="6.5"/><path d="M12 2.5v5M12 16.5v5M2.5 12h5M16.5 12h5"/></svg>'
+        games: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 7h9A4.5 4.5 0 0 1 21 11.5v1a4.5 4.5 0 0 1-4.5 4.5h-1.2l-1.8-2h-3l-1.8 2H7.5A4.5 4.5 0 0 1 3 12.5v-1A4.5 4.5 0 0 1 7.5 7z"/><path d="M8 10v3M6.5 11.5h3"/><circle cx="15.6" cy="10.8" r=".6"/><circle cx="17.6" cy="12.6" r=".6"/></svg>',
+        wins: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5.5a1.5 1.5 0 0 0 0 3H8M16 6h2.5a1.5 1.5 0 0 1 0 3H16"/><path d="M12 13v4M8.5 20.5h7M10 17h4v3.5h-4z"/></svg>',
+        losses: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><path d="M8 20v2h8v-2"/><path d="M12.5 17l-.5-1-.5 1h1z"/><path d="M12 5a7 7 0 0 0-7 7v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3a7 7 0 0 0-7-7z"/></svg>'
       };
 
       const FRIENDS = [
@@ -325,11 +325,11 @@ export default function TitanPage() {
         coreRaf = requestAnimationFrame(step);
       }
       function countTo(el, to, dur = 1600) {
-        if (reduce) { el.textContent = fmt(to) + 'h'; return; }
+        if (reduce) { el.textContent = fmt(to); return; }
         const t0 = performance.now();
         const step = t => {
           const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3);
-          el.textContent = fmt(to * e) + 'h';
+          el.textContent = fmt(to * e);
           if (p < 1) requestAnimationFrame(step);
         };
         requestAnimationFrame(step);
@@ -357,36 +357,22 @@ export default function TitanPage() {
         cv.width = cv.height = Math.round(cvSize * dpr);
       }
       function simulateBands(t, dt) {
-        bpm += (bpmTarget - bpm) * (1 - Math.exp(-dt * 2.5));
-        beat += dt * bpm / 60;
-        const b = beat % 4;
-        const hit = (times, decay) => { let m = 4; for (const x of times) m = Math.min(m, (b - x + 4) % 4); return Math.exp(-m * decay); };
-        const kick = hit([0, 2, 2.75], 5.5);
-        const snare = hit([1, 3], 5);
-        const hat = Math.exp(-((b * 2) % 1) * 7) * (Math.floor(b * 2) % 2 ? 1 : .55);
-        const wob = k => .5 + .5 * Math.sin(t * (1.1 + k * .37) + k * 1.9);
-        const target = [
-          kick * .95 + .10 * wob(0),
-          kick * .60 + snare * .30 + .15 * wob(1),
-          snare * .85 + .15 * wob(2),
-          snare * .40 + hat * .50 + .20 * wob(3),
-          hat * .80 + .20 * wob(4),
-          hat * .50 + kick * .15 + .30 * wob(5)
-        ];
+        const wob = k => 0.5 + 0.5 * Math.sin(t * (1.1 + k * 0.37) + k * 1.9);
         for (let k = 0; k < 6; k++) {
-          const rate = 1 - Math.exp(-dt * (target[k] > bands[k] ? 28 : 7));   // fast attack, slow release
-          bands[k] += (target[k] - bands[k]) * rate;
+          const target = 0.3 + 0.4 * wob(k);
+          bands[k] += (target - bands[k]) * dt * 3;
         }
-        kickSm += (kick - kickSm) * (1 - Math.exp(-dt * (kick > kickSm ? 30 : 8)));
+        const breath = Math.sin(t * 1.5);
+        kickSm += (breath * 0.6 - kickSm) * dt * 4;
       }
       function drawBlob(dt) {
         const s = cvSize, R = s * .5, ctx = cctx;
-        const scale = 1 + .055 * kickSm;
+        const scale = 1 + .04 * kickSm;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
         ctx.clearRect(0, 0, s, s);
         ctx.translate(R, R);
         for (const L of LAYERS) {
-          L.rot += dt * L.spd * (1 + 3 * kickSm);
+          L.rot += dt * L.spd;
           const R0 = s * .41 * L.rs * scale, sigma = .36 * (Math.PI * 2 / L.n), N = 150;
           ctx.beginPath();
           for (let i = 0; i <= N; i++) {
@@ -422,7 +408,7 @@ export default function TitanPage() {
       ghRow.innerHTML = HRS.map((h, i) => `
   <button class="gh" data-i="${i}" style="--c:${h.c}" aria-label="${esc(h.name)}">
     <span class="ic" style="background:${h.c};color:${h.fg}">${GLYPH[h.k]}</span>
-    <span class="gv" id="gv${i}">${fmt(h.v)}h</span>
+    <span class="gv" id="gv${i}">${fmt(h.v)}</span>
   </button>`).join('');
       $$('.gh', ghRow).forEach(b => {
         const i = +b.dataset.i;
@@ -503,6 +489,7 @@ export default function TitanPage() {
     // --- End Logic ---
 
     return () => {
+      initialized.current = false;
       cleanupFuncs.forEach(fn => fn());
     };
 
