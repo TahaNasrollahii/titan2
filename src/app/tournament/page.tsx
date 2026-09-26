@@ -81,12 +81,6 @@ export default function TournamentPage() {
             <div className="th-art-wrap">
               <img src="/images/banner-hero.png" alt="" className="th-art" />
             </div>
-            
-            <div className="th-dots">
-              <div className="th-dot active"></div>
-              <div className="th-dot"></div>
-              <div className="th-dot"></div>
-            </div>
           </article>
         </section>
 

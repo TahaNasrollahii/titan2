@@ -28,7 +28,9 @@ export const ICONS: Record<string, [string, boolean?]> = {
   sliders: ['<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>'],
   steam: ['<circle cx="15.2" cy="9" r="3.4"/><circle cx="8" cy="15.6" r="2.3"/><path d="m9.8 14 3.2-3M3.3 13.4l3.3 1.3"/>'],
   epic: ['<path d="M6 3.5h12v12.6L12 20.5l-6-4.4z"/><path d="M10 8h4M10 8v5.5h4M10 10.7h3"/>'],
-  cursor: ['<path d="M5 3l14 7-6 2-2 6z"/>', true]
+  cursor: ['<path d="M5 3l14 7-6 2-2 6z"/>', true],
+  skull: ['<circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><path d="M8 20v2h8v-2"/><path d="M12.5 17l-.5-1-.5 1h1z"/><path d="M12 5a7 7 0 0 0-7 7v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3a7 7 0 0 0-7-7z"/>'],
+  swords: ['<path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4M19 21l2-2"/>']
 };
 
 export function Icon({ name, className = '', style }: { name: string, className?: string, style?: React.CSSProperties }) {

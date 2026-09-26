@@ -14,9 +14,9 @@ export function ScoreWidget() {
     const fmt = (n: number) => Math.round(n).toLocaleString('en-US');
 
     const HRS = [
-      { k: 'rank', name: 'رتبه شما', v: 12, c: '#d9443f', fg: '#fff', bpm: 92 },
+      { k: 'games', name: 'تعداد بازی‌ها', v: 345, c: '#7458d6', fg: '#fff', bpm: 110 },
       { k: 'wins', name: 'تعداد بردها', v: 240, c: '#fff1b8', fg: '#2b1013', bpm: 128 },
-      { k: 'kills', name: 'تعداد کیل‌ها', v: 4500, c: '#7458d6', fg: '#fff', bpm: 110 }
+      { k: 'losses', name: 'تعداد باخت‌ها', v: 105, c: '#d9443f', fg: '#fff', bpm: 92 }
     ];
     let total = HRS.reduce((a, h) => a + h.v, 0);
 
@@ -151,7 +151,7 @@ export function ScoreWidget() {
       const i = Math.floor(Math.random() * HRS.length);
       HRS[i].v++; total++;
       const gvEl = document.getElementById('sw-gv' + i);
-      if (gvEl) gvEl.textContent = fmt(HRS[i].v) + 'h';
+      if (gvEl) gvEl.textContent = fmt(HRS[i].v);
       const b = document.querySelector(`.sw-gh[data-i="${i}"]`) as HTMLElement;
       if (b) { b.classList.remove('bump'); void b.offsetWidth; b.classList.add('bump'); }
       if (hovering === -1) setCore('مجموع امتیاز', total, 500);
@@ -178,23 +178,23 @@ export function ScoreWidget() {
           </div>
         </div>
         <div className="gh-row" id="swGhRow" style={{ transform: 'scale(0.75)', transformOrigin: 'top center', marginTop: '4px' }}>
-          <button className="gh sw-gh" data-i="0" style={{ '--c': '#d9443f' } as any} aria-label="رتبه شما">
-            <span className="ic" style={{ background: '#d9443f', color: '#fff' }}>
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l6.5 8L5 20h4l7-8-7-8z"/><path d="M14 4h5l-5 5.5z" opacity=".8"/></svg>
+          <button className="gh sw-gh" data-i="0" style={{ '--c': '#7458d6' } as any} aria-label="تعداد بازی‌ها">
+            <span className="ic" style={{ background: '#7458d6', color: '#fff' }}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="6" width="20" height="12" rx="2" ry="2"/><path d="M6 12h4"/><path d="M8 10v4"/><circle cx="15" cy="13" r="1" fill="currentColor" stroke="none"/><circle cx="18" cy="11" r="1" fill="currentColor" stroke="none"/></svg>
             </span>
-            <span className="gv" id="sw-gv0">12h</span>
+            <span className="gv" id="sw-gv0">345</span>
           </button>
           <button className="gh sw-gh" data-i="1" style={{ '--c': '#fff1b8' } as any} aria-label="تعداد بردها">
             <span className="ic" style={{ background: '#fff1b8', color: '#2b1013' }}>
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" strokeWidth="2"/><path d="M12 8l3.5 2.5-1.3 4h-4.4l-1.3-4z" fill="currentColor"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
             </span>
-            <span className="gv" id="sw-gv1">240h</span>
+            <span className="gv" id="sw-gv1">240</span>
           </button>
-          <button className="gh sw-gh" data-i="2" style={{ '--c': '#7458d6' } as any} aria-label="تعداد کیل‌ها">
-            <span className="ic" style={{ background: '#7458d6', color: '#fff' }}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="6.5"/><path d="M12 2.5v5M12 16.5v5M2.5 12h5M16.5 12h5"/></svg>
+          <button className="gh sw-gh" data-i="2" style={{ '--c': '#d9443f' } as any} aria-label="تعداد باخت‌ها">
+            <span className="ic" style={{ background: '#d9443f', color: '#fff' }}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6"/><path d="M9 9l6 6"/></svg>
             </span>
-            <span className="gv" id="sw-gv2">4,500h</span>
+            <span className="gv" id="sw-gv2">105</span>
           </button>
         </div>
       </article>
